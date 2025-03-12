@@ -2,7 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slice/authSlice"; // Ensure the path is correct
 
 export const store = configureStore({
-  reducer: { auth: authReducer },
+  reducer: { 
+    auth: authReducer
+   },
 });
 
 // Correctly define RootState and AppDispatch
