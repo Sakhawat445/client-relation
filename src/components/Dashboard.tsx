@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/redux/slice/authSlice";
-import { AppDispatch } from "@/redux/store"; // Import AppDispatch
-import { RootState } from "@/redux/store"; // Import RootState
+import { AppDispatch } from "@/redux/store"; 
+import { RootState } from "@/redux/store"; 
 
 export default function Dashboard() {
   const router = useRouter(); // Define router using useRouter hook
