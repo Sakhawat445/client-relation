@@ -21,6 +21,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          UserRole? @default(USER)
+   reset_token            String?  // Add this line
+  reset_token_expiration DateTime? // Add this line
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
