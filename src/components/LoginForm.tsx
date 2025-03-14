@@ -4,7 +4,7 @@ import InputField from "@/components/InputField"; // Reusable InputField compone
 import Button from "@/components/Button"; // Reusable Button component
 import useLoginForm from "./useLoginForm"; // Import the custom hook
 import { useEffect } from "react"; // Import useEffect
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // ✅ Correct import
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
@@ -61,15 +61,35 @@ const LoginForm = () => {
             onChange={handleChange}
           />
 
+          <div className="flex justify-between items-center">
+            {/* Forgot Password Link */}
+            <button
+              onClick={() => router.push("/reset")}
+              className="text-white text-sm hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           <Button
             type="submit"
             className="w-full"
             disabled={loading}
-            text={loading ? "Logging in..." : "Login"}
           >
             {loading ? "Logging in..." : "Login"}
           </Button>
         </form>
+
+        {/* Signup Button */}
+        <div className="mt-4 text-center">
+          <p className="text-white">Don&apos;t have an account?</p>
+          <button
+            onClick={() => router.push("/register")}
+            className="mt-2 text-white font-semibold hover:underline"
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
 
       {/* ToastContainer should be rendered once in your app, typically in the root component */}

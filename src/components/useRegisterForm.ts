@@ -16,16 +16,28 @@ const useRegisterForm = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, onSuccess: () => void) => {
     e.preventDefault();
+    setFormError(null); // Clear previous errors
+  
+    if (!form.name || !form.email || !form.password) {
+      setFormError("All fields are required.");
+      return;
+    }
+  
     setLoading(true);
     try {
-      // Registration logic here
-      setLoading(false);
-      onSuccess(); // Call the success callback
+      const resultAction = await dispatch(registerUser(form));
+      if (registerUser.fulfilled.match(resultAction)) {
+        onSuccess(); // Navigate to another page if needed
+      } else {
+        setFormError((resultAction.payload as string) || "Registration failed");
+      }
     } catch (error) {
-      setFormError("Registration failed");
+      setFormError("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
+  
 
   return {
     form,

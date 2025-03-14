@@ -28,22 +28,8 @@ const ResetPasswordPage = () => {
             onChange={handleChange}
             className="mb-3 w-full bg-white bg-opacity-20 text-white placeholder-gray-200"
           />
-          <InputField
-            label="New Password"
-            value={form.newPassword}
-            type="password"
-            name="newPassword"
-            placeholder="Enter new password"
-            onChange={handleChange}
-          />
-          <InputField
-            label="Confirm New Password"
-            value={form.confirmNewPassword}
-            type="password"
-            name="confirmNewPassword"
-            placeholder="Confirm new password"
-            onChange={handleChange}
-          />
+      
+        
 
           <Button
             type="submit"

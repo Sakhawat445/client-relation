@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   // Define public and protected routes
-  const authRoutes = ["/login", "/register"];
+  const authRoutes = ["/login", "/register  ", "/reset"];
   const protectedRoutes = ["/dashboard"];
 
   // Clone the URL for manipulation

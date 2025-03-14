@@ -24,6 +24,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "User created successfully", user }, { status: 201 });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

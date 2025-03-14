@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store"; // Import AppDispatch type
+import { resetPassword } from "../redux/slice/authSlice"; // Ensure correct import
 
 const useResetPasswordForm = () => {
-  const [form, setForm] = useState({
-    email: "",
-    newPassword: "",
-    confirmNewPassword: "",
-  });
+  const [form, setForm] = useState({ email: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>(); // ✅ Fix: Correctly type dispatch
 
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,37 +23,14 @@ const useResetPasswordForm = () => {
     setLoading(true);
     setError("");
 
-    // Basic validation
-    if (!form.email || !form.newPassword || !form.confirmNewPassword) {
-      setError("All fields are required");
-      setLoading(false);
-      return;
-    }
-
-    if (form.newPassword !== form.confirmNewPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-      return;
-    }
-
-    // Simulate a password reset process (client-side only)
     try {
-      // Here, you can add client-side logic to update the password
-      // For example, you might update the password in localStorage or context
-      console.log("Password reset logic goes here");
-
-      // Simulate a delay for demonstration purposes
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Show success message
-      toast.success("Password reset successfully! Redirecting to login...");
-
-      // Redirect to login page after a delay
-      setTimeout(() => {
-        router.push("/login");
-      }, 3000); // 3 seconds delay
-    } catch (err) {
-      setError("An error occurred. Please try again.");
+      await dispatch(resetPassword(form.email)).unwrap(); // ✅ Fix: Correctly type async dispatch
+      toast.success("Reset password email sent! Check your inbox.");
+      setTimeout(() => router.push("/login"), 3000);
+    } catch (error: unknown) {
+      const errorMessage = (error instanceof Error) ? error.message : "An error occurred";
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
