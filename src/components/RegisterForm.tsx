@@ -56,7 +56,6 @@ const RegisterForm = () => {
             type="submit"
             className="w-full"
             disabled={loading}
-            text={loading ? "Registering..." : "Register"}
           >
             {loading ? "Registering..." : "Register"}
           </Button>

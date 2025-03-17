@@ -8,7 +8,7 @@ const useRegisterForm = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const [formError, setFormError] = useState<string | null>(null);
-  const { loading: authLoading, error: authError } = useSelector((state: RootState) => state.auth);
+  useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const useRegisterForm = () => {
       } else {
         setFormError((resultAction.payload as string) || "Registration failed");
       }
-    } catch (error) {
+    } catch {
       setFormError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

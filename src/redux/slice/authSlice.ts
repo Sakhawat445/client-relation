@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { signIn, signOut } from "next-auth/react";
-
 // Define the shape of the user data
-interface User {
+type User = {
+  id: string;
   name: string;
   email: string;
+  photoURL?: string; // Add this line
+
+  // Add other fields as necessary
 }
+
 
 // Define the shape of the auth state
 interface AuthState {

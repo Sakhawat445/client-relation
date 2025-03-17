@@ -4,7 +4,7 @@ import InputField from "@/components/InputField"; // Reusable InputField compone
 import Button from "@/components/Button"; // Reusable Button component
 import useResetPasswordForm from "./useResetPassword"; // Custom hook for reset password logic
 import { useRouter } from "next/navigation"; // For navigation
-import { toast, ToastContainer } from "react-toastify"; // For toast notifications
+import { ToastContainer } from "react-toastify"; // For toast notifications
 import "react-toastify/dist/ReactToastify.css"; // Toast styles
 
 const ResetPasswordPage = () => {
@@ -35,7 +35,6 @@ const ResetPasswordPage = () => {
             type="submit"
             className="w-full"
             disabled={loading}
-            text={loading ? "Resetting Password..." : "Reset Password"}
           >
             {loading ? "Resetting Password..." : "Reset Password"}
           </Button>

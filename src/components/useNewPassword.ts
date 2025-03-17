@@ -6,12 +6,6 @@ const useNewPassword = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-
-  interface FetchResponse {
-    ok: boolean;
-    json: () => Promise<any>;
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault();
     setError("");
@@ -36,7 +30,7 @@ const useNewPassword = () => {
 
     setLoading(true);
     try {
-      const response: FetchResponse = await fetch("/api/auth/newPassword", {
+      const response = await fetch("/api/auth/newPassword", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, password }),
