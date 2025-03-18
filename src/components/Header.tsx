@@ -1,16 +1,17 @@
 'use client';
 
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { Search } from 'lucide-react';
+import React from 'react';
 import Image from 'next/image';
-const Header = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+import { Search } from 'lucide-react';
+import { useHeader } from './useHeader';
+
+const Header: React.FC = () => {
+  // Use the custom hook to get user data and search state/handler.
+  const { user, search, handleSearchChange } = useHeader();
 
   return (
-    <header className="flex items-center justify-between md p-4">
+    <header className="flex items-center justify-between p-4">
       <h1 className=""></h1>
-
       <div className="flex items-center gap-3">
         {user?.photoURL && (
           <Image
@@ -21,13 +22,16 @@ const Header = () => {
             className="rounded-full border"
           />
         )}
-        <span className="font-medium text-gray-700">Welcome back, {user?.name || 'User'}</span>
+        <span className="font-medium text-gray-700">
+          Welcome back, {user?.name || 'User'}
+        </span>
       </div>
-      
       <div className="relative w-64">
         <input
           type="text"
           placeholder="Search..."
+          value={search}
+          onChange={handleSearchChange}
           className="w-full p-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />

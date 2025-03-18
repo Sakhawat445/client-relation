@@ -1,23 +1,13 @@
 'use client';
 
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { AppDispatch } from '@/redux/store';
-import { useRouter } from 'next/navigation';
-import { logoutUser } from '@/redux/slice/authSlice';
-import { Home, Bell, Users, List, BarChart2, FileText, HelpCircle, Settings, LogOut } from 'lucide-react';
+import React from 'react';
 import Link from 'next/link';
+import { Home, Bell, Users, List, BarChart2, FileText, HelpCircle, Settings, LogOut } from 'lucide-react';
+import { useSidebar } from './useSideBar';
 
-  const Sidebar = () => {
-    const [active, setActive] = useState<string>('');
-
-  const dispatch: AppDispatch = useDispatch();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    router.push('/login');
-  };
+const Sidebar: React.FC = () => {
+  // Use the custom hook to get active state and logout handler.
+  const { active, setActive, handleLogout } = useSidebar();
 
   const menuItems = [
     { name: 'Dashboard', icon: <Home />, path: '/' },
@@ -41,8 +31,8 @@ import Link from 'next/link';
           <Link key={item.name} href={item.path}>
             <div
               className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-indigo-100 transition-all ${
-    active === item.name ? 'bg-indigo-500 text-white' : 'text-gray-700'
-  }`}
+                active === item.name ? 'bg-indigo-500 text-white' : 'text-gray-700'
+              }`}
               onClick={() => setActive(item.name)}
             >
               {item.icon}

@@ -1,90 +1,83 @@
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
 }
 
-enum UserRole {
-  ADMIN
-  USER
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id                     String          @id @default(auto()) @map("_id") @db.ObjectId
-  name                   String?
-  email                  String?         @unique
-  emailVerified          DateTime?
-  image                  String?
-  password               String?
-  accounts               Account[]
-  sessions               Session[]
-  role                   UserRole?       @default(USER)
-  reset_token            String? // Add this line
-  reset_token_expiration DateTime? // Add this line
-  // Optional for WebAuthn support
-  Authenticator          Authenticator[]
-
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String  @unique
+  password  String
+  imageURL  String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
-  session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+model Product {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  imageURL    String?
+  name        String
+  price       Int
+  stock       Int
+  companyName String
+  createdAt   DateTime @default(now())
 }
 
-model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Customer {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String  @unique
+  imageURI     String?
+  orderCount   Int?
+  spendings    Int?
+  documentURL  String?
+  createdDate  DateTime @default(now())
+  status       CustomerStatus @default(PENDING)
+  address      Address
+  contactNumber Int
+  deviceType   DeviceType
 }
 
-model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@unique([identifier, token])
+type Address {
+  city    String
+  country String
 }
 
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @id @map("_id")
-  userId               String  @db.ObjectId
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
+model Order {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  products  String[] // Array of product IDs
+  customer  OrderCustomer
+  price     Int
+  status    OrderStatus
+  date      DateTime @default(now())
+}
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+type OrderCustomer {
+  country    String
+  orderCount Int?
+}
 
-  @@unique([userId, credentialID])
+enum CustomerStatus {
+  PENDING
+  APPROVED
+}
+
+enum DeviceType {
+  MOBILE
+  DESKTOP
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELED
 }

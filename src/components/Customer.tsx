@@ -3,19 +3,25 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from './Button'; 
+import Button from './Button';
+import CustomerModal from './Modal'; // Import the modal component
 
-const customers = [
-  { date: '31 Jul 2023', name: 'Jacob Swanson', status: 'Success', amount: '$989.00', image: '/avatar1.png' },
-  { date: '31 Jul 2023', name: 'Amelia Johnson', status: 'Success', amount: '$1999.00', image: '/avatar2.png' },
-  { date: '31 Jul 2023', name: 'Eric Slater', status: 'Pending', amount: '$2000.00', image: '/avatar3.png' },
-  { date: '31 Jul 2023', name: 'Aaron Chadwick', status: 'Success', amount: '$289.00', image: '/avatar4.png' },
-  { date: '31 Jul 2023', name: 'Jessica Sloan', status: 'Pending', amount: '$729.00', image: '/avatar5.png' },
-  { date: '31 Jul 2023', name: 'Mary Brower', status: 'Success', amount: '$900.00', image: '/avatar6.png' },
+type Customer = {
+  date: string;
+  name: string;
+  image: string;
+  status: 'Success' | 'Pending';
+  amount: string;
+};
+
+const customers: Customer[] = [
+  // Add your customer objects here if needed
 ];
 
 const NewCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const totalPages = 4;
 
   return (
@@ -23,17 +29,27 @@ const NewCustomers = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">New Customers</h2>
         <div className="flex gap-2 items-center">
-        <Button onClick={() => alert('Add Customer Clicked')}>Add Customer</Button>
-        <button
-            className="p-1 text-gray-500 hover:text-indigo-600"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          <Button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="w-full"
+            // disabled={loading}
+          >
+            {loading ? "Adding new customer..." : "New Customer"}
+          </Button>
+          <button
+            onClick={() => {
+              if (currentPage > 1) setCurrentPage(currentPage - 1);
+            }}
+            className="p-2"
           >
             <ChevronLeft />
           </button>
-          <span className="text-sm">{currentPage} / {totalPages}</span>
           <button
-            className="p-1 text-gray-500 hover:text-indigo-600"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() => {
+              if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+            }}
+            className="p-2"
           >
             <ChevronRight />
           </button>
@@ -65,7 +81,9 @@ const NewCustomers = () => {
               <td className="py-2 px-2">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    customer.status === 'Success' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
+                    customer.status === 'Success'
+                      ? 'bg-green-100 text-green-600'
+                      : 'bg-yellow-100 text-yellow-600'
                   }`}
                 >
                   {customer.status}
@@ -76,6 +94,9 @@ const NewCustomers = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Render the modal when isModalOpen is true */}
+      <CustomerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
