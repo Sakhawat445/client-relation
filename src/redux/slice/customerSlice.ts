@@ -33,7 +33,7 @@ const initialState: CustomerState = {
 export const fetchCustomers = createAsyncThunk<Customer[]>(
   'customers/fetchCustomers',
   async () => {
-    const response = await fetch('/api/customer'); // adjust path if needed
+    const response = await fetch('api/customer'); // adjust path if needed
     if (!response.ok) {
       throw new Error('Failed to fetch customers');
     }
@@ -45,7 +45,7 @@ export const fetchCustomers = createAsyncThunk<Customer[]>(
 export const createCustomer = createAsyncThunk<Customer, Omit<Customer, 'id'>>(
   'customers/createCustomer',
   async (customerData) => {
-    const response = await fetch('/api/customer', {
+    const response = await fetch('api/customer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(customerData),

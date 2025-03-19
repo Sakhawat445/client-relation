@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import Input from './InputField'; // Ensure this component exists
-import Button from './Button';
-import type { RootState, AppDispatch } from '@/redux/store';
-import { useAppDispatch } from '@/redux/store';
-import { createCustomer } from '@/redux/slice/customerSlice';
+import React, { useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import Input from "./InputField";
+import Button from "./Button";
+import type { RootState } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
+import { createCustomer } from "@/redux/slice/customerSlice";
 
 const initialState = {
-  name: '',
-  email: '',
-  imageURI: '',
-  orderCount: '',
-  spendings: '',
-  documentURL: '',
-  createdDate: '',
-  status: '',
-  address: '',
-  contactNumber: '',
-  deviceType: '',
-  selectedProduct: '',
+  name: "",
+  email: "",
+  imageURI: "",
+  orderCount: 0,
+  spendings: 0,
+  documentURL: "",
+  createdDate: new Date().toISOString().split("T")[0], // Default to today's date
+  status: "PENDING",
+  address: { city: "", country: "" },
+  contactNumber: 0,
+  deviceType: "MOBILE",
+  productType: "",
 };
 
 interface CustomerModalProps {
@@ -35,7 +35,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
 
   // Fetch products from the product slice in Redux
   const products = useSelector((state: RootState) => state.product.products);
-
+  console.log(products);
   if (!isOpen) return null;
 
   const handleChange = (
@@ -44,8 +44,15 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const [city, country] = value.split(",").map((item) => item.trim()); // Split city and country
+    setFormData((prev) => ({
+      ...prev,
+      address: { city: city || "", country: country || "" }, // Ensure empty values are handled
+    }));
+  };
 
-  // Triggered when an image is selected
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -57,27 +64,26 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Dispatch createCustomer thunk with the form data.
-    // Convert numeric fields as necessary.
-    await dispatch(
-      createCustomer({
-        name: formData.name,
-        email: formData.email,
-        imageURI: formData.imageURI,
-        orderCount: formData.orderCount ? parseInt(formData.orderCount) : 0,
-        spendings: formData.spendings ? parseInt(formData.spendings) : 0,
-        documentURL: formData.documentURL,
-        createdDate: formData.createdDate, // Adjust conversion if needed
-        status: formData.status,
-        address: formData.address,
-        contactNumber: formData.contactNumber
-          ? parseInt(formData.contactNumber)
-          : 0,
-        deviceType: formData.deviceType,
-        selectedProduct: formData.selectedProduct,
-      })
-    );
+    // Prepare the customer data to match the Prisma schema
+    const customerData = {
+      name: formData.name,
+      email: formData.email,
+      imageURI: formData.imageURI,
+      orderCount: formData.orderCount,
+      spendings: formData.spendings,
+      documentURL: formData.documentURL,
+      createdDate: new Date(formData.createdDate).toISOString(),
+      status: formData.status,
+      address: `${formData.address.city}, ${formData.address.country}`, // Convert address object to string
+      contactNumber: formData.contactNumber,
+      deviceType: formData.deviceType,
+      productType: formData.productType,
+    };
 
+    // Dispatch createCustomer thunk with the form data
+    await dispatch(createCustomer(customerData));
+
+    // Reset form and close modal
     setFormData(initialState);
     onClose();
   };
@@ -106,7 +112,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
             type="email"
             label="Email"
           />
-          {/* Hidden file input for image selection */}
           <input
             type="file"
             accept="image/*"
@@ -135,7 +140,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
           </div>
           <Input
             name="orderCount"
-            value={formData.orderCount}
+            value={formData.orderCount.toString()}
             onChange={handleChange}
             placeholder="Order Count"
             type="number"
@@ -143,7 +148,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
           />
           <Input
             name="spendings"
-            value={formData.spendings}
+            value={formData.spendings.toString()}
             onChange={handleChange}
             placeholder="Spendings"
             type="number"
@@ -175,23 +180,29 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
             >
-              <option value="">Select status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
+              <option value="PENDING">Pending</option>
+              <option value="APPROVED">Approved</option>
             </select>
           </div>
           <Input
             name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="Address"
+            value={`${formData.address.city}${
+              formData.address.country ? `, ${formData.address.country}` : ""
+            }`}
+            onChange={handleAddressChange}
+            placeholder="City,Country"
             type="text"
             label="Address"
           />
           <Input
             name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleChange}
+            value={formData.contactNumber.toString()}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                contactNumber: parseInt(e.target.value, 10) || 0,
+              }))
+            }
             placeholder="Contact Number"
             type="tel"
             label="Contact Number"
@@ -206,9 +217,8 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
             >
-              <option value="">Select device type</option>
-              <option value="mobile">Mobile</option>
-              <option value="desktop">Desktop</option>
+              <option value="MOBILE">Mobile</option>
+              <option value="DESKTOP">Desktop</option>
             </select>
           </div>
           <div>
@@ -216,17 +226,25 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
               Product
             </label>
             <select
-              name="selectedProduct"
-              value={formData.selectedProduct}
+              name="productType" // Ensure this matches formData key
+              value={formData.productType || ""} // Ensure it's always a string
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
             >
-              <option value="">Select product</option>
-              {products.map((product) => (
-                <option key={product.id} value={product.id}>
-                  {product.name}
+              <option value="" disabled>
+                Select product
+              </option>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <option key={product.id} value={product.id}>
+                    {product.name}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  No products available
                 </option>
-              ))}
+              )}
             </select>
           </div>
         </div>

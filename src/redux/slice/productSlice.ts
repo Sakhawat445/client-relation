@@ -26,7 +26,7 @@ const initialState: ProductState = {
 export const fetchProducts = createAsyncThunk<Product[]>(
   'products/fetchProducts',
   async () => {
-    const res = await fetch('api/product');
+    const res = await fetch('/api/product');
     if (!res.ok) {
       throw new Error('Failed to fetch products');
     }

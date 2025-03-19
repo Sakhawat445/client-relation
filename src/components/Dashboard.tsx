@@ -69,6 +69,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold mb-2">New Customers</h3>
               <NewCustomers />
             </div>
+            
 
           
         </main>

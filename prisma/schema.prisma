@@ -29,6 +29,8 @@ model Product {
   stock       Int
   companyName String
   createdAt   DateTime @default(now())
+    customers   Customer[] // ✅ Add this to establish the reverse relation
+
 }
 
 model Customer {
@@ -41,15 +43,17 @@ model Customer {
   documentURL  String?
   createdDate  DateTime @default(now())
   status       CustomerStatus @default(PENDING)
-  address      Address
+  address      String?
   contactNumber Int
   deviceType   DeviceType
+    productType   String  @db.ObjectId
+  product       Product @relation(fields: [productType], references: [id]) 
 }
 
-type Address {
-  city    String
-  country String
-}
+// type Address {
+//   city    String
+//   country String
+// }
 
 model Order {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

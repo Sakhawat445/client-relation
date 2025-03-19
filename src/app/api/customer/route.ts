@@ -23,23 +23,11 @@ export async function GET() {
 /**
  * POST /customer
  * Creates a new customer in the database.
- * Expects a JSON body with the following fields:
- * - name: string
- * - email: string
- * - imageURI: string (optional)
- * - orderCount: string or number (will be parsed to an int)
- * - spendings: string or number (will be parsed to an int)
- * - documentURL: string (optional)
- * - createdDate: string (date) or number (timestamp)
- * - status: string (e.g., "pending" or "approved")
- * - address: string
- * - contactNumber: string or number (will be parsed to an int)
- * - deviceType: string (e.g., "mobile" or "desktop")
- * - selectedProduct: string (product id, optional)
  */
-export async function POST(request: Request) {
-  const body = await request.json();
+
+export async function POST(req: Request) {
   try {
+    const body = await req.json();
     const {
       name,
       email,
@@ -52,36 +40,35 @@ export async function POST(request: Request) {
       address,
       contactNumber,
       deviceType,
-          } = body;
+      productType, // Ensure this is passed
+    } = body;
 
-    // Create the new customer record.
-    // Adjust field conversions as needed (e.g., if your schema expects numbers or dates).
+    if (!productType) {
+      return NextResponse.json({ error: "ProductType is required" }, { status: 400 });
+    }
+
     const newCustomer = await prisma.customer.create({
       data: {
         name,
         email,
-        imageURI: imageURI || null,
-        orderCount: orderCount ? parseInt(orderCount) : undefined,
-        spendings: spendings ? parseInt(spendings) : undefined,
-        documentURL: documentURL || null,
-        // Assuming your schema stores createdDate as a DateTime; adjust if it's stored as an int.
-        createdDate: createdDate ? new Date(createdDate) : new Date(),
+        imageURI,
+        orderCount:Number(orderCount) ,
+        spendings: Number(spendings),
+        documentURL,
+        createdDate: new Date(createdDate),
         status,
         address,
-        contactNumber: contactNumber ? contactNumber.toString() : undefined,
+        contactNumber: Number(contactNumber),
         deviceType,
-        // Optionally store the selected product id, if your Customer model has a relation or field for it.
-        // productId: selectedProduct || null,
+        product: {
+          connect: { id: productType }, // Correct way to associate an existing product
+        },
       },
     });
 
     return NextResponse.json(newCustomer, { status: 201 });
   } catch (error) {
-    console.error('POST /customer error:', error);
-    // console.log(object)
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error("Error creating customer:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

@@ -13,7 +13,7 @@ type User = {
 
 // Define the shape of the auth state
 interface AuthState {
-  user: User | null;
+  user: User |null;
   users: User[]; // Array to store registered users
   loading: boolean;
   error: string | null;
