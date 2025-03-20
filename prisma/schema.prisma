@@ -29,7 +29,7 @@ model Product {
   stock       Int
   companyName String
   createdAt   DateTime @default(now())
-    customers   Customer[] // ✅ Add this to establish the reverse relation
+    customers   Customer[]
 
 }
 

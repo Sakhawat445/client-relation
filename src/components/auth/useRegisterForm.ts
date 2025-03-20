@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../redux/slice/authSlice";
-import type { RootState, AppDispatch } from "../redux/store";
+import { registerUser } from "../../redux/slice/authSlice";
+import type { RootState, AppDispatch } from "../../redux/store";
 
 const useRegisterForm = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });

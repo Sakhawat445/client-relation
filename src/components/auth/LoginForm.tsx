@@ -1,7 +1,7 @@
 "use client";
 
-import InputField from "@/components/InputField"; // Reusable InputField component
-import Button from "@/components/Button"; // Reusable Button component
+import InputField from "@/components/input/InputField"; // Reusable InputField component
+import Button from "@/components/button/Button"; // Reusable Button component
 import useLoginForm from "./useLoginForm"; // Import the custom hook
 import { useEffect } from "react"; // Import useEffect
 import { useRouter } from "next/navigation"; // ✅ Correct import

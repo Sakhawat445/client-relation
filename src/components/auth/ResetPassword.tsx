@@ -1,7 +1,7 @@
 "use client";
 
-import InputField from "@/components/InputField"; // Reusable InputField component
-import Button from "@/components/Button"; // Reusable Button component
+import InputField from "@/components/input/InputField"; // Reusable InputField component
+import Button from "@/components/button/Button"; // Reusable Button component
 import useResetPasswordForm from "./useResetPassword"; // Custom hook for reset password logic
 import { useRouter } from "next/navigation"; // For navigation
 import { ToastContainer } from "react-toastify"; // For toast notifications

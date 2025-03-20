@@ -7,7 +7,7 @@ interface Product {
   price: number;
   stock: number;
   companyName: string;
-  imageURL?: string;
+  imageURL: string;
 }
 
 interface ProductState {

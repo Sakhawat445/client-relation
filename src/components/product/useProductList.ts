@@ -1,9 +1,8 @@
 'use client'; // Required if using Next.js 13 App Router with React hooks
 
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../redux/store'; // Adjust the path as needed
-
-import { fetchProducts } from '../redux/slice/productSlice'; // Adjust the path as needed
+import { useAppDispatch, useAppSelector } from '../../redux/store'; // Adjust the path as needed
+import { fetchProducts } from '../../redux/slice/productSlice'; // Adjust the path as needed
 
 export function useProducts() {
   const dispatch = useAppDispatch();

@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import InputField from "@/components/InputField";
-import Button from "./Button";
+import InputField from "@/components/input/InputField";
+import Button from "../button/Button";
 import useNewPassword from "./useNewPassword";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";

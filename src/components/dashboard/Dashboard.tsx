@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import Sidebar from "./SideBar";
-import Header from "./Header";
-import Footer from "./Footer";
-import BestSellingProducts from "./BestSellingProduct";
-import NewCustomers from "./Customer";
+import Sidebar from "../sideBar/SideBar";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import BestSellingProducts from "../product/BestSellingProduct";
+import NewCustomers from "../customer/Customer";
 
 export default function Dashboard() {
   // Sample product data for the BestSellingProducts component

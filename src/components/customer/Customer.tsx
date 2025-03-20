@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from './Button';
+import Button from '../button/Button';
 import CustomerModal from './Modal'; // Import the modal component
 
 type Customer = {
@@ -20,7 +20,7 @@ const customers: Customer[] = [
 
 const NewCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalPages = 4;
 

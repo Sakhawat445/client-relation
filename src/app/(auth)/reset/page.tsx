@@ -1,4 +1,4 @@
-import ResetPasswordPage from "@/components/ResetPassword";
+import ResetPasswordPage from "@/components/auth/ResetPassword";
 
 const LoginPageResetPasswordPage = () => {
     return (

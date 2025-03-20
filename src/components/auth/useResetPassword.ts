@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/redux/store"; // Import AppDispatch type
-import { resetPassword } from "../redux/slice/authSlice"; // Ensure correct import
+import { resetPassword } from "../../redux/slice/authSlice"; // Ensure correct import
 
 const useResetPasswordForm = () => {
   const [form, setForm] = useState({ email: "" });

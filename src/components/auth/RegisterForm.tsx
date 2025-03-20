@@ -1,7 +1,7 @@
 "use client";
 
-import InputField from "@/components/InputField"; // Correct import
-import Button from "@/components/Button"; // Correct import
+import InputField from "@/components/input/InputField"; // Correct import
+import Button from "@/components/button/Button"; // Correct import
 import useRegisterForm from "./useRegisterForm"; // Import the custom hook
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { toast, ToastContainer } from "react-toastify"; // Import toast for notifications
