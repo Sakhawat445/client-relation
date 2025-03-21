@@ -1,22 +1,6 @@
 // customerSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-export interface Customer {
-  id?: string;
-  name: string;
-  email: string;
-  imageURI?: string;
-  orderCount?: number;
-  spendings?: number;
-  documentURL?: string;
-  createdDate: string; // or Date, depending on your schema
-  status: string;
-  address: string;
-  contactNumber: number;
-  deviceType: string;
-  selectedProduct?: string;
-}
-
+import { Customer } from '@/types/types';
 interface CustomerState {
   customers: Customer[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';

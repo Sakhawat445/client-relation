@@ -1,15 +1,6 @@
 // productSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-interface Product {
-  id?: string;
-  name: string;
-  price: number;
-  stock: number;
-  companyName: string;
-  imageURL: string;
-}
-
+import { Product } from '@/types/types';
 interface ProductState {
   products: Product[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';

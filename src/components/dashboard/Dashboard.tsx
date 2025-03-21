@@ -5,7 +5,7 @@ import Sidebar from "../sideBar/SideBar";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BestSellingProducts from "../product/BestSellingProduct";
-import NewCustomers from "../customer/Customer";
+import NewCustomers from "../newCustomer/NewCustomer";
 
 export default function Dashboard() {
   // Sample product data for the BestSellingProducts component

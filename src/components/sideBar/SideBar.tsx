@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
   const { active, setActive, handleLogout } = useSidebar();
 
   const menuItems = [
-    { name: 'Dashboard', icon: <Home />, path: '/' },
+    { name: 'Dashboard', icon: <Home />, path: '/dashboard' },
     { name: 'Notifications', icon: <Bell />, path: '/notifications' },
     { name: 'Customers', icon: <Users />, path: '/customers' },
     { name: 'Order Overview', icon: <List />, path: '/orders' },
