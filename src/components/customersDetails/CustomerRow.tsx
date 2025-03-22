@@ -2,17 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-
-export interface Customer {
-    id: string;
-    name: string;
-    email: string;
-    contactNumber: string;
-    address: string;
-    status: string;
-    imageURI?: string;
-}
-
+import { Customer } from "@/types/types";
 interface CustomerProps {
     customer: Customer;
 }

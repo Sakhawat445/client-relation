@@ -4,6 +4,8 @@ type ButtonProps = {
   className?: string;
   disabled?: boolean;
   children: React.ReactNode;
+  variant?: string; // Add the 'variant' prop to the ButtonProps type
+
   onClick?: () => void;
 };
 

@@ -54,11 +54,48 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    
     if (files && files.length > 0) {
-      if (name === 'image') setImageFile(files[0]);
-      if (name === 'document') setDocumentFile(files[0]);
+      const file = files[0];
+      
+      // Update state based on input name
+      if (name === 'image') {
+        setImageFile(file);
+      } else if (name === 'document') {
+        setDocumentFile(file);
+      }
+      
+      // Prepare FormData for upload
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('filename', file.name); // Include original filename
+      
+      try {
+        // You can make the API call here if you want immediate upload
+        const response = await fetch('/api/imageUpload', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (!response.ok) {
+          throw new Error('Upload failed');
+        }
+        
+        const result = await response.json();
+        console.log('Upload successful:', result);
+        
+        // Optionally update state with the response data
+        if (name === 'image') {
+          // setImageUrl(result.url) or similar
+        } else if (name === 'document') {
+          // setDocumentUrl(result.url) or similar
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        // Handle error (e.g., show error message to user)
+      }
     }
   };
 
@@ -94,6 +131,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
     };
 
     await dispatch(createCustomer(customerData));
+    console.log(customerData)
     setFormData(initialState);
     setImageFile(null);
     setDocumentFile(null);

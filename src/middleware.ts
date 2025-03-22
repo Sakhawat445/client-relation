@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
 
   // Define public and protected routes
   const authRoutes = ["/login", "/register  ", "/reset"];
-  const protectedRoutes = ["/dashboard","/customers", "./orders"];
+  const protectedRoutes = ["/dashboard","/customers", "./orders","./analytics", "./documents"];
 
   // Clone the URL for manipulation
   const url = req.nextUrl.clone();
