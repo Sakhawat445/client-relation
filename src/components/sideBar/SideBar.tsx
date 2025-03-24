@@ -16,6 +16,8 @@ const Sidebar: React.FC = () => {
     { name: 'Order Overview', icon: <List />, path: '/orders' },
     { name: 'Analytics', icon: <BarChart2 />, path: '/analytics' },
     { name: 'Documents', icon: <FileText />, path: '/documents' },
+    { name: 'Profile', icon: <FileText />, path: '/profile' },
+
   ];
 
   const supportItems = [

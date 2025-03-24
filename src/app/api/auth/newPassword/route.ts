@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.findFirst({
       where: {
         reset_token: token,
-        reset_token_expiration: { gt: new Date() },
+        reset_token_expiration: { gte: new Date() },
       },
     });
     

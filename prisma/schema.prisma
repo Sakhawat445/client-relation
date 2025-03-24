@@ -19,6 +19,8 @@ model User {
   password  String
   imageURL  String?
   createdAt DateTime @default(now())
+   reset_token            String?  // Add this line
+   reset_token_expiration DateTime? // Add this line
 }
 
 model Product {
