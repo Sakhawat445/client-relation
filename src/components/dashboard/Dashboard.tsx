@@ -6,10 +6,29 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BestSellingProducts from "../product/BestSellingProduct";
 import NewCustomers from "../newCustomer/NewCustomer";
+import TargetOrdersCard from "../targetOrderCard/TargetOrderCard";
+import MonthlyIncomeCard from "../monthlyIncome/MonthlyIncomeCard";
+import { FaChartLine } from "react-icons/fa";
+import { MdMoneyOff } from "react-icons/md";
+import StatsCard from "@/components/statsCard/StatsCard";
+import CustomerStatsCard from "./CustomerStatsCard";
 
 export default function Dashboard() {
-  // Sample product data for the BestSellingProducts component
-  
+  // Sample data for stats cards
+  const profitChartData = {
+    labels: ["Mar", "Apr", "May", "Jun", "July"],
+    datasets: [{ data: [100, 200, 150, 300, 250], borderColor: "green", fill: false }],
+  };
+  const expensesChartData = {
+    labels: ["Mar", "Apr", "May", "Jun", "July"],
+    datasets: [{ data: [300, 250, 400, 350, 500], borderColor: "red", fill: false }],
+  };
+
+  const stats = {
+    profit: 1000,
+    expenses: 500,
+    customers: 120,
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -21,57 +40,42 @@ export default function Dashboard() {
         {/* Top header */}
         <Header />
 
-        {/* Main section: scrollable content */}
-        <main className="flex-1 p-4 overflow-y-auto">
-          {/* KPI Cards Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            {/* KPI Card 1 */}
-            <div className="bg-white rounded-lg p-4 shadow">
-              <p className="text-sm text-gray-500">Total Sales</p>
-              <p className="text-xl font-semibold">$8,393</p>
-            </div>
-            {/* KPI Card 2 */}
-            <div className="bg-white rounded-lg p-4 shadow">
-              <p className="text-sm text-gray-500">Profit</p>
-              <p className="text-xl font-semibold">$6,667</p>
-            </div>
-            {/* KPI Card 3 */}
-            <div className="bg-white rounded-lg p-4 shadow">
-              <p className="text-sm text-gray-500">Awareness</p>
-              <p className="text-xl font-semibold">1,467</p>
-            </div>
-            {/* KPI Card 4 */}
-            <div className="bg-white rounded-lg p-4 shadow">
-              <p className="text-sm text-gray-500">New Customers</p>
-              <p className="text-xl font-semibold">234</p>
-            </div>
+        {/* Dashboard content */}
+        <main className="p-6 flex-1 overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Key Stats Cards */}
+            <TargetOrdersCard />
+            <MonthlyIncomeCard />
+            <CustomerStatsCard />
           </div>
 
-          {/* Middle Row: Charts & Best Selling Products */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Analytics Overview / Charts (occupies 2 columns) */}
-            <div className="col-span-1 lg:col-span-2 bg-white rounded-lg p-4 shadow">
-              <h3 className="text-lg font-semibold mb-2">Analytics Overview</h3>
-              {/* Placeholder for charts or analytics components */}
-              <div className="h-64 bg-gray-200 rounded flex items-center justify-center">
-                <p className="text-gray-500">Chart / Graph Goes Here</p>
-              </div>
-            </div>
-
-            {/* Best Selling Products (occupies 1 column) */}
-            <div className="col-span-1">
-              <BestSellingProducts />
-            </div>
+          {/* Middle Section with Analytics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <StatsCard
+              title="Total Profit"
+              amount={`$${stats.profit}`}
+              percentage="3.4%"
+              isPositive={true}
+              chartData={profitChartData}
+              icon={<FaChartLine className="text-white" />}
+              bgColor="bg-purple-500"
+            />
+            <StatsCard
+              title="Total Expenses"
+              amount={`$${stats.expenses}`}
+              percentage="2.6%"
+              isPositive={false}
+              chartData={expensesChartData}
+              icon={<MdMoneyOff className="text-white" />}
+              bgColor="bg-red-500"
+            />
           </div>
 
-            {/* New Customers */}
-            <div className="bg-white rounded-lg p-4 shadow">
-              <h3 className="text-lg font-semibold mb-2">New Customers</h3>
-              <NewCustomers />
-            </div>
-            
-
-          
+          {/* Bottom Section with Best Selling Products & New Customers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <BestSellingProducts />
+            <NewCustomers />
+          </div>
         </main>
 
         {/* Footer */}

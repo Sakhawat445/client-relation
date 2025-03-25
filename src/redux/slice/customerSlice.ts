@@ -5,7 +5,9 @@ interface CustomerState {
   customers: Customer[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
-}
+};
+
+// Removed unused OrderState initial state
 
 const initialState: CustomerState = {
   customers: [],
