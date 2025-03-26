@@ -12,6 +12,7 @@ import { FaChartLine } from "react-icons/fa";
 import { MdMoneyOff } from "react-icons/md";
 import StatsCard from "@/components/statsCard/StatsCard";
 import CustomerStatsCard from "./CustomerStatsCard";
+import CityOrderMap from "../cityOrderMap/CityOrderMap";
 
 export default function Dashboard() {
   // Sample data for stats cards
@@ -75,6 +76,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <BestSellingProducts />
             <NewCustomers />
+            <CityOrderMap />
           </div>
         </main>
 

@@ -30,8 +30,8 @@ interface CustomerModalProps {
 
 const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState(initialState);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [documentFile, setDocumentFile] = useState<File | null>(null);
+  const [, setImageFile] = useState<File | null>(null);
+  const [, setDocumentFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -56,82 +56,72 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
-    
+
     if (files && files.length > 0) {
       const file = files[0];
-      
-      // Update state based on input name
+
       if (name === 'image') {
         setImageFile(file);
       } else if (name === 'document') {
         setDocumentFile(file);
       }
-      
-      // Prepare FormData for upload
+
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('filename', file.name); // Include original filename
-      
+      formData.append('filename', file.name);
+
       try {
-        // You can make the API call here if you want immediate upload
-        const response = await fetch('/api/imageUpload', {
+        const response = await fetch('/api/imageUpload', {  // Fixed API endpoint
           method: 'POST',
           body: formData,
         });
-        
+
         if (!response.ok) {
           throw new Error('Upload failed');
         }
-        
+
         const result = await response.json();
         console.log('Upload successful:', result);
-        
-        // Optionally update state with the response data
+
         if (name === 'image') {
-          // setImageUrl(result.url) or similar
+          setFormData((prev) => ({ ...prev, imageURI: result.url }));
         } else if (name === 'document') {
-          // setDocumentUrl(result.url) or similar
+          setFormData((prev) => ({ ...prev, documentURL: result.url }));
         }
       } catch (error) {
         console.error('Error uploading file:', error);
-        // Handle error (e.g., show error message to user)
       }
     }
   };
 
-  const uploadFile = async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    try {
-      const res = await fetch('/api/imageUpload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      return res.ok ? data.url : '';
-    } catch (error) {
-      console.error('Upload error:', error);
-      return '';
-    }
-  };
+  // const uploadFile = async (file: File) => {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   try {
+  //     const res = await fetch('/api/upload', {  // Fixed API endpoint
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+  //     const data = await res.json();
+  //     return res.ok ? data.url : '';
+  //   } catch (error) {
+  //     console.error('Upload error:', error);
+  //     return '';
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploading(true);
 
-    const imageURI = imageFile ? await uploadFile(imageFile) : formData.imageURI;
-    const documentURL = documentFile ? await uploadFile(documentFile) : formData.documentURL;
-
     const customerData = {
       ...formData,
-      imageURI,
-      documentURL,
       address: `${formData.address.city}, ${formData.address.country}`,
       contactNumber: parseInt(formData.contactNumber, 10) || 0,
     };
 
     await dispatch(createCustomer(customerData));
-    console.log(customerData)
+    console.log(customerData);
     setFormData(initialState);
     setImageFile(null);
     setDocumentFile(null);

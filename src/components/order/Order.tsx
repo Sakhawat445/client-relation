@@ -5,6 +5,8 @@ import Sidebar from "../sideBar/SideBar";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import ProductOrder from "../productOder/ProductOder";
+import SalesStatistic from "../salesStatistic/SalesStatistic";
+import CountrySalesStatistics from "../countrySales/CountrySalesStatistics";
 
 export default function Order() {
   // Sample product data for the BestSellingProducts component
@@ -18,6 +20,8 @@ export default function Order() {
       <div className="flex flex-col flex-1">
         {/* Top header */}
         <Header />
+        <SalesStatistic />  
+        <CountrySalesStatistics />
 <ProductOrder />
         {/* Footer */}
         <Footer />

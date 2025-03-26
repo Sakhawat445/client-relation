@@ -9,7 +9,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
-      role: "ADMIN" | "EMPLOYEE";
+      role: string | null;
     };
   }
 
@@ -18,7 +18,6 @@ declare module "next-auth" {
     name?: string | null;
     email?: string | null;
     password?: string | null;
-    role: "ADMIN" | "EMPLOYEE";
   }
 }
 
@@ -37,6 +36,7 @@ export const authOptions: AuthOptions = {
 
         const user = await prisma.user.findFirst({
           where: { email: credentials.email },
+          select: { id: true, name: true, email: true, password: true, }, // ✅ Explicitly select the role field
         });
 
         if (!user || !user.password) {
@@ -49,7 +49,8 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        return { id: user.id, name: user.name, email: user.email, role: user.role as "ADMIN" | "EMPLOYEE" };
+        return { id: user.id, name: user.name, email: user.email
+         };
       },
     }),
   ],
@@ -65,7 +66,6 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = user.role; // ✅ Ensure role is added
       }
       return token;
     },
