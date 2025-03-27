@@ -15,7 +15,7 @@ const initialState = {
   orderCount: 0,
   spendings: 0,
   documentURL: '',
-  createdDate: new Date().toISOString().split('T')[0],
+  // createdDate: new Date().toISOString().split('T')[0],
   status: 'PENDING',
   address: { city: '', country: '' },
   contactNumber: '',
@@ -147,7 +147,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
           <Input type="number" name="orderCount" value={formData.orderCount.toString()} onChange={handleChange} label="Order Count" />
           <Input type="number" name="spendings" value={formData.spendings.toString()} onChange={handleChange} label="Spendings" />
           <Input type="text" name="documentURL" value={formData.documentURL} onChange={handleChange} label="Document URL" />
-          <Input name="createdDate" type="date" value={formData.createdDate} onChange={handleChange} label="Created Date" />
+          {/* <Input name="createdDate" type="date" value={formData.createdDate} onChange={handleChange} label="Created Date" /> */}
           <label>Status</label>
           <select name="status" value={formData.status} onChange={handleChange} className="w-full p-2 border rounded-lg">
             <option value="PENDING">Pending</option>
