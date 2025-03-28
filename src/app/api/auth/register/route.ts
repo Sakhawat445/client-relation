@@ -32,34 +32,102 @@ export async function POST(req: Request) {
 }
 
 
+// export async function PUT(req: Request) {
+//   try {
+//     const session = await getServerSession(authOptions);
+    
+//     if (!session?.user?.email) {
+//       return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+//     }
+
+//     const { name,imageURL } = await req.json();
+
+//     if (!name) {
+//       return NextResponse.json({ message: "Name is required" }, { status: 400 });
+//     }
+
+//     const updatedUser = await prisma.user.update({
+//       where: { email: session.user.email },
+//       data: { name, imageURL },
+//     });
+
+//     return NextResponse.json(
+//       { message: "Profile updated successfully", user: updatedUser },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json(
+//       { message: "Internal Server Error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+// In your PUT endpoint (/api/auth/register)
 export async function PUT(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    
     if (!session?.user?.email) {
-      return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Not authenticated" },
+        { status: 401 }
+      );
     }
 
-    const { name } = await req.json();
+    const { name, imageURL } = await req.json();
+    console.log('Received update data:', { name, imageURL });
 
     if (!name) {
-      return NextResponse.json({ message: "Name is required" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Name is required" },
+        { status: 400 }
+      );
     }
 
     const updatedUser = await prisma.user.update({
-      where: { email: session.user.email },
-      data: { name },
+      where: { email: session.user.email as string },
+      data: { 
+        name, 
+        imageURL // Make sure this is being saved
+      },
     });
 
+    console.log('Updated user in database:', updatedUser);
+    
     return NextResponse.json(
-      { message: "Profile updated successfully", user: updatedUser },
+      { 
+        message: "Profile updated successfully", 
+        user: updatedUser 
+      },
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error updating profile:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 }
     );
+  }
+}
+export async function GET() {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    console.error("GET /user/me error:", error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

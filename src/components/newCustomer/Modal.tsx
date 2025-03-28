@@ -118,6 +118,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
       ...formData,
       address: `${formData.address.city}, ${formData.address.country}`,
       contactNumber: parseInt(formData.contactNumber, 10) || 0,
+      createdDate: new Date().toISOString(), // Add the createdDate property
     };
 
     await dispatch(createCustomer(customerData));

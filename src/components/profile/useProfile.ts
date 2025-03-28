@@ -1,8 +1,16 @@
-import { useAppSelector } from "@/redux/store"; // Import useAppSelector
-import { RootState } from "@/redux/store"; // Ensure RootState is imported
+import { useAppSelector } from "@/redux/store";
+
 
 const useProfile = () => {
-  return useAppSelector((state: RootState) => state.auth);
+  const { user, loading, error } = useAppSelector((state) => state.auth);
+  
+  console.log("User data in useProfile:", user);
+
+  return {
+    user,
+    loading,
+    error,
+    };
 };
 
 export default useProfile;

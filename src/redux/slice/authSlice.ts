@@ -10,7 +10,6 @@
 //   // Add other fields as necessary
 // }
 
-
 // // Define the shape of the auth state
 // interface AuthState {
 //   user: User |null;
@@ -198,7 +197,7 @@ type User = {
   id: string;
   name: string;
   email: string;
-  photoURL?: string;
+  imageURL?: string;
 };
 
 // Define the shape of the auth state
@@ -218,97 +217,147 @@ const initialState: AuthState = {
 };
 
 // Async thunk for registration
-export const registerUser = createAsyncThunk<User, { name: string; email: string; password: string }, { rejectValue: string }>(
-  "auth/registerUser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed. Please try again.");
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "An unknown error occurred");
+export const registerUser = createAsyncThunk<
+  User,
+  { name: string; email: string; password: string },
+  { rejectValue: string }
+>("auth/registerUser", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed. Please try again.");
     }
+    return data;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
   }
-);
+});
 
 // Async thunk for login
-export const loginUser = createAsyncThunk<User, { email: string; password: string }, { rejectValue: string }>(
-  "auth/loginUser",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await signIn("credentials", {
-        redirect: false,
-        ...credentials,
-      });
-      if (res?.error) {
-        return rejectWithValue(res.error);
-      }
-      const sessionResponse = await fetch("/api/auth/session");
-      const sessionData = await sessionResponse.json();
-      if (!sessionResponse.ok || !sessionData.user) {
-        throw new Error("Failed to retrieve user session");
-      }
-      return sessionData.user;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "Login failed");
+export const loginUser = createAsyncThunk<
+  User,
+  { email: string; password: string },
+  { rejectValue: string }
+>("auth/loginUser", async (credentials, { rejectWithValue }) => {
+  try {
+    const res = await signIn("credentials", {
+      redirect: false,
+      ...credentials,
+    });
+    if (res?.error) {
+      return rejectWithValue(res.error);
     }
+    const sessionResponse = await fetch("/api/auth/register");
+    const sessionData = await sessionResponse.json();
+    if (!sessionResponse.ok || !sessionData) {
+      throw new Error("Failed to retrieve user session");
+    }
+    return sessionData;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "Login failed"
+    );
   }
-);
+});
 
 // Async thunk for password reset
-export const resetPassword = createAsyncThunk<{ message: string }, string, { rejectValue: string }>(
-  "auth/resetPassword",
-  async (email, { rejectWithValue }) => {
-    try {
-      const response = await fetch("/api/auth/reset", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send reset email.");
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "An unknown error occurred");
+export const resetPassword = createAsyncThunk<
+  { message: string },
+  string,
+  { rejectValue: string }
+>("auth/resetPassword", async (email, { rejectWithValue }) => {
+  try {
+    const response = await fetch("/api/auth/reset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to send reset email.");
     }
+    return data;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
   }
-);
+});
 
 // Async thunk for new password
-export const newPassword = createAsyncThunk<{ message: string }, { token: string; password: string }, { rejectValue: string }>(
-  "auth/newPassword",
-  async ({ token, password }, { rejectWithValue }) => {
-    try {
-      const response = await fetch("/api/auth/newPassword", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to update password.");
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : "An unknown error occurred");
+export const newPassword = createAsyncThunk<
+  { message: string },
+  { token: string; password: string },
+  { rejectValue: string }
+>("auth/newPassword", async ({ token, password }, { rejectWithValue }) => {
+  try {
+    const response = await fetch("/api/auth/newPassword", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, password }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update password.");
     }
+    return data;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
+  }
+});
+// Add this with your other async thunks
+export const fetchUserData = createAsyncThunk<
+  User,
+  void,
+  { rejectValue: string }
+>("auth/fetchUserData", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // Ensure cookies/session are sent
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data");
+    }
+
+    const sessionData = await response.json();
+    console.log("Session data:", sessionData); // Debugging line
+
+    if (!sessionData) {
+      throw new Error("User data not found in session");
+    }
+
+    return sessionData as User;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "Failed to fetch user data"
+    );
+  }
+});
+
+console.log("fetchUserData", fetchUserData);
+// Async thunk
+//  for logout
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, { dispatch }) => {
+    await signOut({ redirect: false });
+    dispatch(authSlice.actions.logoutUser());
   }
 );
-
-// Async thunk for logout
-export const logoutUser = createAsyncThunk("auth/logoutUser", async (_, { dispatch }) => {
-  await signOut({ redirect: false });
-  dispatch(authSlice.actions.logoutUser());
-});
 
 // Create the auth slice
 const authSlice = createSlice({
@@ -319,14 +368,33 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
     },
-    updateUsername: (state, action: PayloadAction<string>) => {
+    updateUser: (
+      state,
+      action: PayloadAction<{ name: string; imageURL: string }>
+    ) => {
       if (state.user) {
-        state.user.name = action.payload;
+        state.user.name = action.payload.name;
+        state.user.imageURL = action.payload.imageURL;
       }
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchUserData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        fetchUserData.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.loading = false;
+          state.user = action.payload;
+        }
+      )
+      .addCase(fetchUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? "Failed to fetch user data";
+      })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -356,7 +424,7 @@ const authSlice = createSlice({
 });
 
 // Export actions
-export const { logoutUser: logoutUserAction, updateUsername } = authSlice.actions;
+export const { logoutUser: logoutUserAction, updateUser } = authSlice.actions;
 
 // Export reducer
 export default authSlice.reducer;

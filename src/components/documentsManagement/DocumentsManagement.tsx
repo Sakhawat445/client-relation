@@ -1,85 +1,58 @@
-import { useState } from "react";
-import Button from "@/components/button/Button";
-import Input from "@/components/input/InputField";
-import { useDocumentsManagement } from "./useDocumentsManagement"; // Ensure correct import
+// components/document/DocumentManagement.tsx
+"use client";
 
-export default function DocumentPage() {
-  const [search, setSearch] = useState("");
-  const { customers: documents, status, error } = useDocumentsManagement(); // Fetch documents
+import React from "react";
+import { useDocumentsManagement } from "./useDocumentsManagement"; // adjust path
+import DocumentRow from "./DocumentsRow";
+import Button from "@/components/button/Button";
+import { Customer } from "@/types/types";
+
+export default function DocumentManagement() {
+  // Use the 'documents' property returned from the hook.
+  const { documents, status, error } = useDocumentsManagement();
 
   const loading = status === "loading";
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Filter & Search Section */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex gap-2">
-          <Button variant="outline">All</Button>
-          <Button variant="outline">Active</Button>
-          <Button variant="outline">Archive</Button>
-        </div>
-        <div className="flex gap-2">
-          <Input
-            name="search"
-            label="Search"
-            type="text"
-            placeholder="Type here"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Button>Search</Button>
-          <Button>Download</Button>
-          <Button variant="destructive">Delete</Button>
-        </div>
+        <h2 className="text-xl font-bold">Document Management</h2>
+        <Button>Add New Document</Button>
       </div>
 
-      {/* Loading and Error Handling */}
-      {loading && <p className="text-center text-gray-500">Loading documents...</p>}
-      {error && <p className="text-center text-red-500">Error: {error}</p>}
+      {loading && (
+        <p className="text-center text-gray-500">Loading documents...</p>
+      )}
+      {error && (
+        <p className="text-center text-red-500">Error: {error}</p>
+      )}
 
-      {/* Document Table */}
+      {/* Table with DocumentRows */}
       {!loading && !error && documents?.length > 0 ? (
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead className="bg-gray-100 text-gray-600">
               <tr>
+                <th className="p-3 text-left w-10"></th>
                 <th className="p-3 text-left">Document Name</th>
-                <th className="p-3">Type</th>
-                <th className="p-3">Author</th>
-                <th className="p-3">Uploaded File</th>
-                <th className="p-3">Actions</th>
+                <th className="p-3 text-center">Type</th>
+                <th className="p-3 text-left">Author</th>
+                <th className="p-3 text-center">Version</th>
+                <th className="p-3 text-center">Status</th>
+                <th className="p-3 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {documents.map((doc, index) => (
-                <tr key={index} className="border-b">
-                  {/* <td className="p-3">{doc.name}</td> */}
-                  <td className="p-3">{doc.name}</td>
-                  <td className="p-3">
-                    {doc.documentURL ? (
-                      <a
-                        href={doc.documentURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        View Document
-                      </a>
-                    ) : (
-                      "No file uploaded"
-                    )}
-                  </td>
-                  <td className="p-3">
-                    <Button variant="outline">Download</Button>
-                    <Button variant="destructive">Delete</Button>
-                  </td>
-                </tr>
+              {documents.map((doc: Customer, index: number) => (
+                <DocumentRow key={doc.id || index} doc={doc} />
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        !loading && <p className="text-center text-gray-500">No documents found.</p>
+        !loading && (
+          <p className="text-center text-gray-500">No documents found.</p>
+        )
       )}
     </div>
   );

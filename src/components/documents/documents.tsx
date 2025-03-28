@@ -4,7 +4,7 @@ import React from "react";
 import Sidebar from "../sideBar/SideBar";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import DocumentPage from "../documentsManagement/DocumentsManagement";
+import DocumentManagement from "../documentsManagement/DocumentsManagement";
 
 export default function Documents() {
   // Sample product data for the BestSellingProducts component
@@ -18,7 +18,7 @@ export default function Documents() {
       <div className="flex flex-col flex-1">
         {/* Top header */}
         <Header />
-<DocumentPage/>
+<DocumentManagement  />
         {/* Footer */}
         <Footer />
       </div>

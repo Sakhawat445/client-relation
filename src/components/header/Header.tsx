@@ -13,9 +13,10 @@ const Header: React.FC = () => {
     <header className="flex items-center justify-between p-4">
       <h1 className=""></h1>
       <div className="flex items-center gap-3">
-        {user?.photoURL && (
+        {user?.imageURL && (
           <Image
-            src={user.photoURL || '/default-avatar.png'}
+            src={user.imageURL
+         || '/default-avatar.png'}
             alt="User Avatar"
             width={40}
             height={40}
