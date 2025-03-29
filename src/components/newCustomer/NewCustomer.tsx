@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Button from "../button/Button";
 import CustomerList from "./CustomerList";
-import CustomerModal from "./Modal";
+import CustomerModal from "../customerModal/Modal";
 
 const NewCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,15 +25,19 @@ const NewCustomers = () => {
             {loading ? "Adding new customer..." : "New Customer"}
           </Button>
           <button
+            type="button"
+            title="Previous Page"
             onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
             className="p-2 bg-gray-200 rounded-md"
           >
-            <ChevronLeft />
-          </button>
           <button
+            type="button"
+            title="Next Page"
             onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
             className="p-2 bg-gray-200 rounded-md"
           >
+            <ChevronRight />
+          </button>
             <ChevronRight />
           </button>
         </div>

@@ -141,28 +141,31 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
           <Input type="text" name="name" value={formData.name} onChange={handleChange} label="Name" />
           <Input type="email" name="email" value={formData.email} onChange={handleChange} label="Email" />
           <label>Profile Image</label>
-          <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="block w-full" />
-          <label>Document</label>
-          <input type="file" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} className="block w-full" />
+          <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="block w-full" title="Upload profile image" />
+          <label htmlFor="documentFile">Document</label>
+          <input id="documentFile" type="file" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} className="block w-full" />
           {uploading && <p className="text-sm text-gray-500">Uploading files...</p>}
           <Input type="number" name="orderCount" value={formData.orderCount.toString()} onChange={handleChange} label="Order Count" />
           <Input type="number" name="spendings" value={formData.spendings.toString()} onChange={handleChange} label="Spendings" />
           <Input type="text" name="documentURL" value={formData.documentURL} onChange={handleChange} label="Document URL" />
           {/* <Input name="createdDate" type="date" value={formData.createdDate} onChange={handleChange} label="Created Date" /> */}
           <label>Status</label>
-          <select name="status" value={formData.status} onChange={handleChange} className="w-full p-2 border rounded-lg">
+          <label htmlFor="status">Status</label>
+          <select id="status" name="status" value={formData.status} onChange={handleChange} className="w-full p-2 border rounded-lg">
             <option value="PENDING">Pending</option>
             <option value="APPROVED">Approved</option>
           </select>
           <Input type="text" name="address" value={`${formData.address.city}, ${formData.address.country}`} onChange={handleAddressChange} label="Address" />
           <Input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleChange} label="Contact Number" />
           <label>Device Type</label>
-          <select name="deviceType" value={formData.deviceType} onChange={handleChange} className="w-full p-2 border rounded-lg">
+          <label htmlFor="deviceType">Device Type</label>
+          <select id="deviceType" name="deviceType" value={formData.deviceType} onChange={handleChange} className="w-full p-2 border rounded-lg">
             <option value="MOBILE">Mobile</option>
             <option value="DESKTOP">Desktop</option>
           </select>
           <label>Product</label>
-          <select name="productType" value={formData.productType} onChange={handleChange} className="w-full p-2 border rounded-lg">
+          <label htmlFor="productType">Product</label>
+          <select id="productType" name="productType" value={formData.productType} onChange={handleChange} className="w-full p-2 border rounded-lg">
             <option value="" disabled>Select product</option>
             {products.length > 0 ? products.map((product) => (
               <option key={product.id} value={product.id}>{product.name}</option>

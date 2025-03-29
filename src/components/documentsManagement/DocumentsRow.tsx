@@ -50,7 +50,7 @@ export default function DocumentRow({ doc }: DocumentRowProps) {
     <tr className="border-b last:border-0">
       {/* Checkbox */}
       <td className="p-3">
-        <input type="checkbox" />
+        <input type="checkbox" aria-label="Select document" />
       </td>
 
       {/* Document Name & Date */}
