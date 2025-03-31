@@ -11,7 +11,7 @@ import MonthlyIncomeCard from "../monthlyIncome/MonthlyIncomeCard";
 import { FaChartLine } from "react-icons/fa";
 import { MdMoneyOff } from "react-icons/md";
 import StatsCard from "@/components/statsCard/StatsCard";
-import CustomerStatsCard from "./CustomerStatsCard";
+import CustomerStatsCard from "../customerStatsCard/CustomerStatsCard";
 import CityOrderMap from "../cityOrderMap/CityOrderMap";
 
 export default function Dashboard() {

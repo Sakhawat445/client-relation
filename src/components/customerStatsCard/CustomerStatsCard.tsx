@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUserPlus } from "react-icons/fa";
 import StatsCard from "@/components/statsCard/StatsCard";
-import { useCustomerStats } from "./useCustomerStats";
+import { useCustomerStats } from "./useCustomerStats"; // Custom hook to fetch customer stats 
 
 const CustomerStatsCard: React.FC = () => {
   const { totalCustomers, chartData } = useCustomerStats(); // Fetch total customers and chart data
