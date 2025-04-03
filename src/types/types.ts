@@ -19,6 +19,8 @@ export type User = {
     contactNumber: number;
     deviceType: string;
     selectedProduct?: string;
+    productType?: string; // Added productType property
+
   }
 
   export type Product ={

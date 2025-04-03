@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import Input from '../input/InputField';
 import Button from '../button/Button';
 import type { RootState } from '@/redux/store';
 import { useAppDispatch } from '@/redux/store';
-import { createCustomer } from '@/redux/slice/customerSlice';
+import { createCustomer, updateCustomer } from '@/redux/slice/customerSlice';
+import { Customer } from '@/types/types';
 
 const initialState = {
   name: '',
@@ -15,7 +17,6 @@ const initialState = {
   orderCount: 0,
   spendings: 0,
   documentURL: '',
-  // createdDate: new Date().toISOString().split('T')[0],
   status: 'PENDING',
   address: { city: '', country: '' },
   contactNumber: '',
@@ -26,12 +27,17 @@ const initialState = {
 interface CustomerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isDocumentModal?: boolean;
+  doc: Customer;
 }
 
-const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
+const CustomerModal: React.FC<CustomerModalProps> = ({
+  isOpen,
+  onClose,
+  isDocumentModal,
+  doc,
+}) => {
   const [formData, setFormData] = useState(initialState);
-  const [, setImageFile] = useState<File | null>(null);
-  const [, setDocumentFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -60,20 +66,14 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
     if (files && files.length > 0) {
       const file = files[0];
 
-      if (name === 'image') {
-        setImageFile(file);
-      } else if (name === 'document') {
-        setDocumentFile(file);
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('filename', file.name);
+      const fileData = new FormData();
+      fileData.append('file', file);
+      fileData.append('filename', file.name);
 
       try {
-        const response = await fetch('/api/imageUpload', {  // Fixed API endpoint
+        const response = await fetch('/api/imageUpload', {
           method: 'POST',
-          body: formData,
+          body: fileData,
         });
 
         if (!response.ok) {
@@ -94,42 +94,74 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // const uploadFile = async (file: File) => {
-  //   const formData = new FormData();
-  //   formData.append('file', file);
-  //   try {
-  //     const res = await fetch('/api/upload', {  // Fixed API endpoint
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  //     const data = await res.json();
-  //     return res.ok ? data.url : '';
-  //   } catch (error) {
-  //     console.error('Upload error:', error);
-  //     return '';
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploading(true);
 
-    const customerData = {
-      ...formData,
-      address: `${formData.address.city}, ${formData.address.country}`,
-      contactNumber: parseInt(formData.contactNumber, 10) || 0,
-      createdDate: new Date().toISOString(), // Add the createdDate property
-    };
+    if (isDocumentModal) {
+      // In document mode, update the customer documentURL.
+      const updatedCustomer = {
+        ...doc,
+        documentURL: formData.documentURL, // using the newly uploaded document URL
+      };
+      await dispatch(updateCustomer(updatedCustomer));
+      console.log('Updated customer:', updatedCustomer);
+    } else {
+      // Create a new customer.
+      const customerData = {
+        ...formData,
+        address: `${formData.address.city}, ${formData.address.country}`,
+        contactNumber: parseInt(formData.contactNumber, 10) || 0,
+        createdDate: new Date().toISOString(),
+      };
+      await dispatch(createCustomer(customerData));
+      console.log('Created customer:', customerData);
+    }
 
-    await dispatch(createCustomer(customerData));
-    console.log(customerData);
     setFormData(initialState);
-    setImageFile(null);
-    setDocumentFile(null);
     setUploading(false);
     onClose();
   };
 
+  // If isDocumentModal prop is true, render a simplified form with one document input field.
+  if (isDocumentModal) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/25">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-6 rounded-lg shadow-lg w-96 max-h-[80vh] overflow-y-auto"
+        >
+          <h2 className="text-lg font-semibold mb-4">Upload Document</h2>
+          <div>
+            <label htmlFor="documentFile" className="block mb-1">
+              Document
+            </label>
+            <input
+              id="documentFile"
+              type="file"
+              name="document"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              className="block w-full"
+              title="Upload a document file"
+              placeholder="Choose a document file"
+            />
+          </div>
+          {uploading && (
+            <p className="text-sm text-gray-500">Uploading file...</p>
+          )}
+          <div className="flex justify-end gap-2 mt-4">
+            <Button onClick={onClose}>Cancel</Button>
+            <Button type="submit" disabled={uploading}>
+              {uploading ? 'Saving...' : 'Save'}
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  // Otherwise render the full customer modal.
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/25">
       <form
@@ -138,43 +170,165 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose }) => {
       >
         <h2 className="text-lg font-semibold mb-4">Add New Customer</h2>
         <div className="space-y-3">
-          <Input type="text" name="name" value={formData.name} onChange={handleChange} label="Name" />
-          <Input type="email" name="email" value={formData.email} onChange={handleChange} label="Email" />
-          <label>Profile Image</label>
-          <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="block w-full" title="Upload profile image" />
-          <label htmlFor="documentFile">Document</label>
-          <input id="documentFile" type="file" name="document" accept=".pdf,.doc,.docx" onChange={handleFileChange} className="block w-full" />
-          {uploading && <p className="text-sm text-gray-500">Uploading files...</p>}
-          <Input type="number" name="orderCount" value={formData.orderCount.toString()} onChange={handleChange} label="Order Count" />
-          <Input type="number" name="spendings" value={formData.spendings.toString()} onChange={handleChange} label="Spendings" />
-          <Input type="text" name="documentURL" value={formData.documentURL} onChange={handleChange} label="Document URL" />
-          {/* <Input name="createdDate" type="date" value={formData.createdDate} onChange={handleChange} label="Created Date" /> */}
-          <label>Status</label>
-          <label htmlFor="status">Status</label>
-          <select id="status" name="status" value={formData.status} onChange={handleChange} className="w-full p-2 border rounded-lg">
+          <Input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            label="Name"
+          />
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            label="Email"
+          />
+
+          {/* Custom Image Upload Square */}
+          <div>
+            <label className="block mb-1">Profile Image</label>
+            <div
+              onClick={() =>
+                document.getElementById('imageUploadInput')?.click()
+              }
+              className="w-40 h-40 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer"
+            >
+              {formData.imageURI ? (
+                <Image 
+                  width={23}
+                  height={23}
+                  src={formData.imageURI}
+                  alt="Preview"
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <span className="text-gray-500">Click to upload image</span>
+              )}
+            </div>
+            <input
+              id="imageUploadInput"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              title="Upload a profile image"
+              placeholder="Choose an image file"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="documentFile" className="block mb-1">
+              Document
+            </label>
+            <input
+              id="documentFile"
+              type="file"
+              name="document"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              className="block w-full"
+              title="Upload a document file"
+              placeholder="Choose a document file"
+            />
+          </div>
+
+          {uploading && (
+            <p className="text-sm text-gray-500">Uploading files...</p>
+          )}
+
+          <Input
+            type="number"
+            name="orderCount"
+            value={formData.orderCount.toString()}
+            onChange={handleChange}
+            label="Order Count"
+          />
+          <Input
+            type="number"
+            name="spendings"
+            value={formData.spendings.toString()}
+            onChange={handleChange}
+            label="Spendings"
+          />
+
+          <label className="block">Status</label>
+          <label htmlFor="status" className="block">
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          >
             <option value="PENDING">Pending</option>
             <option value="APPROVED">Approved</option>
           </select>
-          <Input type="text" name="address" value={`${formData.address.city}, ${formData.address.country}`} onChange={handleAddressChange} label="Address" />
-          <Input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleChange} label="Contact Number" />
-          <label>Device Type</label>
-          <label htmlFor="deviceType">Device Type</label>
-          <select id="deviceType" name="deviceType" value={formData.deviceType} onChange={handleChange} className="w-full p-2 border rounded-lg">
+
+          <Input
+            type="text"
+            name="address"
+            value={`${formData.address.city}, ${formData.address.country}`}
+            onChange={handleAddressChange}
+            label="Address"
+          />
+          <Input
+            type="text"
+            name="contactNumber"
+            value={formData.contactNumber}
+            onChange={handleChange}
+            label="Contact Number"
+          />
+
+          <label htmlFor="deviceType" className="block">
+            Device Type
+          </label>
+          <select
+            id="deviceType"
+            name="deviceType"
+            value={formData.deviceType}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          >
             <option value="MOBILE">Mobile</option>
             <option value="DESKTOP">Desktop</option>
           </select>
-          <label>Product</label>
-          <label htmlFor="productType">Product</label>
-          <select id="productType" name="productType" value={formData.productType} onChange={handleChange} className="w-full p-2 border rounded-lg">
-            <option value="" disabled>Select product</option>
-            {products.length > 0 ? products.map((product) => (
-              <option key={product.id} value={product.id}>{product.name}</option>
-            )) : <option value="" disabled>No products available</option>}
+
+          <label htmlFor="productType" className="block">
+            Product
+          </label>
+          <select
+            id="productType"
+            name="productType"
+            value={formData.productType}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          >
+            <option value="" disabled>
+              Select product
+            </option>
+            {products.length > 0 ? (
+              products.map((product) => (
+                <option key={product.id} value={product.id}>
+                  {product.name}
+                </option>
+              ))
+            ) : (
+              <option value="" disabled>
+                No products available
+              </option>
+            )}
           </select>
         </div>
+
         <div className="flex justify-end gap-2 mt-4">
           <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit" disabled={uploading}>{uploading ? 'Saving...' : 'Add Customer'}</Button>
+          <Button type="submit" disabled={uploading}>
+            {uploading ? 'Saving...' : 'Add Customer'}
+          </Button>
         </div>
       </form>
     </div>
