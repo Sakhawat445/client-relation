@@ -1,5 +1,5 @@
 // customerSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Customer } from '@/types/types';
 import axios from 'axios';
 interface CustomerState {
@@ -40,6 +40,19 @@ export const updateCustomer = createAsyncThunk<Customer, Customer>(
     return (await response.data) as Customer;
   }
 );
+export const deleteCustomer = createAsyncThunk<string, string>(
+  'customers/deleteCustomer',
+  async (customerId: string) => {
+    // Ensure the URL starts with a slash
+    const response = await axios.delete(`/api/customer/${customerId}`);
+    if (response.status !== 200) {
+      throw new Error('Failed to delete customer');
+    }
+    return customerId;
+  }
+);
+
+
 
 
 // Async thunk to create a new customer
@@ -91,6 +104,19 @@ const customerSlice = createSlice({
       state.error = action.error.message ?? 'Failed to create customer';
     });
 
+    builder.addCase(deleteCustomer.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    builder.addCase(deleteCustomer.fulfilled, (state, action: PayloadAction<string>) => {
+      state.status = 'succeeded';
+      state.customers = state.customers.filter((customer) => customer.id !== action.payload);
+    })
+    builder.addCase(deleteCustomer.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message || 'Failed to delete customer';
+    });
+
     // updateCustomer
     builder.addCase(updateCustomer.pending, (state) => {
       state.status = 'loading';
@@ -109,5 +135,6 @@ const customerSlice = createSlice({
       state.error = action.error.message || 'Failed to update customer';
     });
   },
+
 });
 export default customerSlice.reducer;

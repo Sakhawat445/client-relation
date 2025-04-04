@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/button/Button";
@@ -6,9 +7,11 @@ import { Customer } from "@/types/types";
 
 interface DocumentRowProps {
   doc: Customer;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
-export default function DocumentRow({ doc }: DocumentRowProps) {
+export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowProps) {
   const fileUrl = doc.documentURL || "";
   let extractedName = "";
   let extractedType = "";
@@ -44,12 +47,18 @@ export default function DocumentRow({ doc }: DocumentRowProps) {
   }
 
   const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
-console.log("Document Row", doc);
+  console.log("Document Row", doc);
+
   return (
     <>
       <tr className="border-b last:border-0">
         <td className="p-3">
-          <input type="checkbox" aria-label="Select document" />
+          <input
+            type="checkbox"
+            aria-label="Select customer id"
+            checked={isSelected}
+            onChange={() => onSelect()}
+          />
         </td>
 
         <td className="p-3">

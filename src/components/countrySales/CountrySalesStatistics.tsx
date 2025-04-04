@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useCountrySalesData } from "./useCountrySalesData";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import Image from "next/image";
@@ -87,7 +87,7 @@ const CountrySalesStatistics = () => {
         {salesData.map(({ country, sales }) => (
           <div key={country} className="flex justify-between items-center border-b py-2">
             <div className="flex items-center">
-              <Image src={getFlagUrl(country)|| "https://placehold.co/24x16"} width={24} height={16} alt={country} className="mr-2 rounded" />
+              <Image src={getFlagUrl(country)|| "https://placehold.co/24x16"} width={24} height={16} alt={country|| 'alt'} className="mr-2 rounded" />
               <span className="text-sm">{country}</span>
             </div>
             <span className="font-bold">{sales.toLocaleString()}</span>

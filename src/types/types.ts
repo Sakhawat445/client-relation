@@ -20,6 +20,7 @@ export type User = {
     deviceType: string;
     selectedProduct?: string;
     productType?: string; // Added productType property
+    product?: { id: string; name: string }; // Add this property
 
   }
 
