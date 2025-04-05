@@ -1,53 +1,62 @@
+"use client";
 import React from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-import { useCustomerDemographics } from "./useCustomerDemographics";
+import { scaleQuantile } from "d3-scale";
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
+// Sample Data - Replace this with your actual API data
+const stateData = [
+  { id: "06", state: "California", members: 80, nonMembers: 20 },
+  { id: "08", state: "Colorado", members: 40, nonMembers: 60 },
+  { id: "17", state: "Illinois", members: 70, nonMembers: 30 },
+  { id: "37", state: "North Carolina", members: 65, nonMembers: 35 },
+  { id: "42", state: "Pennsylvania", members: 75, nonMembers: 25 },
+  { id: "56", state: "Wyoming", members: 55, nonMembers: 45 },
+];
 
-const CustomerDemographics = () => {
-  const stateCityMap = useCustomerDemographics();
+// Define color scale
+const colorScale = scaleQuantile<string>()
+  .domain(stateData.map((d) => d.members))
+  .range(["#E5D4FF", "#8B5CF6"]);
 
+const CustomerDemographics: React.FC = () => {
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md">
-      <h2 className="text-lg font-semibold">Customer Demographics</h2>
-      <ComposableMap projection="geoAlbersUsa">
-        <Geographies geography={geoUrl}>
-          {({ geographies }) =>
-            geographies.map((geo) => {
-              const stateName = geo.properties.name;
-              const hasCustomers = stateCityMap[stateName] && stateCityMap[stateName].size > 0;
-              const fillColor = hasCustomers ? "#6B46C1" : "#D6BCFA"; // Dark purple vs light purple
+    <div className="bg-white shadow-md rounded-lg p-4 w-[1000]  " >
+      <h2 className="text-lg font-semibold mb-2">Customer Demographic</h2>
+      <div className="relative">
+        <ComposableMap projection="geoAlbersUsa" width={800} height={200}>
+          <Geographies geography="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json">
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const stateInfo = stateData.find((s) => s.id === geo.id);
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={stateInfo ? colorScale(stateInfo.members) : "#EEE"}
+                    stroke="#FFF"
+                    className="transition duration-200 hover:opacity-75"
+                  />
+                );
+              })
+            }
+          </Geographies>
+        </ComposableMap>
+      </div>
 
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={fillColor} // Use fill instead of className
-                  stroke="#FFF" // Optional: Add border for clarity
-                  style={{
-                    default: { outline: "none" },
-                    hover: { fill: "#805AD5", outline: "none" }, // Lighter purple on hover
-                    pressed: { fill: "#553C9A", outline: "none" }, // Darker purple on click
-                  }}
-                />
-              );
-            })
-          }
-        </Geographies>
-      </ComposableMap>
-
+      {/* Legend */}
       <div className="flex justify-center mt-4 space-x-4">
         <div className="flex items-center">
-          <div className="w-4 h-4 bg-purple-900 rounded-full"></div>
-          <span className="ml-2 text-sm">Has Customers</span>
+          <span className="w-4 h-4 bg-purple-700 inline-block rounded-full"></span>
+          <span className="ml-2 text-sm">Majority Members</span>
         </div>
         <div className="flex items-center">
-          <div className="w-4 h-4 bg-purple-400 rounded-full"></div>
-          <span className="ml-2 text-sm">No Customers</span>
+          <span className="w-4 h-4 bg-purple-300 inline-block rounded-full"></span>
+          <span className="ml-2 text-sm">Majority Non-Members</span>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default CustomerDemographics;

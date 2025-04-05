@@ -55,7 +55,10 @@ const NewCustomers = () => {
         </table>
       </div>
       <CustomerList />
-      <CustomerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <CustomerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

@@ -26,9 +26,7 @@ const StatsCard: FC<StatsCardProps> = ({
   bgColor,
 }) => {
   return (
-    <div className="mt-10 bg-white shadow-md rounded-lg p-4 w-full md:w-64 -ml-12 ">
-      {/* Title & Icon */}
-      <div className="flex items-center gap-2">
+<div className="mt-10 bg-white shadow-md rounded-lg p-4 w-full md:w-64 -ml-12 h-[260px]">      <div className="flex items-center gap-2">
         <div className={`p-2 rounded-full ${bgColor}`}>{icon}</div>
         <h3 className="text-gray-700 font-medium">{title}</h3>
       </div>

@@ -10,9 +10,9 @@ const Member = () => {
     <Card
       title="Member"
       value={MemberCustomers}
-      color="bg-white"
+      color="bg-green"
       textColor="text-black"
-      icon={<FaUsers className="text-black" />}
+      icon={<FaUsers className="text-green-500" />}
     />
   );
 };

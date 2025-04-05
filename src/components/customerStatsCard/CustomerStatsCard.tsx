@@ -8,13 +8,13 @@ const CustomerStatsCard: React.FC = () => {
 
   return (
     <StatsCard
-      title="Total Customers"
-      amount={totalCustomers.toString()} // Show total customers
+      title="New Customers" // Updated to match the image
+      amount={totalCustomers.toLocaleString()} // Format with commas (e.g., 1,000)
       chartData={chartData} // Pass chart data
       icon={<FaUserPlus className="text-white" />}
-      bgColor="bg-blue-500"
-      percentage={(totalCustomers / 100) * 100} // Example percentage calculation
-      isPositive={totalCustomers > 0} // Check if there are customers
+      bgColor="bg-purple-500" // Updated to match the purple icon background in the image
+      percentage="10%" // Updated to match the +10% in the image
+      isPositive={true} // The percentage is positive in the image
     />
   );
 };
