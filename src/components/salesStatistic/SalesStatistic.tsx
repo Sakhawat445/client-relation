@@ -8,7 +8,7 @@ const SalesStatistic = () => {
   const { totalRevenue, totalSales, data } = useSalesData();
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md">
+    <div className="p-6 bg-white rounded-xl shadow-md w-170 ">
       <h2 className="text-lg font-semibold">Sales Statistic</h2>
       <div className="flex justify-between text-center mt-4">
         <div>

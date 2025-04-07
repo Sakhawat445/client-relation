@@ -40,7 +40,7 @@ const CountrySalesStatistics = () => {
   const { totalOrders, salesData } = useCountrySalesData(); // 🔥 Fetch data from the hook
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md">
+    <div className="p-4 bg-white  ml-185 rounded-xl shadow-md mt-[-1085] w-80">
       <h2 className="text-lg font-semibold">Country Sales Statistics</h2>
 
       {/* World Map */}

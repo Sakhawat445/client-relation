@@ -62,8 +62,8 @@ export default function VisitorsChart() {
   };
 
   return (
-    <div style={{ width: 400, padding: "1rem", background: "#fff", borderRadius: "8px" }}>
-      <h3 style={{ marginBottom: "0.5rem" }}>Visitors</h3>
+    <div className="p-4 w-100 bg-white rounded-xl shadow-md ml-170 mt-[-360]">
+      <h3 className= "mb-5" >Visitors</h3>
 
       {/* Responsive container keeps the chart flexible */}
       <ResponsiveContainer width="100%" height={250}>
@@ -88,7 +88,7 @@ export default function VisitorsChart() {
         </BarChart>
       </ResponsiveContainer>
 
-      <div style={{ marginTop: "1rem", color: "#4A5568" }}>
+      <div className= "mt-5 bg-4A5568" >
         <strong>Awesome!</strong> You just hit a new record!
       </div>
     </div>

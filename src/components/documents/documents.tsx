@@ -3,7 +3,7 @@
 import React from "react";
 import Sidebar from "../sideBar/SideBar";
 import Header from "../header/Header";
-// import Footer from "../footer/Footer";
+import Footer from "../footer/Footer";
 import DocumentManagement from "../documentsManagement/DocumentsManagement";
 
 export default function Documents() {
@@ -20,7 +20,7 @@ export default function Documents() {
         <Header />
 <DocumentManagement  />
         {/* Footer */}
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );

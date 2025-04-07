@@ -41,7 +41,7 @@ export default function ContributionChart() {
   ]);
 
   return (
-    <div className="border rounded-md p-5 bg-gray-50">
+    <div className="border rounded-md p-5 bg-gray-50 w-180 mt-[-380px] ml-90 ">
       <h2 className="text-lg font-semibold mb-4 text-gray-700">Sales per Week</h2>
 
       <div className="flex items-center">

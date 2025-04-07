@@ -30,14 +30,14 @@ export default function CountryOrdersChart() {
   console.log("orderData:", orderData);
 
   return (
-    <div className="border rounded-md p-5 bg-white shadow-md">
+    <div className="border rounded-md p-5 bg-white shadow- w-160 mt-5 ml-5  ">
       <h2 className="text-lg font-semibold mb-2 text-gray-700">
         Orders per Country{" "}
         <span className="text-gray-500">
           ({totalOrders.toLocaleString()} Orders)
         </span>
       </h2>
-      <div className="flex items-center h-95 w-full">
+      <div className="flex items-center h-95 w-full ">
         <ResponsiveContainer width="50%">
           <BarChart layout="vertical" data={orderData} margin={{ left: 20 }}>
             <XAxis

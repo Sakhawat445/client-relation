@@ -25,7 +25,7 @@ const Profile = () => {
     if (user?.name) {
       setUsername(user.name);
     }
-  }, []);
+  }, [user?.imageURL, user?.name]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;

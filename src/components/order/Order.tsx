@@ -9,9 +9,6 @@ import SalesStatistic from "../salesStatistic/SalesStatistic";
 import CountrySalesStatistics from "../countrySales/CountrySalesStatistics";
 
 export default function Order() {
-  // Sample product data for the BestSellingProducts component
-  
-
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -20,9 +17,20 @@ export default function Order() {
       <div className="flex flex-col flex-1">
         {/* Top header */}
         <Header />
-        <SalesStatistic />  
-        <CountrySalesStatistics />
-<ProductOrder />
+
+        {/* Main Content */}
+
+          {/* Create a two-column grid */}
+          {/* Left Column */}
+            <div className="mb-4 ml-6">
+              <SalesStatistic />
+              <ProductOrder />
+            </div>
+
+            {/* Right Column */}
+              <CountrySalesStatistics />
+
+
         {/* Footer */}
         <Footer />
       </div>

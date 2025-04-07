@@ -1,11 +1,6 @@
 "use client";
 import React from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 interface PurchaseSource {
   name: string;
@@ -13,7 +8,6 @@ interface PurchaseSource {
   color: string;
 }
 
-// Example data (must total 100 for 100% center text)
 const data: PurchaseSource[] = [
   { name: "Social Media", value: 49, color: "#4285F4" },
   { name: "Direct Search", value: 36, color: "#34A853" },
@@ -21,15 +15,17 @@ const data: PurchaseSource[] = [
 ];
 
 export default function PurchaseSourceChart() {
-  // For a total of 100% in the center
+  // Calculate total value (should be 100)
   const total = data.reduce((acc, cur) => acc + cur.value, 0);
 
   return (
-    <div style={{ width: 300, padding: "1rem", background: "#fff", borderRadius: 8 }}>
-      <h3 style={{ marginBottom: "0.5rem" }}>Source of Purchases</h3>
+    <div className="w-[300px] p-4  bg-white rounded-lg shadow mt-[70px] ml-5">
+      <h3 className="mb-2 text-lg font-semibold text-gray-800">
+        Source of Purchases
+      </h3>
 
       {/* Chart container */}
-      <div style={{ width: "100%", height: 200, position: "relative" }}>
+      <div className="w-full h-[200px] relative">
         <ResponsiveContainer>
           <PieChart>
             <Pie
@@ -47,14 +43,13 @@ export default function PurchaseSourceChart() {
               ))}
             </Pie>
 
-            {/* Text in the center of the donut */}
+            {/* Center text */}
             <text
               x="50%"
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              fontSize={24}
-              fontWeight="bold"
+              className="text-2xl font-bold"
             >
               {`${total}%`}
             </text>
@@ -63,36 +58,23 @@ export default function PurchaseSourceChart() {
       </div>
 
       {/* Custom Legend */}
-      <div style={{ marginTop: "1rem" }}>
+      <div className="mt-4">
         {data.map((item) => (
           <div
             key={item.name}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "0.25rem",
-            }}
+            className="flex justify-between items-center mb-1"
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div className="flex items-center">
               {/* Color bullet */}
               <div
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  backgroundColor: item.color,
-                  marginRight: 8,
-                }}
+                className="colorBullet"
               />
-              <span style={{ fontSize: 14 }}>{item.name}</span>
+              <span className="text-sm">{item.name}</span>
             </div>
-                        <span style={{ fontSize: 14, fontWeight: "bold" }}>
-                          {item.value}%
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            }
+            <span className="text-sm font-bold">{item.value}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

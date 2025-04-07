@@ -5,7 +5,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-md py-4 text-gray-600 text-sm">
+    <footer className="bg-white shadow-md py-4 text-gray-600 text-sm mt-40">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
@@ -23,13 +23,13 @@ const Footer = () => {
         </div>
 
         <div className="flex justify-end mt-4 gap-3">
-          <a href="#" className="hover:text-indigo-600">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600" title="Follow us on Facebook">
             <Facebook className="h-5 w-5" />
           </a>
-          <a href="#" className="hover:text-indigo-600">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600" title="Follow us on Instagram">
             <Instagram className="h-5 w-5" />
           </a>
-          <a href="#" className="hover:text-indigo-600">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600" title="Follow us on Twitter">
             <Twitter className="h-5 w-5" />
           </a>
         </div>

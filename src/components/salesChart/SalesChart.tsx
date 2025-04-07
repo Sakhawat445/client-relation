@@ -15,7 +15,7 @@ const SalesChart = () => {
   const { salesData, totalSales, percentageChange } = useSalesData();
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md">
+    <div className="p-4 bg-white rounded-xl ml-5 shadow-md w-160">
       {/* Overall Sales Header */}
       <div className="flex justify-between items-center mb-4">
         <div>

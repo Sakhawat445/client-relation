@@ -12,6 +12,14 @@ const CustomerList: React.FC = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // --- Pagination state ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(customers.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const paginatedCustomers = customers.slice(startIdx, endIdx);
+
   // Select customer when checkbox is checked
   const handleSelect = (id: string) => {
     console.log("Selected Customer ID:", id);
@@ -42,14 +50,36 @@ const CustomerList: React.FC = () => {
       </Button>
 
       {/* Customer List */}
-      {customers.map((customer) => (
-  <CustomerRow 
-    key={customer.id} 
-    customer={customer} 
-    onSelect={() => handleSelect(customer.id ?? "")}
-    isSelected={selectedCustomer?.id === customer.id} 
-  />
-))}
+      {paginatedCustomers.map((customer) => (
+        <CustomerRow 
+          key={customer.id} 
+          customer={customer} 
+          onSelect={() => handleSelect(customer.id ?? "")}
+          isSelected={selectedCustomer?.id === customer.id} 
+        />
+      ))}
+
+      {/* Pagination Controls */}
+      {customers.length > itemsPerPage && (
+        <div className="flex justify-between items-center mt-4 text-sm">
+          <p>
+            Showing {startIdx + 1} to {Math.min(endIdx, customers.length)} of {customers.length} entries
+          </p>
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                className={`px-3 py-1 rounded-md ${
+                  page === currentPage ? "bg-purple-600 text-white" : "bg-white border"
+                }`}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Edit Customer Modal */}
       {isModalOpen && selectedCustomer && (
@@ -57,8 +87,8 @@ const CustomerList: React.FC = () => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           isDocumentModal={false}
-          doc={selectedCustomer}  // Pass selected customer data
-          isEditMode={true}  // Indicate it's edit mode
+          doc={selectedCustomer}
+          isEditMode={true}
         />
       )}
     </div>

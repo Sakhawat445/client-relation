@@ -40,7 +40,7 @@ const ProductOrder: React.FC = () => {
   });
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full">
+    <div className="bg-white p-6 rounded-lg shadow-md w-170 mt-5">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Best Selling Products
       </h2>
