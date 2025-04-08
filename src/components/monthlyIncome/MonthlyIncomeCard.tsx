@@ -6,7 +6,7 @@ const MonthlyIncomeCard: React.FC = () => {
   const { totalIncome, percentageChange, chartData } = useMonthlyIncome();
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 ml-[-140px] w-[570px]   max-w-md h-70">
+    <div className="bg-white shadow-md rounded-lg p-6 ml-[-180px]  w-120 h-70">
       <h3 className="text-gray-600 text-lg font-medium">Monthly Spendings</h3>
       
       <div className="flex items-center gap-2 mt-2">

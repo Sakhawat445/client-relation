@@ -34,7 +34,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-gray-300 min-h-screen">
       {/* Sidebar */}
       <Sidebar />
 
@@ -48,7 +48,7 @@ export default function Dashboard() {
         <Header />
 
         {/* Dashboard content */}
-        <main className=" md:p-6 flex-1 ">
+        <main className="  flex-1 ">
           {/* First Row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <TargetOrdersCard />
@@ -58,8 +58,7 @@ export default function Dashboard() {
 
           {/* Second Row */}
           
-<div className="flex-1 grid grid-cols-1 md:grid-cols-3 -ml-90 mr-70 p-48 gap-65 ml-x-[-280px] -mt-50">
-  <StatsCard
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 ml-[-230px] mr-[170] p-45 ml-x-[-280px] mt-[-550px] ">  <StatsCard
     title="Total Profit"
     amount={`$${stats.profit.toLocaleString()}`}
     percentage="3.4%"

@@ -4,33 +4,38 @@ import React from "react";
 import Image from "next/image";
 import { useCustomerList } from "./useCustomerList"; // Adjust path
 
-const CustomerList: React.FC = () => {
+// Added interface declaration so this component accepts the pagination props.
+interface CustomerListProps {
+  currentPage: number;
+  itemsPerPage: number;
+}
+
+const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }) => {
   const { customers, status, error } = useCustomerList();
 
   if (status === "loading") return <p>Loading customers...</p>;
   if (status === "failed") return <p>Error: {error}</p>;
 
+  // Added slicing logic to render only a subset of customers.
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleCustomers = customers.slice(startIndex, endIndex);
+
   return (
-    <div className="bg-white rounded-lg p-4 w-full shadow">
+    <div className=" rounded-lg p-4 w-full shadow">
       <table className="w-full border-collapse text-gray-600 text-sm">
-        <thead>
-          <tr className="border-b bg-gray-100 text-gray-700">
-            <th className="py-2 px-3 text-left">Date</th>
-            <th className="py-2 px-3 text-left">Customer</th>
-            <th className="py-2 px-3 text-left">Status</th>
-            <th className="py-2 px-3 text-left">Spending</th>
-          </tr>
-        </thead>
+      
         <tbody>
-          {customers.map((customer) => (
+          {visibleCustomers.map((customer) => (
             <tr key={customer.id} className="border-b">
-<td className="py-3 px-3">
-  {new Date(customer.createdDate).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  })}
-</td>              <td className="py-3 px-3 flex items-center gap-3">
+              <td className="py-3 px-3">
+                {new Date(customer.createdDate).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </td>
+              <td className="py-3 px-3 flex items-center gap-3">
                 <Image
                   src={customer.imageURI || "/default-avatar.png"}
                   alt={customer.name}
@@ -51,7 +56,9 @@ const CustomerList: React.FC = () => {
                   {customer.status}
                 </span>
               </td>
-              <td className="py-3 px-3 font-semibold">${(customer.spendings ?? 0).toFixed(2)}</td>
+              <td className="py-3 px-3 font-semibold">
+                ${(customer.spendings ?? 0).toFixed(2)}
+              </td>
             </tr>
           ))}
         </tbody>

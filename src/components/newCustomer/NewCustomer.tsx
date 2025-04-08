@@ -10,7 +10,7 @@ const NewCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const totalPages = 5;
+  const totalPages = 5; // Total number of page buttons
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4">
@@ -30,6 +30,8 @@ const NewCustomers = () => {
             onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
             className="p-2 bg-gray-200 rounded-md"
           >
+            <ChevronRight className="rotate-180" />
+          </button>
           <button
             type="button"
             title="Next Page"
@@ -38,10 +40,9 @@ const NewCustomers = () => {
           >
             <ChevronRight />
           </button>
-            <ChevronRight />
-          </button>
         </div>
       </div>
+
       <div className="bg-gray-100 rounded-md p-2 mb-2">
         <table className="w-full text-left text-gray-600 text-sm">
           <thead>
@@ -54,7 +55,24 @@ const NewCustomers = () => {
           </thead>
         </table>
       </div>
-      <CustomerList />
+
+      <CustomerList currentPage={currentPage} itemsPerPage={6} />
+
+      {/* Pagination Buttons */}
+      <div className="flex justify-center gap-2 mt-4">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 rounded-md ${
+              currentPage === page ? "bg-purple-600 text-white" : "bg-gray-200"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+
       <CustomerModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

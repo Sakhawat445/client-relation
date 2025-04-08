@@ -29,16 +29,16 @@ interface CustomerModalProps {
   isDocumentModal?: boolean;
   isEditModal?: boolean;
   isEditMode?: boolean;
-  doc: Customer;
+  doc?: Customer;
   editCustomer?: Customer | null; // Ensure this prop is defined for edit functionality
 }
 
 const CustomerModal: React.FC<CustomerModalProps> = ({
   isOpen,
   onClose,
-  isDocumentModal,
-  isEditMode,
-  isEditModal,
+  isDocumentModal = false,
+  isEditMode = false,
+  isEditModal = false,
   doc,
   
   editCustomer,
@@ -54,22 +54,22 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
     if (isEditModal || isEditMode) {
       const customerData = editCustomer || doc;
       // Parse address if stored as string
-      const address = typeof customerData.address === 'string' ? 
-        { city: customerData.address.split(',')[0]?.trim() || '', country: customerData.address.split(',')[1]?.trim() || '' } : 
-        customerData.address;
+      const address = typeof (customerData?.address ?? '') === 'string' ? 
+        { city: customerData?.address.split(',')[0]?.trim() || '', country: customerData?.address.split(',')[1]?.trim() || '' } : 
+        customerData?.address;
 
       setFormData({
-        name: customerData.name || '',
-        email: customerData.email || '',
-        imageURI: customerData.imageURI || '',
-        orderCount: customerData.orderCount || 0,
-        spendings: customerData.spendings || 0,
-        documentURL: customerData.documentURL || '',
-        status: customerData.status || 'PENDING',
-        address: address || { city: '', country: '' },
-        contactNumber: String(customerData.contactNumber || ''),
-        deviceType: customerData.deviceType || 'MOBILE',
-        productType: customerData.productType || customerData.product?.id || '',
+        name: customerData?.name || '',
+        email: customerData?.email || '',
+        imageURI: customerData?.imageURI || '',
+        orderCount: customerData?.orderCount || 0,
+        spendings: customerData?.spendings || 0,
+        documentURL: customerData?.documentURL || '',
+        status: customerData?.status || 'PENDING',
+        address: typeof address === 'object' && address !== null ? address : { city: '', country: '' },
+        contactNumber: String(customerData?.contactNumber || ''),
+        deviceType: customerData?.deviceType || 'MOBILE',
+        productType: customerData?.productType || customerData?.product?.id || '',
       });
     }
   }, [isEditModal, isEditMode, doc, editCustomer]); // Add editCustomer to dependencies
@@ -133,15 +133,19 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
       const updatedCustomer = {
         ...doc,
         documentURL: formData.documentURL,
+        name: formData.name || '', // Ensure name is always a string
+        email: formData.email || '', // Ensure email is always a string
       };
-      await dispatch(updateCustomer(updatedCustomer));
+      await dispatch(updateCustomer(updatedCustomer as Customer));
     } else if (isEditMode || isEditModal) { // Combined edit mode check
       // Use same update pattern as document modal
-      const updatedCustomer = {
+      const updatedCustomer: Customer = {
         ...doc, // Use doc as base
         ...formData, // Spread form data
+        email: formData.email || '', // Ensure email is always a string
         address: `${formData.address.city}, ${formData.address.country}`,
         contactNumber: parseInt(formData.contactNumber, 10) || 0,
+        createdDate: doc?.createdDate ?? new Date().toISOString(), // Ensure createdDate is always a string
       };
       await dispatch(updateCustomer(updatedCustomer));
     } else {
@@ -149,10 +153,9 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
       const customerData = {
         ...formData,
         address: `${formData.address.city}, ${formData.address.country}`,
-        contactNumber: parseInt(formData.contactNumber, 10) || 0,
-        createdDate: new Date().toISOString(),
+        createdDate: doc?.createdDate || new Date().toISOString(),
       };
-      await dispatch(createCustomer(customerData));
+      await dispatch(createCustomer({ ...customerData, contactNumber: parseInt(formData.contactNumber, 10) || 0 }));
     }
   
     setFormData(initialState);

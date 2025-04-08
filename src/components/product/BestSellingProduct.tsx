@@ -25,7 +25,7 @@ const BestSellingProducts: React.FC = () => {
 
   return (
     <>
-      <div className="bg-white rounded-lg p-4 w-65 shadow ">
+      <div className="bg-white rounded-lg p-4 w-80 shadow ml-[-10] ">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Best Selling Products</h2>
           <Button onClick={handleOpenModal}>Add Product</Button>

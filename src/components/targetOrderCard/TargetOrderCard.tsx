@@ -9,7 +9,7 @@ const TotalOrderCard: React.FC = () => {
   const percentage = totalOrders > 0 ? Math.min((completedOrders / totalOrders) * 100, 100) : 0;
 
   return (
-    <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl text-white w-50 h-70 ml-[-50px]">
+    <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl text-white w-45 h-70 ml-[-50px]">
       <div className="relative flex items-center justify-center w-26 h-26 mx-auto">
         <svg className="absolute w-full h-full">
           <circle
