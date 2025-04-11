@@ -8,9 +8,9 @@ export const useCustomerStats = () => {
   // Get total number of customers
   const totalCustomers = customers.length;
 
-  // Generate chart data
+  // Generate chart data with labels replaced with "Name"
   const chartData: ChartData<"line", number[], string> = {
-    labels: customers.map((customer) => `Customer ${customer.id}`), // X-axis labels
+    labels: customers.map(() => ""), // Replace customer name with static string "Name"
     datasets: [
       {
         label: "Total Customers",

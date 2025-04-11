@@ -36,11 +36,14 @@ export default function Dashboard() {
   return (
     <div className="flex bg-gray-300 min-h-screen">
       {/* Sidebar */}
-      <Sidebar />
+      <div className="mt-6 ">
+        <Sidebar />
+      </div>
+      
 
       {/* Main content wrapper */}
       <div
-        className={`flex flex-col flex-1 transition-all duration-300 ${
+        className={`flex flex-col flex-1 transition-all duration-300  ${
           isOpen ? 'md:ml-64' : 'md:ml-16'
         }`}
       >
@@ -80,9 +83,7 @@ export default function Dashboard() {
 </div>
 
           {/* Third Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <NewCustomers />
-            </div>
               <CityOrderMap />
         </main>
 

@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
     <>
       {/* Mobile toggle button */}
       <button
-        className="md:hidden fixed top-5 right-5 z-50 bg-purple-500 p-2 rounded"
+        className="md:hidden fixed top-5 right-5 z-50 bg-purple-500 p-5 rounded  ml-7 "
         onClick={toggleSidebar}
       >
         {isOpen ? <X className="text-white" /> : <Menu className="text-white" />}
@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md p-5 flex flex-col z-40 transform transition-transform duration-300
+        className={`h-screen fixed rounded  w-64 bg-white shadow-md p-5 flex flex-col z-40  transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:flex`}
       >
         <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>
@@ -61,10 +61,10 @@ const Sidebar: React.FC = () => {
           ))}
         </nav>
 
-        <div className="mt-auto space-y-2 border-t pt-4">
+        <div className=" border-t ">
           {supportItems.map((item) => (
             <Link key={item.name} href={item.path}>
-              <div className="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-gray-200">
+              <div className="flex items-center gap-3  p-3 rounded-lg cursor-pointer hover:bg-gray-200">
                 {item.icon}
                 <span>{item.name}</span>
               </div>

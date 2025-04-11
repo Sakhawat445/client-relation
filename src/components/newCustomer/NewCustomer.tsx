@@ -13,7 +13,7 @@ const NewCustomers = () => {
   const totalPages = 5; // Total number of page buttons
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4">
+    <div className="bg-white shadow-md rounded-lg p-4 w-170 ml-[-55px] ">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">New Customers</h2>
         <div className="flex gap-2 items-center">

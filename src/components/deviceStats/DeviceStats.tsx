@@ -5,7 +5,7 @@ const DeviceStats = () => {
   const { desktopUsers = 0, mobileUsers = 0 } = useDeviceStats();
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md">
+    <div className="p-4 bg-white rounded-xl shadow-md mb-7 w-full">
       <div className="flex justify-between">
         {/* Desktop Users */}
         <div className="w-1/2 pr-2">

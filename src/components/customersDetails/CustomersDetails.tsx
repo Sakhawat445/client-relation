@@ -43,7 +43,7 @@ const CustomerList: React.FC = () => {
   if (status === "failed") return <p>Error: {error}</p>;
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full space-y-3">
+    <div className="bg-white p-6 rounded-lg shadow-md w-[1050px] space-y-3">
       {/* Edit Button */}
       <Button onClick={handleEdit} className="mb-4" disabled={!selectedCustomer}>
         Edit

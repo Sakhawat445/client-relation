@@ -20,7 +20,7 @@ const colorScale = scaleQuantile<string>()
 
 const CustomerDemographics: React.FC = () => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-[1000]  " >
+    <div className="bg-white shadow-md rounded-lg p-4  w-full  mb-7" >
       <h2 className="text-lg font-semibold mb-2">Customer Demographic</h2>
       <div className="relative">
         <ComposableMap projection="geoAlbersUsa" width={800} height={200}>

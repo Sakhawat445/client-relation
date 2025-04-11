@@ -5,8 +5,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-md py-4 text-gray-600 text-sm mt-40">
-      <div className="container mx-auto px-4">
+<footer className="w-[1350] -ml-87 mt-4 bg-white border-t border-gray-300 py-8 h-[225px] " >      <div className="container mx-auto px-4 w-screen">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>
