@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import Sidebar from "../sideBar/SideBar";
@@ -14,46 +14,44 @@ import CustomerDetails from "../customersDetails/CustomersDetails";
 
 export default function Customer() {
   return (
-    <div className="flex bg-gray-300 min-h-screen p-5">
-      {/* Sidebar: hidden on small screens, visible from md up */}
-      <div className="hidden md:block">
-        <Sidebar />
-      </div>
+    <div className="flex flex-col md:flex-row bg-gray-100 min-h-screen">
+      {/* Sidebar: always visible on all screens, fixed width */}
+      <aside className="w-full md:w-[250px] ">
+        <Sidebar />      </aside>
 
       {/* Main content */}
       <div className="flex flex-col flex-1">
         {/* Header */}
         <Header />
 
-        <main className="ml-3 flex-1">
-          {/* Page Title + Date + Avatar (if needed) */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-            {/* Optionally add a date picker or avatar here */}
-          </div>
-
-          {/* Top summary cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-7">
+        {/* Page content */}
+        <main className="p-4 sm:p-6 md:p-8 space-y-6">
+          {/* Summary cards - single column on small screens */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <TotalCustomers />
             <NewCustomer />
             <Member />
             <NonMember />
           </div>
 
-          {/* Device stats and Demographics in a responsive grid */}
+          {/* DeviceStats - full width */}
+          <div>
             <DeviceStats />
-            <CustomerDemographics />
-          
+          </div>
 
-          {/* Full-width customer details */}
-          <div className="mb-7">
+          {/* CustomerDemographics - full width */}
+          <div>
+            <CustomerDemographics />
+          </div>
+
+          {/* Customer table section */}
+          <div>
             <CustomerDetails />
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="mt-10 w-full">
-          <Footer />
-        </footer>
+        <Footer />
       </div>
     </div>
   );

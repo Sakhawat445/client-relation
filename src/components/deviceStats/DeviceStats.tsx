@@ -6,24 +6,35 @@ const DeviceStats = () => {
 
   return (
     <div className="p-4 bg-white rounded-xl shadow-md mb-7 w-full">
-      <div className="flex justify-between">
-        {/* Desktop Users */}
-        <div className="w-1/2 pr-2">
-          <p className="text-sm text-gray-500">Desktop Users</p>
-          <p className="text-lg font-bold">{desktopUsers}%</p>
-          <div className="w-full bg-gray-200 h-3 rounded-md">
-            <div className={`h-3 bg-blue-500 rounded-md desktop-bar`} data-width={desktopUsers}></div>
-          </div>
+      {/* Labels */}
+      <div className="flex justify-between mb-2 text-sm text-gray-700 font-semibold">
+        <div>
+          <p className="text-xs text-gray-500">Desktop Users</p>
+          <p>{desktopUsers}%</p>
         </div>
+        <div>
+          <p className="text-xs text-gray-500">Mobile Users</p>
+          <p>{mobileUsers}%</p>
+        </div>
+      </div>
 
-        {/* Mobile Users */}
-        <div className="w-1/2 pl-2">
-          <p className="text-sm text-gray-500">Mobile Users</p>
-          <p className="text-lg font-bold">{mobileUsers}%</p>
-          <div className="w-full bg-gray-200 h-3 rounded-md">
-            <div className={`h-3 bg-green-500 rounded-md mobile-bar`} data-width={mobileUsers}></div>
-          </div>
-        </div>
+      {/* Combined bar */}
+      <div className="flex w-full h-6 bg-gray-200 rounded-md overflow-hidden">
+        {/* Desktop bar */}
+        <div
+          className={`h-full bg-blue-500 transition-all duration-300 ${
+            desktopUsers === 100 ? "rounded-md" : "rounded-l-md"
+          }`}
+          style={{ width: `${desktopUsers}%` }}
+        ></div>
+
+        {/* Mobile bar */}
+        <div
+          className={`h-full bg-green-600 transition-all duration-300 ${
+            mobileUsers === 100 ? "rounded-md" : "rounded-r-md"
+          }`}
+          style={{ width: `${mobileUsers}%` }}
+        ></div>
       </div>
     </div>
   );

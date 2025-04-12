@@ -5,14 +5,17 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
-<footer className="w-[1350] -ml-87 mt-4 bg-white border-t border-gray-300 py-8 h-[225px] " >      <div className="container mx-auto px-4 w-screen">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
+    <footer className="w-full mt-4 bg-white border-t border-gray-300 py-8">
+      <div className="max-w-[1350px] mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          {/* Logo and tagline */}
+          <div className="text-center md:text-left">
             <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>
             <p className="mt-1 text-xs">Crafting Connections, One Customer at a Time.</p>
           </div>
 
-          <nav className="flex gap-4 text-gray-700 text-sm">
+          {/* Navigation links */}
+          <nav className="flex flex-wrap justify-center gap-3 text-gray-700 text-sm">
             <Link href="/dashboard" className="hover:text-indigo-600">Dashboard</Link>
             <Link href="/customers" className="hover:text-indigo-600">Customers</Link>
             <Link href="/orders" className="hover:text-indigo-600">Order Overview</Link>
@@ -21,7 +24,8 @@ const Footer = () => {
           </nav>
         </div>
 
-        <div className="flex justify-end mt-4 gap-3">
+        {/* Social media icons */}
+        <div className="flex justify-center md:justify-end mt-6 gap-4">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600" title="Follow us on Facebook">
             <Facebook className="h-5 w-5" />
           </a>
@@ -33,7 +37,8 @@ const Footer = () => {
           </a>
         </div>
 
-        <div className="flex justify-between items-center mt-4 text-gray-500 text-xs">
+        {/* Bottom info row */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-gray-500 text-xs gap-2 text-center">
           <Link href="/privacy-policy" className="hover:text-indigo-600">Privacy Policy</Link>
           <p>&copy; {new Date().getFullYear()} Mugna Technologies, Inc.</p>
           <Link href="/terms" className="hover:text-indigo-600">Terms & Conditions</Link>

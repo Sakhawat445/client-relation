@@ -13,10 +13,8 @@ import { MdMoneyOff } from 'react-icons/md';
 import StatsCard from '@/components/statsCard/StatsCard';
 import CustomerStatsCard from '../customerStatsCard/CustomerStatsCard';
 import CityOrderMap from '../cityOrderMap/CityOrderMap';
-import { useSidebar } from '../sideBar/useSideBar';
 
 export default function Dashboard() {
-  const { isOpen } = useSidebar(); // Reflects sidebar toggle state
 
   const profitChartData = {
     labels: ['Mar', 'Apr', 'May', 'Jun', 'July'],
@@ -35,18 +33,10 @@ export default function Dashboard() {
 
   return (
     <div className="flex bg-gray-300 min-h-screen">
-      {/* Sidebar */}
-      <div className="mt-6 ">
         <Sidebar />
-      </div>
       
 
-      {/* Main content wrapper */}
-      <div
-        className={`flex flex-col flex-1 transition-all duration-300  ${
-          isOpen ? 'md:ml-64' : 'md:ml-16'
-        }`}
-      >
+
         {/* Top Header */}
         <Header />
 
@@ -90,6 +80,5 @@ export default function Dashboard() {
         {/* Footer */}
         <Footer />
       </div>
-    </div>
   );
 }

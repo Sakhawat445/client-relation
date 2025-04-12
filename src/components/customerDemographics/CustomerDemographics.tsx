@@ -20,10 +20,18 @@ const colorScale = scaleQuantile<string>()
 
 const CustomerDemographics: React.FC = () => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4  w-full  mb-7" >
+    <div className="bg-white shadow-md rounded-lg p-4 w-full mb-7">
       <h2 className="text-lg font-semibold mb-2">Customer Demographic</h2>
-      <div className="relative">
-        <ComposableMap projection="geoAlbersUsa" width={800} height={200}>
+
+      {/* Reduced and centered map container */}
+      <div className="relative mx-auto max-w-xl h-[300px]">
+        <ComposableMap
+          projection="geoAlbersUsa"
+          projectionConfig={{ scale: 1000 }}
+          width={800}
+          height={500}
+          className="w-full h-full"
+        >
           <Geographies geography="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json">
             {({ geographies }) =>
               geographies.map((geo) => {
@@ -43,8 +51,8 @@ const CustomerDemographics: React.FC = () => {
         </ComposableMap>
       </div>
 
-      {/* Legend */}
-      <div className="flex justify-center mt-4 space-x-4">
+      {/* Responsive Legend */}
+      <div className="flex flex-col md:flex-row justify-center items-center mt-4 space-x-0 md:space-x-4 space-y-2 md:space-y-0">
         <div className="flex items-center">
           <span className="w-4 h-4 bg-purple-700 inline-block rounded-full"></span>
           <span className="ml-2 text-sm">Majority Members</span>
@@ -57,6 +65,5 @@ const CustomerDemographics: React.FC = () => {
     </div>
   );
 };
-
 
 export default CustomerDemographics;
