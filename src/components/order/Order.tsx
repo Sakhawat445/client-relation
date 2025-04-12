@@ -10,37 +10,46 @@ import CountrySalesStatistics from "../countrySales/CountrySalesStatistics";
 import { useSidebar } from "../sideBar/useSideBar";
 
 export default function Order() {
-    useSidebar(); // Reflects sidebar toggle state
-  
+  useSidebar(); // Reflects sidebar toggle state
+
   return (
-    <div className="flex h-full bg-gray-300">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="mt-6 ml-[-20px]">
+      {/* Hide sidebar on small screens, show from md and up */}
+      <div className=" md:w-64 ">
         <Sidebar />
       </div>
 
+      {/* Main Content Area */}
       <div className="flex flex-col flex-1">
-        {/* Top header */}
+        {/* Header */}
         <Header />
 
-        {/* Main Content */}
+        {/* Main Dashboard Content */}
+        {/* 
+          Convert into a responsive grid:
+            - On small screens (default), single column
+            - From md breakpoint onward, 3 columns 
+              where left section spans 2 columns, and 
+              right section spans 1 column.
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 p-6">
+          {/* Left Column (takes 2 columns on md and above) */}
+          <div className="md:col-span-2 flex flex-col space-y-6">
+            <SalesStatistic />
+            <ProductOrder />
+          </div>
 
-          {/* Create a two-column grid */}
-          {/* Left Column */}
-            <div className="mb-4 ml-6">
-              <SalesStatistic />
-              <ProductOrder />
-            </div>
-
-            {/* Right Column */}
-              <CountrySalesStatistics />
-
+          {/* Right Column (1 column on md and above) */}
+          <div>
+            <CountrySalesStatistics />
+          </div>
+        </div>
 
         {/* Footer */}
-       <div className="ml-20 mt-100">
-        <Footer />
-</div>
-
+        <div className="mt-auto px-6 py-4 bg-white shadow">
+          <Footer />
+        </div>
       </div>
     </div>
   );

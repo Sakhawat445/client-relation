@@ -1,84 +1,66 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Sidebar from '../sideBar/SideBar';
-import Header from '../header/Header';
-import Footer from '../footer/Footer';
-import BestSellingProducts from '../product/BestSellingProduct';
-import NewCustomers from '../newCustomer/NewCustomer';
-import TargetOrdersCard from '../targetOrderCard/TargetOrderCard';
-import MonthlyIncomeCard from '../monthlyIncome/MonthlyIncomeCard';
-import { FaChartLine } from 'react-icons/fa';
-import { MdMoneyOff } from 'react-icons/md';
-import StatsCard from '@/components/statsCard/StatsCard';
-import CustomerStatsCard from '../customerStatsCard/CustomerStatsCard';
-import CityOrderMap from '../cityOrderMap/CityOrderMap';
+import React from "react";
+import Sidebar from "../sideBar/SideBar";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import BestSellingProducts from "../product/BestSellingProduct";
+import NewCustomers from "../newCustomer/NewCustomer";
+import TargetOrdersCard from "../targetOrderCard/TargetOrderCard";
+import MonthlyIncomeCard from "../monthlyIncome/MonthlyIncomeCard";
+import CustomerStatsCard from "../customerStatsCard/CustomerStatsCard";
+import CityOrderMap from "../cityOrderMap/CityOrderMap";
+import TotalProfitCard from "../totalProfitCard/TotalProfitCard";
+import TotalExpensesCard from "../totalExpensesCard/TotalExpensesCard";
 
 export default function Dashboard() {
-
-  const profitChartData = {
-    labels: ['Mar', 'Apr', 'May', 'Jun', 'July'],
-    datasets: [{ data: [100, 200, 150, 300, 250], borderColor: 'green', fill: false }],
-  };
-  const expensesChartData = {
-    labels: ['Mar', 'Apr', 'May', 'Jun', 'July'],
-    datasets: [{ data: [300, 250, 400, 350, 500], borderColor: 'red', fill: false }],
-  };
-
-  const stats = {
-    profit: 3930, // Updated to match the image
-    expenses: 1467, // Updated to match the image
-    customers: 1000, // Updated to match the image
-  };
-
   return (
-    <div className="flex bg-gray-300 min-h-screen">
-        <Sidebar />
-      
+    <div className="flex bg-gray-100 min-h-screen">
+      {/* Sidebar */}
+      <Sidebar />
 
-
-        {/* Top Header */}
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1">
+        {/* Header */}
         <Header />
 
-        {/* Dashboard content */}
-        <main className="  flex-1 ">
-          {/* First Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <TargetOrdersCard />
-            <MonthlyIncomeCard />
-            <BestSellingProducts />
+        {/* Page Content */}
+        <main className="flex-1 p-4 sm:p-6 space-y-6">
+          {/* Top Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            {/* First Row: Target Orders + Monthly Income (stacked on small, grid on md+) */}
+            <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <TargetOrdersCard />
+              <MonthlyIncomeCard />
+            </div>
+
+            {/* Best Selling Products (full width on mobile, right column on lg) */}
+            <div className="lg:row-span-2">
+              <BestSellingProducts />
+            </div>
+
+            {/* Second Row: Total Profit, Expenses, Stats */}
+            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <TotalProfitCard />
+              <TotalExpensesCard />
+              <CustomerStatsCard />
+            </div>
           </div>
 
-          {/* Second Row */}
-          
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 ml-[-230px] mr-[170] p-45 ml-x-[-280px] mt-[-550px] ">  <StatsCard
-    title="Total Profit"
-    amount={`$${stats.profit.toLocaleString()}`}
-    percentage="3.4%"
-    isPositive={true}
-    chartData={profitChartData}
-    icon={<FaChartLine className="text-white" />}
-    bgColor="bg-purple-500"
-  />
-  <StatsCard
-    title="Total Expenses"
-    amount={`$${stats.expenses.toLocaleString()}`}
-    percentage="2.6%"
-    isPositive={false}
-    chartData={expensesChartData}
-    icon={<MdMoneyOff className="text-white" />}
-    bgColor="bg-red-500"
-  />
-  <CustomerStatsCard />
-</div>
-
-          {/* Third Row */}
+          {/* Bottom Section: New Customers + Map */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="lg:col-span-2">
               <NewCustomers />
+            </div>
+            <div>
               <CityOrderMap />
+            </div>
+          </div>
         </main>
 
         {/* Footer */}
         <Footer />
       </div>
+    </div>
   );
 }

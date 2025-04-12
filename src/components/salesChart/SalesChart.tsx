@@ -15,16 +15,18 @@ const SalesChart = () => {
   const { salesData, totalSales, percentageChange } = useSalesData();
 
   return (
-    <div className="p-4 bg-white rounded-xl ml-5 shadow-md w-160">
+    <div className="p-4 bg-white rounded-xl shadow-md w-full max-w-3xl mx-auto">
       {/* Overall Sales Header */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-4">
         <div>
           <h2 className="text-lg font-semibold">Overall Sales</h2>
           <p className="text-3xl font-bold">${totalSales.toLocaleString()}</p>
         </div>
         <span
-          className={`text-sm px-2 py-1 rounded ${
-            percentageChange > 0 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
+          className={`mt-2 sm:mt-0 text-sm px-2 py-1 rounded ${
+            percentageChange > 0
+              ? "bg-green-100 text-green-600"
+              : "bg-red-100 text-red-600"
           }`}
         >
           {percentageChange.toFixed(1)}%
@@ -39,8 +41,22 @@ const SalesChart = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="currentWeek" stroke="#8854d0" strokeWidth={2} dot={{ r: 5 }} name="Current Week" />
-          <Line type="monotone" dataKey="lastWeek" stroke="#3498db" strokeWidth={2} dot={{ r: 5 }} name="Last Week" />
+          <Line
+            type="monotone"
+            dataKey="currentWeek"
+            stroke="#8854d0"
+            strokeWidth={2}
+            dot={{ r: 5 }}
+            name="Current Week"
+          />
+          <Line
+            type="monotone"
+            dataKey="lastWeek"
+            stroke="#3498db"
+            strokeWidth={2}
+            dot={{ r: 5 }}
+            name="Last Week"
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

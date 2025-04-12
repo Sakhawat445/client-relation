@@ -13,30 +13,32 @@ import PurchaseSourceChart from "../purchaseSourceChart/PurchaseSourceChart";
 
 export default function Analytics() {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar />
 
+      {/* Main content area */}
       <div className="flex flex-col flex-1">
-        {/* Top header */}
+        {/* Header */}
         <Header />
 
-        {/* Main Content */}
-          {/* Title Row (Optional if you want a separate title + date range + user info) */}
-         
+        {/* Content */}
+        <main className="flex-1 p-6 overflow-auto">
 
-          {/* Row 1: Overall Sales & Visitors */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Row 1 */}
             <SalesChart />
             <VisitorsChart />
 
-          {/* Row 2: Source of Purchases & Sales per Week */}
+            {/* Row 2 */}
             <PurchaseSourceChart />
             <ContributionChart />
 
-          {/* Row 3: Sales per Country & Sales History */}
+            {/* Row 3 */}
             <CountrySalesChart />
             <SalesHistory />
-         
+          </div>
+        </main>
 
         {/* Footer */}
         <Footer />

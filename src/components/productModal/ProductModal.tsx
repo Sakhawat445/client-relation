@@ -120,6 +120,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ onClose }) => {
               accept="image/*"
               onChange={handleFileChange}
               className="block w-full"
+              placeholder="Upload product image"
+              title="Product Image Upload"
             />
           </div>
           {uploading && <p className="text-sm text-gray-500">Uploading image...</p>}

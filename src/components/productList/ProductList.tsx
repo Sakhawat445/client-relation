@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useProducts } from './useProductList'; // Adjust the path
+import { useProducts } from '../product/useProductList'; // Adjust the path
 
 const ProductList: React.FC = () => {
   const { products, status, error } = useProducts();

@@ -18,7 +18,7 @@ interface ProductProps {
   
 
 
-const Product: React.FC<ProductProps> = ({ product}) => {
+const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
   return (
     <tr className="border-b">
       {/* Product Name & Image */}
@@ -63,4 +63,4 @@ const Product: React.FC<ProductProps> = ({ product}) => {
   );
 };
 
-export default Product;
+export default ProductOrderList;

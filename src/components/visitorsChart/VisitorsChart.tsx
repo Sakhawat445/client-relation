@@ -42,7 +42,7 @@ export default function VisitorsChart() {
   }
 
   const CustomBarLabel = (props: CustomBarLabelProps) => {
-    const { x, y, width,  value } = props;
+    const { x, y, width, value } = props;
     // If this bar is the max bar, show a label above it
     if (value === maxValue) {
       return (
@@ -62,8 +62,8 @@ export default function VisitorsChart() {
   };
 
   return (
-    <div className="p-4 w-100 bg-white rounded-xl shadow-md ml-170 mt-[-360]">
-      <h3 className= "mb-5" >Visitors</h3>
+    <div className="p-4 bg-white rounded-xl shadow-md mx-auto w-full max-w-lg my-4">
+      <h3 className="mb-5 text-xl font-semibold text-center">Visitors</h3>
 
       {/* Responsive container keeps the chart flexible */}
       <ResponsiveContainer width="100%" height={250}>
@@ -78,17 +78,14 @@ export default function VisitorsChart() {
             {data.map((entry, index) => {
               const isMax = entry.visitors === maxValue;
               return (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={isMax ? "#48BB78" : "#BBF7D0"} // Dark green for max, light green otherwise
-                />
+                <Cell key={`cell-${index}`} fill={isMax ? "#48BB78" : "#BBF7D0"} />
               );
             })}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
 
-      <div className= "mt-5 bg-4A5568" >
+      <div className="mt-5 bg-gray-200 p-2 rounded text-center">
         <strong>Awesome!</strong> You just hit a new record!
       </div>
     </div>

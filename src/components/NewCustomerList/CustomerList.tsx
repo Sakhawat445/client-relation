@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useCustomerList } from "./useCustomerList"; // Adjust path
+import { useCustomerList } from "../newCustomer/useCustomerList"; // Adjust path
 
 // Added interface declaration so this component accepts the pagination props.
 interface CustomerListProps {

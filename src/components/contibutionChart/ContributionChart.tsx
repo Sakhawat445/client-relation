@@ -4,21 +4,20 @@ import React from "react";
 import HeatMap from "@uiw/react-heat-map";
 import useSalesPerWeek from "./useSalesPerWeek";
 
-// 1) Calculate the start of the current week (Monday)
 const currentDate = new Date();
-const dayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+const dayOfWeek = currentDate.getDay();
 const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 const startOfWeek = new Date(currentDate);
 startOfWeek.setDate(currentDate.getDate() - daysToMonday);
 
-// 2) Generate labels for the 7 days (e.g., "1 Jul", "2 Jul", ...)
+// Generate week labels and date strings
 const weekLabels: string[] = [];
 const weekDates: string[] = [];
 
 for (let i = 0; i < 7; i++) {
   const date = new Date(startOfWeek);
   date.setDate(startOfWeek.getDate() + i);
-  
+
   const day = date.getDate();
   const month = date.toLocaleString("en-US", { month: "short" });
 
@@ -29,7 +28,6 @@ for (let i = 0; i < 7; i++) {
 export default function ContributionChart() {
   const salesData = useSalesPerWeek();
 
-  // Convert sales data to HeatMap format
   const heatmapData = salesData.flatMap((row) => [
     { date: weekDates[0], count: row.Mon },
     { date: weekDates[1], count: row.Tue },
@@ -41,18 +39,15 @@ export default function ContributionChart() {
   ]);
 
   return (
-    <div className="border rounded-md p-5 bg-gray-50 w-180 mt-[-380px] ml-90 ">
+    <div className="w-full max-w-5xl mx-auto bg-gray-50 p-5 rounded-md shadow-sm mt-8">
       <h2 className="text-lg font-semibold mb-4 text-gray-700">Sales per Week</h2>
 
-      <div className="flex items-center">
-        {/* Y-axis labels */}
-       
-        {/* Heatmap */}
-        <div className="flex flex-col">
+      <div className="overflow-x-auto">
+        <div className="min-w-[500px]">
           <HeatMap
-            width={550}
-            height={450}
-            rectSize={50}
+            width={600}
+            height={300}
+            rectSize={40}
             space={8}
             value={heatmapData}
             startDate={startOfWeek}
@@ -62,32 +57,26 @@ export default function ContributionChart() {
               1000: "#b38ed9",
               5000: "#7b4ca3",
             }}
-            rectProps={{
-              rx: 5,
-              ry: 5,
-            }}
+            rectProps={{ rx: 5, ry: 5 }}
           />
-
-          {/* X-axis labels below the heatmap */}
-          
         </div>
       </div>
 
-      <div className="mt-4 text-sm text-gray-600">
-        <strong>Orders:</strong>
-        <span className="inline-flex items-center ml-2">
+      <div className="mt-4 text-sm text-gray-600 flex flex-wrap gap-4">
+        <strong className="mr-2">Orders:</strong>
+        <span className="inline-flex items-center">
           <span className="inline-block w-3 h-3 rounded-sm bg-[#f2f2f2] mr-1"></span>
           0-500
         </span>
-        <span className="inline-flex items-center ml-2">
+        <span className="inline-flex items-center">
           <span className="inline-block w-3 h-3 rounded-sm bg-[#d9c7e6] mr-1"></span>
           501-1,000
         </span>
-        <span className="inline-flex items-center ml-2">
+        <span className="inline-flex items-center">
           <span className="inline-block w-3 h-3 rounded-sm bg-[#b38ed9] mr-1"></span>
           1,001-5,000
         </span>
-        <span className="inline-flex items-center ml-2">
+        <span className="inline-flex items-center">
           <span className="inline-block w-3 h-3 rounded-sm bg-[#7b4ca3] mr-1"></span>
           5,001-10,000
         </span>

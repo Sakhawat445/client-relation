@@ -21,17 +21,18 @@ const CityOrderMap: React.FC = () => {
   const handleZoomOut = () => setZoom((prev) => Math.max(prev / 1.5, 1));
 
   const stateOrders: { [key: string]: number } = {
-    "Colorado": 1567,
-    // Add more states as needed
+    Colorado: 1567,
+    // Add more states here
   };
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 w-[300px] h-[420px] relative mt-[-430px] ml-[680px]">
+    <div className="bg-white shadow-md rounded-xl p-4 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto relative mx-auto mt-6">
       <h2 className="text-md font-semibold text-gray-800 mb-3">
         City Order Statistics
       </h2>
 
-      <div className="relative w-full h-[280px] overflow-hidden">
+      {/* Map container */}
+      <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-[20rem] overflow-hidden">
         <ComposableMap
           projection="geoAlbersUsa"
           width={320}
@@ -54,7 +55,9 @@ const CityOrderMap: React.FC = () => {
                       className="transition duration-200 hover:fill-purple-400"
                       onMouseEnter={(e) => {
                         if (orders) {
-                          const rect = (e.target as Element).getBoundingClientRect();
+                          const rect = (
+                            e.target as Element
+                          ).getBoundingClientRect();
                           setTooltipData({
                             name,
                             orders,
@@ -77,8 +80,8 @@ const CityOrderMap: React.FC = () => {
         {/* Tooltip */}
         {tooltipData && (
           <div
-            className="absolute z-10 bg-white shadow-xl p-3 rounded-lg w-[160px] text-sm"
-          
+            className="absolute z-10 bg-white shadow-xl p-3 rounded-lg w-40 text-sm transform -translate-x-1/2 -translate-y-full"
+            
           >
             <p className="font-semibold text-gray-800">{tooltipData.name}</p>
             <p className="text-xl font-bold text-black">
@@ -106,7 +109,7 @@ const CityOrderMap: React.FC = () => {
         </button>
       </div>
 
-      {/* Reset/Full View Button */}
+      {/* Reset Zoom */}
       <div className="absolute bottom-4 right-4">
         <button
           onClick={() => setZoom(1)}
@@ -118,6 +121,5 @@ const CityOrderMap: React.FC = () => {
     </div>
   );
 };
-
 
 export default CityOrderMap;

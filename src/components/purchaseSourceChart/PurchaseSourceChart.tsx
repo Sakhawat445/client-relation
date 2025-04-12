@@ -19,13 +19,13 @@ export default function PurchaseSourceChart() {
   const total = data.reduce((acc, cur) => acc + cur.value, 0);
 
   return (
-    <div className="w-[300px] p-4  bg-white rounded-lg shadow mt-[70px] ml-5">
+    <div className="w-full max-w-md p-4 bg-white rounded-lg shadow mx-auto mt-6">
       <h3 className="mb-2 text-lg font-semibold text-gray-800">
         Source of Purchases
       </h3>
 
       {/* Chart container */}
-      <div className="w-full h-[200px] relative">
+      <div className="w-full h-64 relative">
         <ResponsiveContainer>
           <PieChart>
             <Pie
