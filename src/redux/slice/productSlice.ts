@@ -1,6 +1,7 @@
 // productSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '@/types/types';
+import axios from 'axios';
 interface ProductState {
   products: Product[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -17,11 +18,12 @@ const initialState: ProductState = {
 export const fetchProducts = createAsyncThunk<Product[]>(
   'products/fetchProducts',
   async () => {
-    const res = await fetch('/api/product');
-    if (!res.ok) {
+    try {
+      const res = await axios.get<Product[]>('/api/product');
+      return res.data;
+    } catch {
       throw new Error('Failed to fetch products');
     }
-    return (await res.json()) as Product[];
   }
 );
 
@@ -29,15 +31,12 @@ export const fetchProducts = createAsyncThunk<Product[]>(
 export const createProduct = createAsyncThunk<Product, Omit<Product, 'id'>>(
   'products/createProduct',
   async (productData) => {
-    const res = await fetch('/api/product', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(productData),
-    });
-    if (!res.ok) {
+    try {
+      const res = await axios.post<Product>('/api/product', productData);
+      return res.data;
+    } catch {
       throw new Error('Failed to create product');
     }
-    return (await res.json()) as Product;
   }
 );
 

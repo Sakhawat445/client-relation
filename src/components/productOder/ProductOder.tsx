@@ -21,13 +21,13 @@ const ProductOrder: React.FC = () => {
   if (productError)
     return <p className="text-red-500">Error: {productError}</p>;
 
-  const updatedProducts = products.map((product) => {
-    const matchingOrders = customers.filter(
-      (customer: Customer) => customer.productType === product.id
+  const updatedProducts = products?.map((product) => {
+    const matchingOrders = customers?.filter(
+      (customer: Customer) => customer.productType === product?.id
     );
 
     const totalOrderCount = matchingOrders.reduce(
-      (sum, customer) => sum + (customer.orderCount || 0),
+      (sum, customer) => sum + (customer?.orderCount || 0),
       0
     );
 
@@ -59,7 +59,7 @@ const ProductOrder: React.FC = () => {
   </thead>
           <tbody>
             {updatedProducts.map((product) => (
-              <ProductOrderList key={product.id} product={product} />
+              <ProductOrderList key={product?.id} product={product} />
             ))}
           </tbody>
         </table>

@@ -4,6 +4,14 @@ import { useDeviceStats } from "./useDeviceStats";
 const DeviceStats = () => {
   const { desktopUsers = 0, mobileUsers = 0 } = useDeviceStats();
 
+  const desktopStyle = {
+    width: `${desktopUsers}%`,
+  };
+
+  const mobileStyle = {
+    width: `${mobileUsers}%`,
+  };
+
   return (
     <div className="p-4 bg-white rounded-xl shadow-md mb-7 w-full">
       {/* Labels */}
@@ -25,7 +33,7 @@ const DeviceStats = () => {
           className={`h-full bg-blue-500 transition-all duration-300 ${
             desktopUsers === 100 ? "rounded-md" : "rounded-l-md"
           }`}
-          style={{ width: `${desktopUsers}%` }}
+          style={desktopStyle}
         ></div>
 
         {/* Mobile bar */}
@@ -33,7 +41,7 @@ const DeviceStats = () => {
           className={`h-full bg-green-600 transition-all duration-300 ${
             mobileUsers === 100 ? "rounded-md" : "rounded-r-md"
           }`}
-          style={{ width: `${mobileUsers}%` }}
+          style={mobileStyle}
         ></div>
       </div>
     </div>

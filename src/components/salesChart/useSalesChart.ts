@@ -8,7 +8,7 @@ interface SalesData {
 }
 
 export const useSalesData = () => {
-  const customers = useAppSelector((state: RootState) => state.customer.customers); // 🔥 Get customers from Redux
+  const customers = useAppSelector((state: RootState) => state.customer?.customers); // 🔥 Get customers from Redux
 
   const [salesData, setSalesData] = useState<SalesData[]>([]);
   const [totalSales, setTotalSales] = useState<number>(0);
@@ -23,16 +23,16 @@ export const useSalesData = () => {
       twoWeeksAgo.setDate(today.getDate() - 14);
 
       // 🔥 Separate customers based on date ranges
-      const currentWeekCustomers = customers.filter((customer) => new Date(customer.createdDate) >= oneWeekAgo);
-      const lastWeekCustomers = customers.filter(
-        (customer) => new Date(customer.createdDate) >= twoWeeksAgo && new Date(customer.createdDate) < oneWeekAgo
+      const currentWeekCustomers = customers?.filter((customer) => new Date(customer?.createdDate) >= oneWeekAgo);
+      const lastWeekCustomers = customers?.filter(
+        (customer) => new Date(customer?.createdDate) >= twoWeeksAgo && new Date(customer?.createdDate) < oneWeekAgo
       );
 
       // 🔥 Calculate total sales for the current week
-      const currentWeekTotal = currentWeekCustomers.reduce((acc, customer) => acc + (customer.spendings ?? 0), 0);
+      const currentWeekTotal = currentWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
 
       // 🔥 Calculate total sales for last week
-      const lastWeekTotal = lastWeekCustomers.reduce((acc, customer) => acc + (customer.spendings ?? 0), 0);
+      const lastWeekTotal = lastWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
 
       // 🔥 Set total sales for the current week
       setTotalSales(currentWeekTotal);
@@ -45,7 +45,7 @@ export const useSalesData = () => {
       const groupedData: Record<string, { currentWeek: number; lastWeek: number }> = {};
 
       customers.forEach((customer) => {
-        const date = new Date(customer.createdDate).toLocaleDateString("en-US", {
+        const date = new Date(customer?.createdDate).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
         });
@@ -54,15 +54,15 @@ export const useSalesData = () => {
           groupedData[date] = { currentWeek: 0, lastWeek: 0 };
         }
 
-        if (new Date(customer.createdDate) >= oneWeekAgo) {
-          groupedData[date].currentWeek += customer.spendings ?? 0;
-        } else if (new Date(customer.createdDate) >= twoWeeksAgo) {
-          groupedData[date].lastWeek += customer.spendings ?? 0;
+        if (new Date(customer?.createdDate) >= oneWeekAgo) {
+          groupedData[date].currentWeek += customer?.spendings ?? 0;
+        } else if (new Date(customer?.createdDate) >= twoWeeksAgo) {
+          groupedData[date].lastWeek += customer?.spendings ?? 0;
         }
       });
 
       // Convert grouped data to an array for the chart
-      const formattedData = Object.entries(groupedData).map(([date, values]) => ({
+      const formattedData = Object.entries(groupedData)?.map(([date, values]) => ({
         date,
         ...values,
       }));

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import SalesHistoryList from "./SalesHistoryList";
-import { useCustomerList } from "../newCustomer/useCustomerList";
+import { useCustomerList } from "./useSalesHistory";
+import SalesHistoryList from "../salesHistoryList/SalesHistoryList";
 
 const SalesHistory: React.FC = () => {
   const { customers = [], status, error } = useCustomerList();
@@ -10,7 +10,7 @@ const SalesHistory: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  const totalPages = Math.ceil(customers.length / itemsPerPage);
+  const totalPages = Math.ceil(customers?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentCustomers = customers.slice(startIndex, endIndex);

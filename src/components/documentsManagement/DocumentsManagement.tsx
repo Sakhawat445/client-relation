@@ -90,7 +90,7 @@ export default function DocumentManagement() {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedDocuments.map((doc, index) => (
+                  {paginatedDocuments?.map((doc, index) => (
                     <DocumentRow
                       key={doc.id || index}
                       doc={doc}
@@ -107,11 +107,11 @@ export default function DocumentManagement() {
           <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm gap-2">
             <p className="text-center sm:text-left">
               Showing {(currentPage - 1) * 10 + 1} to{" "}
-              {Math.min(currentPage * 10, documents.length)} of {documents.length} entries
+              {Math.min(currentPage * 10, documents?.length)} of {documents?.length} entries
             </p>
 
             <div className="flex flex-wrap justify-center gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {Array.from({ length: totalPages }, (_, i) => i + 1)?.map((page) => (
                 <button
                   key={page}
                   className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-md border text-xs sm:text-sm ${

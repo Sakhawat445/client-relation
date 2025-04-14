@@ -6,9 +6,9 @@ interface CountrySales {
 }
 
 export const useCountrySalesData = () => {
-  const customers = useAppSelector((state) => state.customer.customers);
+  const customers = useAppSelector((state) => state.customer?.customers);
 
-  if (!customers || customers.length === 0) return { totalOrders: 0, salesData: [] };
+  if (!customers || customers?.length === 0) return { totalOrders: 0, salesData: [] };
 
   const countrySalesMap: Record<string, number> = {};
 
@@ -16,10 +16,10 @@ export const useCountrySalesData = () => {
 
   customers.forEach((customer) => {
     // Extract country from the second value of the address
-    const addressParts = customer.address ? customer.address.split(",").map(part => part.trim()) : [];
+    const addressParts = customer?.address ? customer?.address.split(",").map(part => part.trim()) : [];
     const country = addressParts.length > 1 ? addressParts[1] : "Unknown";
 
-    const sales = customer.orderCount || 0;
+    const sales = customer?.orderCount || 0;
     totalOrders += sales; // Sum of all orderCount values
 
     if (!countrySalesMap[country]) {
@@ -30,7 +30,7 @@ export const useCountrySalesData = () => {
   });
 
   // Transform data for visualization
-  const salesData: CountrySales[] = Object.entries(countrySalesMap).map(([country, sales]) => ({
+  const salesData: CountrySales[] = Object.entries(countrySalesMap)?.map(([country, sales]) => ({
     country,
     sales,
   }));

@@ -78,23 +78,23 @@ export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowPr
         <td className="p-3">
           <div className="flex items-center gap-2">
             <Image
-              src={doc.imageURI || "/default-avatar.png"}
-              alt={doc.email}
+              src={doc?.imageURI || "/default-avatar.png"}
+              alt={doc?.email}
               width={24}
               height={24}
               className="rounded-full aspect-square object-cover"
               />
-            <span>{doc.name}</span>
+            <span>{doc?.name}</span>
           </div>
         </td>
 
         <td className="p-3 text-center">
-          {doc.orderCount ? `v${doc.orderCount}` : "N/A"}
+          {doc?.orderCount ? `v${doc.orderCount}` : "N/A"}
         </td>
 
         <td className="p-3 text-center">
           <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-            {doc.status}
+            {doc?.status}
           </span>
         </td>
 

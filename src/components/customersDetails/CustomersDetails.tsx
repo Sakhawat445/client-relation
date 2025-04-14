@@ -61,10 +61,10 @@ const CustomerList: React.FC = () => {
           
           {paginatedCustomers.map((customer) => (
             <CustomerRow
-              key={customer.id}
+              key={customer?.id}
               customer={customer}
-              onSelect={() => handleSelect(customer.id ?? "")}
-              isSelected={selectedCustomer?.id === customer.id}
+              onSelect={() => handleSelect(customer?.id ?? "")}
+              isSelected={selectedCustomer?.id === customer?.id}
             />
           ))}
         </div>

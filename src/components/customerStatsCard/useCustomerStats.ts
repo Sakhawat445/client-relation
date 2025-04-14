@@ -3,18 +3,18 @@ import { ChartData } from "chart.js";
 
 export const useCustomerStats = () => {
   // Fetch all customers from Redux store
-  const customers = useAppSelector((state) => state.customer.customers) || [];
+  const customers = useAppSelector((state) => state.customer?.customers) || [];
 
   // Get total number of customers
-  const totalCustomers = customers.length;
+  const totalCustomers = customers?.length;
 
   // Generate chart data with labels replaced with "Name"
   const chartData: ChartData<"line", number[], string> = {
-    labels: customers.map(() => ""), // Replace customer name with static string "Name"
+    labels: customers?.map(() => ""), // Replace customer name with static string "Name"
     datasets: [
       {
         label: "Total Customers",
-        data: customers.map((_, index) => index + 1), // Y-axis values (customer count)
+        data: customers?.map((_, index) => index + 1), // Y-axis values (customer count)
         borderColor: "blue",
         backgroundColor: "rgba(0, 0, 255, 0.1)",
         borderWidth: 2,

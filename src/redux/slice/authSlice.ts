@@ -190,6 +190,7 @@
 // export default authSlice.reducer;
 
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { signIn, signOut } from "next-auth/react";
 
 // Define the shape of the user data
@@ -217,30 +218,29 @@ const initialState: AuthState = {
 };
 
 // Async thunk for registration
+
 export const registerUser = createAsyncThunk<
   User,
   { name: string; email: string; password: string },
   { rejectValue: string }
->("auth/registerUser", async (userData, { rejectWithValue }) => {
-  try {
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || "Registration failed. Please try again.");
+>(
+  "auth/registerUser",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/auth/register", userData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     }
-    return data;
-  } catch (error) {
-    return rejectWithValue(
-      error instanceof Error ? error.message : "An unknown error occurred"
-    );
   }
-});
+);
 
 // Async thunk for login
+
 export const loginUser = createAsyncThunk<
   User,
   { email: string; password: string },
@@ -254,9 +254,11 @@ export const loginUser = createAsyncThunk<
     if (res?.error) {
       return rejectWithValue(res.error);
     }
-    const sessionResponse = await fetch("/api/auth/register");
-    const sessionData = await sessionResponse.json();
-    if (!sessionResponse.ok || !sessionData) {
+    const sessionResponse = await axios.get("/api/auth/register", {
+      headers: { "Content-Type": "application/json" },
+    });
+    const sessionData = sessionResponse.data;
+    if (!sessionData) {
       throw new Error("Failed to retrieve user session");
     }
     return sessionData;
@@ -265,26 +267,27 @@ export const loginUser = createAsyncThunk<
       error instanceof Error ? error.message : "Login failed"
     );
   }
-});
-
-// Async thunk for password reset
+});// Async thunk for password reset
+// Reset Password
 export const resetPassword = createAsyncThunk<
   { message: string },
   string,
   { rejectValue: string }
 >("auth/resetPassword", async (email, { rejectWithValue }) => {
   try {
-    const response = await fetch("/api/auth/reset", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to send reset email.");
-    }
+    const response = await axios.post(
+      "/api/auth/reset",
+      { email },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    const data = response.data;
     return data;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to send reset email."
+      );
+    }
     return rejectWithValue(
       error instanceof Error ? error.message : "An unknown error occurred"
     );
@@ -298,42 +301,38 @@ export const newPassword = createAsyncThunk<
   { rejectValue: string }
 >("auth/newPassword", async ({ token, password }, { rejectWithValue }) => {
   try {
-    const response = await fetch("/api/auth/newPassword", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, password }),
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to update password.");
-    }
+    const response = await axios.post(
+      "/api/auth/newPassword",
+      { token, password },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    const data = response.data;
     return data;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to update password."
+      );
+    }
     return rejectWithValue(
       error instanceof Error ? error.message : "An unknown error occurred"
     );
   }
 });
-// Add this with your other async thunks
+
+// Async thunk to fetch user data
 export const fetchUserData = createAsyncThunk<
   User,
   void,
   { rejectValue: string }
 >("auth/fetchUserData", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch("/api/auth/register", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include", // Ensure cookies/session are sent
+    const response = await axios.get("/api/auth/register", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true, // Ensure cookies/session are sent
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch user data");
-    }
-
-    const sessionData = await response.json();
+    const sessionData = response.data;
     console.log("Session data:", sessionData); // Debugging line
 
     if (!sessionData) {
@@ -342,12 +341,16 @@ export const fetchUserData = createAsyncThunk<
 
     return sessionData as User;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch user data"
+      );
+    }
     return rejectWithValue(
       error instanceof Error ? error.message : "Failed to fetch user data"
     );
   }
 });
-
 console.log("fetchUserData", fetchUserData);
 // Async thunk
 //  for logout

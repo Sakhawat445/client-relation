@@ -18,8 +18,8 @@ export function useDocumentsManagement() {
 
   const handleDelete = () => {
     if (!selectedCustomer) return alert("Please select a document to delete.");
-    if (selectedCustomer.id) {
-      dispatch(deleteCustomer(selectedCustomer.id));
+    if (selectedCustomer?.id) {
+      dispatch(deleteCustomer(selectedCustomer?.id));
       setSelectedCustomer(null);
     } else {
       alert("Selected customer ID is undefined.");

@@ -18,7 +18,7 @@ export default function CountryOrdersChart() {
     0
   );
 
-  const maxOrders = Math.max(...orderData.map((d) => d.orders || 0), 100);
+  const maxOrders = Math.max(...orderData?.map((d) => d.orders || 0), 100);
   const tickInterval = 25;
   const ticks = Array.from(
     { length: Math.ceil(maxOrders / tickInterval) + 1 },

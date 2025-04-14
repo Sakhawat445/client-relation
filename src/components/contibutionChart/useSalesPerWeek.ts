@@ -14,7 +14,7 @@ interface HeatMapData {
 }
 
 const useSalesPerWeek = () => {
-  const customerSales = useAppSelector((state: RootState) => state.customer.customers);
+  const customerSales = useAppSelector((state: RootState) => state.customer?.customers);
   const [data, setData] = useState<HeatMapData[]>([]);
 
   useEffect(() => {
@@ -22,9 +22,9 @@ const useSalesPerWeek = () => {
       const groupedData: Record<string, HeatMapData> = {};
 
       customerSales.forEach((customer) => {
-        const date = new Date(customer.createdDate);
-        const hour = date.getUTCHours().toString(); // Extract hour (0-23) in UTC
-        const day = date.toLocaleDateString("en-US", { weekday: "short" }) as keyof HeatMapData;
+        const date = new Date(customer?.createdDate);
+        const hour = date?.getUTCHours().toString(); // Extract hour (0-23) in UTC
+        const day = date?.toLocaleDateString("en-US", { weekday: "short" }) as keyof HeatMapData;
         const orderCount = customer.orderCount || 0; // Get order count
 
         if (!groupedData[hour]) {

@@ -26,10 +26,10 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
       <table className="w-full border-collapse text-gray-600 text-sm">
       
         <tbody>
-          {visibleCustomers.map((customer) => (
-            <tr key={customer.id} >
+          {visibleCustomers?.map((customer) => (
+            <tr key={customer?.id} >
               <td className="py-3 px-3">
-                {new Date(customer.createdDate).toLocaleDateString("en-GB", {
+                {new Date(customer?.createdDate).toLocaleDateString("en-GB", {
                   day: "2-digit",
                   month: "long",
                   year: "numeric",
@@ -37,27 +37,27 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
               </td>
               <td className="py-3 px-3 flex items-center gap-3">
                 <Image
-                  src={customer.imageURI || "/default-avatar.png"}
-                  alt={customer.name}
+                  src={customer?.imageURI || "/default-avatar.png"}
+                  alt={customer?.name}
                   width={40}
                   height={40}
                   className="rounded-full aspect-square object-cover"
                   />
-                {customer.name}
+                {customer?.name}
               </td>
               <td className="py-3 px-3">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    customer.status === "Success"
+                    customer?.status === "Success"
                       ? "bg-green-100 text-green-600"
                       : "bg-yellow-100 text-yellow-600"
                   }`}
                 >
-                  {customer.status}
+                  {customer?.status}
                 </span>
               </td>
               <td className="py-3 px-3 font-semibold">
-                ${(customer.spendings ?? 0).toFixed(2)}
+                ${(customer?.spendings ?? 0).toFixed(2)}
               </td>
             </tr>
           ))}
