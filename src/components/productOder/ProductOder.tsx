@@ -45,17 +45,18 @@ const ProductOrder: React.FC = () => {
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Best Selling Products
       </h2>
-
-      <div className="min-w-[600px]">
+<hr />  
+    <div className="min-w-[600px] mt-6">
+      
         <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b">
-              <th className="py-3 px-3 text-gray-600">Product Name</th>
-              <th className="py-3 px-3 text-gray-600">Total Order</th>
-              <th className="py-3 px-3 text-gray-600">Status</th>
-              <th className="py-3 px-3 text-gray-600">Price</th>
-            </tr>
-          </thead>
+        <thead>
+    <tr className=" bg-purple-200">
+      <th className="py-3 px-3">Product Name</th>
+      <th className="py-3 px-3">Total Order</th>
+      <th className="py-3 px-3">Status</th>
+      <th className="py-3 px-3">Price</th>
+    </tr>
+  </thead>
           <tbody>
             {updatedProducts.map((product) => (
               <ProductOrderList key={product.id} product={product} />

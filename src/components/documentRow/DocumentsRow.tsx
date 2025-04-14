@@ -82,8 +82,8 @@ export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowPr
               alt={doc.email}
               width={24}
               height={24}
-              className="rounded-full"
-            />
+              className="rounded-full aspect-square object-cover"
+              />
             <span>{doc.name}</span>
           </div>
         </td>

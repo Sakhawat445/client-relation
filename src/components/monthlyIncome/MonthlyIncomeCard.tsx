@@ -19,9 +19,9 @@ const MonthlyIncomeCard: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-4 md:w-[470px] w-full md:ml-[-130px] border border-gray-200 ">
+    <div className="bg-white rounded-2xl shadow-md p-4 w-full h-full max-w-xl mx-auto border border-gray-200 ml-3 ">
       {/* Title */}
-      <h3 className="text-lg font-semibold text-gray-800 mb-3">
+      <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
         Monthly Income
       </h3>
 
@@ -30,7 +30,7 @@ const MonthlyIncomeCard: React.FC = () => {
         <div className="w-full md:w-1/2">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="text-2xl sm:text-3xl font-bold text-gray-900">
                 ${totalIncome.toLocaleString()}
               </span>
               <p className="text-xs text-gray-500 mt-1">

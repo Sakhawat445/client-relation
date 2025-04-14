@@ -20,7 +20,7 @@ interface ProductProps {
 
 const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
   return (
-    <tr className="border-b">
+    <tr >
       {/* Product Name & Image */}
       <td className="py-3 px-3 flex items-center gap-3">
         <Image
@@ -28,7 +28,6 @@ const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
           alt={product.name}
           width={40}
           height={40}
-          className="rounded-md"
         />
         <div>
           <p className="font-medium text-gray-800">{product.name}</p>

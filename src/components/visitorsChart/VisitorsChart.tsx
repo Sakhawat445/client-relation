@@ -62,7 +62,7 @@ export default function VisitorsChart() {
   };
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md mx-auto w-full max-w-lg my-4">
+    <div className="p-4 bg-white rounded-xl shadow-md mx-auto w-full max-w-lg ">
       <h3 className="mb-5 text-xl font-semibold text-center">Visitors</h3>
 
       {/* Responsive container keeps the chart flexible */}

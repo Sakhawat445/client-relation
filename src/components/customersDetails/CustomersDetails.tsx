@@ -58,6 +58,7 @@ const CustomerList: React.FC = () => {
   
         {/* Customer List */}
         <div className="space-y-2">
+          
           {paginatedCustomers.map((customer) => (
             <CustomerRow
               key={customer.id}

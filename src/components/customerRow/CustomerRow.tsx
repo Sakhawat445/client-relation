@@ -30,8 +30,8 @@ const CustomerRow: React.FC<CustomerProps> = ({ customer, onSelect, isSelected }
           alt={customer.name}
           width={40}
           height={40}
-          className="rounded-full"
-        />
+          className="rounded-full aspect-square object-cover"
+          />
         <p className="font-medium text-gray-700">{customer.name}</p>
       </div>
 

@@ -17,16 +17,15 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg p-4 w-full shadow">
-      <h2 className="text-xl font-semibold mb-4">Products</h2>
-      <ul className="list-none m-0 p-0 space-y-4">
+      <ul className="list-none  p-3 space-y-4 bg-gray-200 ">
         {products.map((product) => (
           <li key={product.id} className="flex items-center space-x-4">
           <Image 
-    src={product.imageURL} 
-    alt={product.name} 
+          src={product.imageURL || '/default-product.png'}
+          alt={product.name} 
     width={64} 
     height={64} 
-    className="object-cover rounded-lg"
+    className="object-cover rounded-lg bg-white"
   />
             
             <div className="flex-1">

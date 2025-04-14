@@ -27,7 +27,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
       
         <tbody>
           {visibleCustomers.map((customer) => (
-            <tr key={customer.id} className="border-b">
+            <tr key={customer.id} >
               <td className="py-3 px-3">
                 {new Date(customer.createdDate).toLocaleDateString("en-GB", {
                   day: "2-digit",
@@ -41,8 +41,8 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
                   alt={customer.name}
                   width={40}
                   height={40}
-                  className="rounded-full"
-                />
+                  className="rounded-full aspect-square object-cover"
+                  />
                 {customer.name}
               </td>
               <td className="py-3 px-3">

@@ -14,6 +14,7 @@ import CustomerDetails from "../customersDetails/CustomersDetails";
 
 export default function Customer() {
   return (
+    <>
     <div className="flex flex-col md:flex-row bg-gray-100 min-h-screen">
       {/* Sidebar: always visible on all screens, fixed width */}
       <aside className="w-full md:w-[250px] ">
@@ -51,8 +52,9 @@ export default function Customer() {
         </main>
 
         {/* Footer */}
-        <Footer />
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

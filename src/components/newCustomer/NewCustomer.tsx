@@ -46,8 +46,8 @@ const NewCustomers = () => {
       </div>
 
       {/* Table Header */}
-      <div className="overflow-x-auto bg-gray-100 rounded-md p-2 mb-2">
-        <table className="min-w-full text-left text-gray-600 text-sm">
+      <div className="overflow-x-auto rounded-md p-2 mb-2">
+        <table className="min-w-full text-left  text-sm">
           <thead>
             <tr className="bg-purple-100 text-gray-700">
               <th className="py-2 px-3 whitespace-nowrap">Date</th>

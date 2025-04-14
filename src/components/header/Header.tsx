@@ -28,30 +28,52 @@ const Header: React.FC = () => {
   // If on dashboard, render the default header as in the old code
   if (isDashboard) {
     return (
-      <header className="flex items-center justify-between p-4">
-        <div className="flex  gap-3">
-          {user?.imageURL && (
+      <header className="flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-md">
+        {/* Left: Avatar + Welcome Message */}
+        <div className="flex items-center gap-4  p-4 rounded-md">
+          {user?.imageURL ? (
             <Image
-              src={user.imageURL || '/default-avatar.png'}
-              alt="User Avatar"
-              width={40}
-              height={40}
+              src={user.imageURL}
+              alt="Avatar"
+              width={60}
+              height={60}
+              className="rounded-full aspect-square object-cover"
+            />
+          ) : (
+            <Image
+              src="/default-avatar.png"
+              alt="Default Avatar"
+              width={60}
+              height={60}
               className="rounded-full border"
             />
           )}
-          <span className="font-medium text-gray-700">
-            Welcome back, {user?.name || 'User'}
-          </span>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800">
+              Welcome Back,{' '}
+              <span className="text-purple-600">
+                {user?.name || 'User'}
+              </span>
+            </h2>
+            <p className="text-sm text-gray-500 mt-1">
+              Here are your monthly store updates.
+            </p>
+          </div>
         </div>
-        <div className="relative w-64">
+
+        {/* Right: Search Bar (hidden on small screens) */}
+        <div className="relative hidden md:flex w-full md:w-80 mt-4 md:mt-0 rounded-md overflow-hidden border border-gray-300">
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Type here"
             value={search}
             onChange={handleSearchChange}
-            className="w-full p-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 px-4 py-2 text-sm focus:outline-none"
           />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          <button className="flex items-center justify-center gap-1 px-4 bg-purple-500 text-white text-sm font-medium">
+            <Search size={16} />
+            Search
+          </button>
         </div>
       </header>
     );
@@ -59,7 +81,7 @@ const Header: React.FC = () => {
 
   // For other pages, render the header with the page name and updated user profile info.
   return (
-    <header className="flex items-center justify-between p-10 ">
+    <header className="flex items-center justify-between p-10">
       {/* Left side - display page name */}
       <div>
         <h1 className="text-xl font-bold">{pageName || 'Page'}</h1>
@@ -71,9 +93,9 @@ const Header: React.FC = () => {
           <Image
             src={user.imageURL}
             alt="User Avatar"
-            width={40}
-            height={40}
-            className="rounded-full border"
+            width={50}
+            height={50}
+            className="rounded-full aspect-square object-cover"
           />
         ) : (
           <Image

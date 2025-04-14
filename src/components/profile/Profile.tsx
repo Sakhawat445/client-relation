@@ -109,27 +109,6 @@ const Profile = () => {
       <h2 className="text-2xl font-bold mb-4">Profile</h2>
 
       {/* Display Current Profile Info */}
-      <div className="mb-6">
-        <div className="flex items-center space-x-4">
-          {imagePreview ? (
-            <Image
-              src={imagePreview}
-              width={64}
-              height={64}
-              alt="Profile"
-              className="rounded-full"
-            />
-          ) : (
-            <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded-full">
-              No Image
-            </div>
-          )}
-          <div>
-            <p className="font-bold">{username}</p>
-            <p className="text-sm text-gray-600">{user.email}</p>
-          </div>
-        </div>
-      </div>
       
       {/* Image Upload Section */}
       <div className="flex flex-col items-center mb-6">

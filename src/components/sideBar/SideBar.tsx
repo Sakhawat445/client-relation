@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -28,7 +28,7 @@ const Sidebar: React.FC = () => {
     <>
       {/* Mobile toggle button */}
       <button
-        className="md:hidden fixed top-5 right-5 z-50 bg-purple-500 p-5 rounded  ml-7"
+        className="md:hidden fixed top-5 right-5 z-50 bg-purple-500 p-5 rounded ml-7"
         onClick={toggleSidebar}
       >
         {isOpen ? <X className="text-white" /> : <Menu className="text-white" />}
@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={` fixed rounded w-64 mt-10 ml-4 bg-white shadow-md p-5 flex flex-col z-40 transform transition-transform duration-300
+        className={`fixed rounded w-64 mt-10 ml-4 bg-white h-144 shadow-md p-5 flex flex-col z-40 transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:flex`}
       >
         <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>

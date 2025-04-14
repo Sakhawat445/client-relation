@@ -7,12 +7,12 @@ import Footer from "../footer/Footer";
 import ProductOrder from "../productOder/ProductOder";
 import SalesStatistic from "../salesStatistic/SalesStatistic";
 import CountrySalesStatistics from "../countrySales/CountrySalesStatistics";
-import { useSidebar } from "../sideBar/useSideBar";
 
 export default function Order() {
-  useSidebar(); // Reflects sidebar toggle state
 
   return (
+    <>
+
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       {/* Hide sidebar on small screens, show from md and up */}
@@ -47,10 +47,9 @@ export default function Order() {
         </div>
 
         {/* Footer */}
-        <div className="mt-auto px-6 py-4 bg-white shadow">
-          <Footer />
-        </div>
       </div>
     </div>
+          <Footer />
+    </>
   );
 }
