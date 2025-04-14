@@ -42,7 +42,6 @@ const CountrySalesStatistics = () => {
     <div className="p-4 sm:p-6 bg-white rounded-xl shadow-md mt-6 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto">
       <h2 className="text-lg sm:text-xl font-semibold text-center mb-4">Country Sales Statistics</h2>
 
-      {/* Responsive Map */}
       <div className="w-full overflow-x-auto">
         <ComposableMap projection="geoMercator" width={600} height={300}>
           <Geographies geography={geoUrl}>
@@ -75,13 +74,11 @@ const CountrySalesStatistics = () => {
         </ComposableMap>
       </div>
 
-      {/* Sales Summary */}
       <div className="mt-4 text-center">
         <h3 className="text-xl sm:text-2xl font-bold">{totalOrders.toLocaleString()} Orders</h3>
         <span className="text-green-500 text-sm">+5.6%</span>
       </div>
 
-      {/* Sales List */}
       <div className="mt-4 space-y-3">
         {salesData.map(({ country, sales }) => (
           <div key={country} className="flex justify-between items-center border-b py-2">

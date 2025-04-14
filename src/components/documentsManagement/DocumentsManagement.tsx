@@ -27,9 +27,7 @@ export default function DocumentManagement() {
 
   return (
     <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
-      {/* Header Section */}
       <div className="flex flex-col gap-4 mb-5 lg:flex-row lg:items-center lg:justify-between">
-        {/* Tabs */}
         <div className="flex gap-2 sm:gap-4 text-sm font-medium border-b border-gray-300 overflow-x-auto pb-2">
           {["All", "Active", "Archive"].map((tab) => (
             <button
@@ -41,7 +39,6 @@ export default function DocumentManagement() {
           ))}
         </div>
 
-        {/* Search & Buttons */}
         <div className="flex flex-col sm:flex-row gap-2 sm:items-center w-full sm:w-auto">
           <div className="relative hidden md:flex w-full md:w-80 rounded-md overflow-hidden border border-gray-300">
             <input
@@ -68,7 +65,6 @@ export default function DocumentManagement() {
         </div>
       </div>
 
-      {/* Table Section */}
       {documents === null ? (
         <p className="text-center text-sm text-gray-500">Loading...</p>
       ) : error ? (
@@ -103,7 +99,6 @@ export default function DocumentManagement() {
             </div>
           </div>
 
-          {/* Pagination */}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm gap-2">
             <p className="text-center sm:text-left">
               Showing {(currentPage - 1) * 10 + 1} to{" "}

@@ -3,8 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params; // Extracts the customer ID from the URL
-  console.log("params", params);
+  const { id } = params;  
 
   if (!id) {
     return NextResponse.json({ error: 'Invalid customer id' }, { status: 400 });
@@ -13,7 +12,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   try {
     await prisma.customer.delete({
       where: { id },
-    }); // Deletes the customer from the database
+    });  
     return NextResponse.json({ message: 'Customer deleted successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error deleting customer:', error);

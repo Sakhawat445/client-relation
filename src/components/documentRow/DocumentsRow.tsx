@@ -47,7 +47,6 @@ export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowPr
   }
 
   const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
-  console.log("Document Row", doc);
 
   return (
     <>

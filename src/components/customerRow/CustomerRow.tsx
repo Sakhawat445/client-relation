@@ -13,7 +13,6 @@ interface CustomerProps {
 const CustomerRow: React.FC<CustomerProps> = ({ customer, onSelect, isSelected }) => {
   return (
     <div className="flex items-center bg-white p-4 rounded-lg shadow-md w-full">
-      {/* Radio Button (Only One Can Be Selected) */}
       <input
   type="radio"
   name="customerSelection"
@@ -23,7 +22,6 @@ const CustomerRow: React.FC<CustomerProps> = ({ customer, onSelect, isSelected }
   onChange={() => customer.id && onSelect(customer.id)}
 />
 
-      {/* Profile Image & Name */}
       <div className="flex items-center gap-3 flex-1">
         <Image
           src={customer.imageURI || "/default-avatar.png"}
@@ -35,16 +33,12 @@ const CustomerRow: React.FC<CustomerProps> = ({ customer, onSelect, isSelected }
         <p className="font-medium text-gray-700">{customer.name}</p>
       </div>
 
-      {/* Email */}
       <p className="text-gray-500 flex-1">{customer.email}</p>
 
-      {/* Phone */}
       <p className="text-gray-500 flex-1">{customer.contactNumber}</p>
 
-      {/* Address */}
       <p className="text-gray-500 flex-1">{customer.address}</p>
 
-      {/* Status Badge */}
       <span
         className={`px-3 py-1 text-sm font-medium rounded-full ${
           customer.status === "Online"

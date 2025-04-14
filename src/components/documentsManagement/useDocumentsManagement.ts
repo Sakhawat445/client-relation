@@ -1,4 +1,3 @@
-// components/document/useDocumentsManagement.ts
 
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";

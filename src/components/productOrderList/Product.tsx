@@ -21,7 +21,6 @@ interface ProductProps {
 const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
   return (
     <tr >
-      {/* Product Name & Image */}
       <td className="py-3 px-3 flex items-center gap-3">
         <Image
           src={product.imageURL || "/placeholder.png"}
@@ -35,13 +34,11 @@ const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
         </div>
       </td>
 
-      {/* Total Orders */}
       <td className="py-3 px-3">
         <p className="text-gray-800 font-medium">{product.orderCount} pcs</p>
         <p className="text-sm text-gray-500">{product.orderDate}</p>
       </td>
 
-      {/* Status */}
       <td className="py-3 px-3">
         <span
           className={`px-3 py-1 text-sm font-medium rounded-full ${
@@ -54,7 +51,6 @@ const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
         </span>
       </td>
 
-      {/* Price */}
       <td className="py-3 px-3 font-semibold text-gray-800">
         ${product.price.toFixed(2)}
       </td>

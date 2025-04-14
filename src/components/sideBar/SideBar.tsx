@@ -26,7 +26,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* Mobile toggle button */}
       <button
         className="md:hidden fixed top-5 right-5 z-50 bg-purple-500 p-5 rounded ml-7"
         onClick={toggleSidebar}
@@ -34,7 +33,6 @@ const Sidebar: React.FC = () => {
         {isOpen ? <X className="text-white" /> : <Menu className="text-white" />}
       </button>
 
-      {/* Sidebar */}
       <div
         className={`fixed rounded w-64 mt-10 ml-4 bg-white h-144 shadow-md p-5 flex flex-col z-40 transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:flex`}
@@ -50,7 +48,7 @@ const Sidebar: React.FC = () => {
                 }`}
                 onClick={() => {
                   setActive(item.name);
-                  toggleSidebar(); // auto-close sidebar on mobile
+                  toggleSidebar();  
                 }}
               >
                 {item.icon}

@@ -6,17 +6,14 @@ import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useHeader } from './useHeader';
 
-// Utility function to capitalize the first letter of a string
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const Header: React.FC = () => {
   const { user, search, handleSearchChange } = useHeader();
   const pathname = usePathname();
 
-  // Check if we are on the dashboard page
   const isDashboard = pathname === '/dashboard';
 
-  // For non-dashboard pages, compute the page name
   let pageName = '';
   if (!isDashboard) {
     const segments = pathname.split('/').filter(Boolean);
@@ -25,11 +22,9 @@ const Header: React.FC = () => {
     }
   }
 
-  // If on dashboard, render the default header as in the old code
   if (isDashboard) {
     return (
       <header className="flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-md">
-        {/* Left: Avatar + Welcome Message */}
         <div className="flex items-center gap-4  p-4 rounded-md">
           {user?.imageURL ? (
             <Image
@@ -61,7 +56,6 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Right: Search Bar (hidden on small screens) */}
         <div className="relative hidden md:flex w-full md:w-80 mt-4 md:mt-0 rounded-md overflow-hidden border border-gray-300">
           <input
             type="text"
@@ -79,15 +73,12 @@ const Header: React.FC = () => {
     );
   }
 
-  // For other pages, render the header with the page name and updated user profile info.
   return (
     <header className="flex items-center justify-between p-10">
-      {/* Left side - display page name */}
       <div>
         <h1 className="text-xl font-bold">{pageName || 'Page'}</h1>
       </div>
 
-      {/* Right side - display user profile info with larger image */}
       <div className="flex items-center gap-3">
         {user?.imageURL ? (
           <Image

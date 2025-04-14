@@ -13,10 +13,8 @@ const NewPasswordPage: React.FC = () => {
   const { password, confirmPassword, setPassword, setConfirmPassword, handleSubmit, error, loading } = useNewPassword();
 
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("Updating password...");
 
     const success = await handleSubmit(e);
-    console.log("Password update success:", success);
 
     if (success) {
       toast.success("Password updated successfully! Redirecting to login...", {

@@ -111,7 +111,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
         }
 
         const result = await response.json();
-        console.log('Upload successful:', result);
 
         if (name === 'image') {
           setFormData((prev) => ({ ...prev, imageURI: result.url }));
@@ -228,7 +227,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
               label="Email"
             />
 
-            {/* Custom Image Upload Square for Profile Image */}
             <div>
               <input
                 id={`imageUploadInput-${isEditModal ? 'edit' : 'add'}`}
@@ -285,7 +283,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
             label="Email"
           />
 
-          {/* Custom Image Upload Square */}
           <div>
             <label className="block mb-1">Profile Image</label>
             <div

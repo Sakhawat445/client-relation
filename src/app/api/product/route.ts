@@ -3,10 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-/**
- * GET  /product
- * Returns all products from the database.
- */
+
 export async function GET() {
   try {
     const products = await prisma.product.findMany();
@@ -20,17 +17,11 @@ export async function GET() {
   }
 }
 
-/**
- * POST /product
- * Creates a new product in the database.
- * Expects JSON body: { name, price, stock, companyName, imageURL? }
- */
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { name, price, stock, companyName, imageURL } = body;
 
-    // Create the product using Prisma
     const newProduct = await prisma.product.create({
       data: {
         name,

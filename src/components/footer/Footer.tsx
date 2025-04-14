@@ -7,15 +7,12 @@ const Footer = () => {
   return (
     <footer className="w-full mt-4 bg-white py-8  border-gray-300">
       <div className="mx-auto px-4">
-        {/* Top section: logo/tagline + nav */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* Logo and tagline */}
           <div className="text-center md:text-left">
             <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>
             <p className="mt-1 text-xs">Crafting Connections, One Customer at a Time.</p>
           </div>
 
-          {/* Navigation links */}
           <nav className="flex flex-wrap justify-center gap-3 text-gray-700 text-sm">
             <Link href="/dashboard" className="hover:text-indigo-600">
               Dashboard
@@ -35,7 +32,6 @@ const Footer = () => {
           </nav>
         </div>
 
-        {/* Social media icons */}
         <div className="flex justify-center md:justify-end mt-6 gap-4 border-t-0 md:border-t pt-0 md:pt-6">
           <a
             href="https://facebook.com"
@@ -66,7 +62,6 @@ const Footer = () => {
           </a>
         </div>
 
-        {/* Bottom info row */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-gray-500 text-xs gap-2 text-center">
           <Link href="/privacy-policy" className="hover:text-indigo-600">
             Privacy Policy

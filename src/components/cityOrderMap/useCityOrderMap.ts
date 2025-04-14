@@ -1,7 +1,7 @@
 import { useAppSelector, RootState } from "@/redux/store";
 
 interface StateOrderData {
-Country: string;  // Using "country" as "state" for map consistency
+Country: string; 
   orderCount: number;
   date: string;
 }
@@ -16,21 +16,20 @@ export const useCityOrders = (): StateOrderData[] => {
   orders.forEach((order) => {
     if (!order.address) return;
 
-    // Extract city and country from address
     const addressParts = order.address.split(",").map((part) => part.trim());
-    const country = addressParts.length > 1 ? addressParts[1] : addressParts[0]; // Get country
+    const country = addressParts.length > 1 ? addressParts[1] : addressParts[0]; 
 
-    if (!country) return; // Skip if country is missing
+    if (!country) return; 
 
     if (!stateOrderMap[country]) {
       stateOrderMap[country] = {
-        Country: country, // Treating country as state for mapping
+        Country: country, 
         orderCount: 0,
         date: order.createdDate || new Date().toISOString(),
       };
     }
 
-    // Sum up order counts per country (state)
+  
     stateOrderMap[country].orderCount+= order.orderCount || 0;
   });
 

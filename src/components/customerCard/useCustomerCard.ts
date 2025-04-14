@@ -9,10 +9,9 @@ export const useCustomerCard = () => {
 
   useEffect(() => {
     if (!customers || customers?.length === 0) {
-      dispatch(fetchCustomers()); // dispatch fetch if empty
+      dispatch(fetchCustomers());
     }
   }, [customers, dispatch]);
 
-  console.log("customers:>>", customers);
   return customers ? customers.length : 0;
 };

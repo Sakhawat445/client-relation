@@ -1,21 +1,21 @@
 "use client";
 
-import InputField from "@/components/input/InputField"; // Correct import
-import Button from "@/components/button/Button"; // Correct import
-import useRegisterForm from "./useRegisterForm"; // Import the custom hook
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
-import { toast, ToastContainer } from "react-toastify"; // Import toast for notifications
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import InputField from "@/components/input/InputField";
+import Button from "@/components/button/Button"; 
+import useRegisterForm from "./useRegisterForm";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterForm = () => {
   const { form, loading, formError, handleChange, handleSubmit } = useRegisterForm();
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const onSuccessfulRegister = () => {
-    toast.success("Registration successful! Redirecting to login..."); // Show success toast
+    toast.success("Registration successful! Redirecting to login..."); 
     setTimeout(() => {
-      router.push("/login"); // Navigate to login page after a delay
-    }, 3000); // 3 seconds delay
+      router.push("/login"); 
+    }, 3000); 
   };
 
   return (
@@ -65,7 +65,7 @@ const RegisterForm = () => {
           Already registered?{" "}
           <span
             className="text-blue-500 cursor-pointer hover:underline"
-            onClick={() => router.push("/login")} // Navigate to login page
+            onClick={() => router.push("/login")}
           >
             Login here
           </span>

@@ -16,7 +16,7 @@ const useRegisterForm = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, onSuccess: () => void) => {
     e.preventDefault();
-    setFormError(null); // Clear previous errors
+    setFormError(null);
   
     if (!form.name || !form.email || !form.password) {
       setFormError("All fields are required.");
@@ -27,7 +27,7 @@ const useRegisterForm = () => {
     try {
       const resultAction = await dispatch(registerUser(form));
       if (registerUser.fulfilled.match(resultAction)) {
-        onSuccess(); // Navigate to another page if needed
+        onSuccess(); 
       } else {
         setFormError((resultAction.payload as string) || "Registration failed");
       }

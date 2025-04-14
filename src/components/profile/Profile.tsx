@@ -28,7 +28,6 @@ const Profile = () => {
     <div className="max-w-lg mx-auto mt-10 p-6 border rounded-lg shadow-lg bg-white">
       <h2 className="text-2xl font-bold mb-4">Profile</h2>
 
-      {/* Image Upload Section */}
       <div className="flex flex-col items-center mb-6">
         <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300 flex items-center justify-center">
           {imagePreview ? (

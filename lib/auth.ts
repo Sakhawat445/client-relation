@@ -36,7 +36,7 @@ export const authOptions: AuthOptions = {
 
         const user = await prisma.user.findFirst({
           where: { email: credentials.email },
-          select: { id: true, name: true, email: true, password: true, }, // ✅ Explicitly select the role field
+          select: { id: true, name: true, email: true, password: true, },
         });
 
         if (!user || !user.password) {
@@ -72,7 +72,7 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as "ADMIN" | "EMPLOYEE"; // ✅ Fix role mapping
+        session.user.role = token.role as "ADMIN" | "EMPLOYEE"; 
       }
       return session;
     },

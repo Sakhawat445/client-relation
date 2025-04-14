@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import  prisma  from "./../../../../../lib/prisma"; // Ensure correct import path
+import  prisma  from "./../../../../../lib/prisma"; 
 import { getServerSession } from "next-auth";
-import { authOptions } from "./../../../../../lib/auth"; // Ensure correct import path
+import { authOptions } from "./../../../../../lib/auth"; 
 
 export async function POST(req: Request) {
   try {
@@ -31,40 +31,6 @@ export async function POST(req: Request) {
   }
 }
 
-
-// export async function PUT(req: Request) {
-//   try {
-//     const session = await getServerSession(authOptions);
-    
-//     if (!session?.user?.email) {
-//       return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
-//     }
-
-//     const { name,imageURL } = await req.json();
-
-//     if (!name) {
-//       return NextResponse.json({ message: "Name is required" }, { status: 400 });
-//     }
-
-//     const updatedUser = await prisma.user.update({
-//       where: { email: session.user.email },
-//       data: { name, imageURL },
-//     });
-
-//     return NextResponse.json(
-//       { message: "Profile updated successfully", user: updatedUser },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { message: "Internal Server Error" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// In your PUT endpoint (/api/auth/register)
 export async function PUT(req: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -76,7 +42,6 @@ export async function PUT(req: Request) {
     }
 
     const { name, imageURL } = await req.json();
-    console.log('Received update data:', { name, imageURL });
 
     if (!name) {
       return NextResponse.json(
@@ -89,11 +54,10 @@ export async function PUT(req: Request) {
       where: { email: session.user.email as string },
       data: { 
         name, 
-        imageURL // Make sure this is being saved
+        imageURL 
       },
     });
 
-    console.log('Updated user in database:', updatedUser);
     
     return NextResponse.json(
       { 

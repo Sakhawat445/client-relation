@@ -16,7 +16,6 @@ const SalesChart = () => {
 
   return (
     <div className="p-4 bg-white rounded-xl shadow-md w-full max-w-3xl mx-auto">
-      {/* Overall Sales Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-4">
         <div>
           <h2 className="text-lg font-semibold">Overall Sales</h2>
@@ -33,7 +32,6 @@ const SalesChart = () => {
         </span>
       </div>
 
-      {/* Line Chart */}
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={salesData}>
           <CartesianGrid strokeDasharray="3 3" />

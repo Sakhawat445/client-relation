@@ -3,7 +3,6 @@ import React from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
 
-// Sample Data - Replace this with your actual API data
 const stateData = [
   { id: "06", state: "California", members: 80, nonMembers: 20 },
   { id: "08", state: "Colorado", members: 40, nonMembers: 60 },
@@ -13,7 +12,6 @@ const stateData = [
   { id: "56", state: "Wyoming", members: 55, nonMembers: 45 },
 ];
 
-// Define color scale
 const colorScale = scaleQuantile<string>()
   .domain(stateData.map((d) => d.members))
   .range(["#E5D4FF", "#8B5CF6"]);
@@ -23,7 +21,6 @@ const CustomerDemographics: React.FC = () => {
     <div className="bg-white shadow-md rounded-lg p-4 w-full mb-7">
       <h2 className="text-lg font-semibold mb-2">Customer Demographic</h2>
 
-      {/* Reduced and centered map container */}
       <div className="relative mx-auto max-w-xl h-[300px]">
         <ComposableMap
           projection="geoAlbersUsa"
@@ -51,7 +48,6 @@ const CustomerDemographics: React.FC = () => {
         </ComposableMap>
       </div>
 
-      {/* Responsive Legend */}
       <div className="flex flex-col md:flex-row justify-center items-center mt-4 space-x-0 md:space-x-4 space-y-2 md:space-y-0">
         <div className="flex items-center">
           <span className="w-4 h-4 bg-purple-700 inline-block rounded-full"></span>

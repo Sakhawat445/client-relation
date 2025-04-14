@@ -22,7 +22,6 @@ const CityOrderMap: React.FC = () => {
 
   const stateOrders: { [key: string]: number } = {
     Colorado: 1567,
-    // Add more states here
   };
 
   return (
@@ -31,7 +30,6 @@ const CityOrderMap: React.FC = () => {
         City Order Statistics
       </h2>
 
-      {/* Map container */}
       <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-[20rem] overflow-hidden">
         <ComposableMap
           projection="geoAlbersUsa"
@@ -77,7 +75,6 @@ const CityOrderMap: React.FC = () => {
           </ZoomableGroup>
         </ComposableMap>
 
-        {/* Tooltip */}
         {tooltipData && (
           <div
             className="absolute z-10 bg-white shadow-xl p-3 rounded-lg w-40 text-sm transform -translate-x-1/2 -translate-y-full"
@@ -93,7 +90,6 @@ const CityOrderMap: React.FC = () => {
         )}
       </div>
 
-      {/* Zoom Buttons */}
       <div className="absolute bottom-4 left-4 flex flex-col space-y-2">
         <button
           onClick={handleZoomIn}
@@ -109,7 +105,6 @@ const CityOrderMap: React.FC = () => {
         </button>
       </div>
 
-      {/* Reset Zoom */}
       <div className="absolute bottom-4 right-4">
         <button
           onClick={() => setZoom(1)}

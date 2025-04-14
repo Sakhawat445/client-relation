@@ -23,7 +23,7 @@ const useLoginForm = () => {
     if (loginUser.fulfilled.match(resultAction)) {
       toast.success("User logged in successfully!", {
         position: "top-right",
-        autoClose: 2000, // Close the toast after 2 seconds
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

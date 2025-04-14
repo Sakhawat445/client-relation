@@ -20,7 +20,6 @@ const SalesStatistic = () => {
     <div className="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-4 sm:p-6 md:p-8">
       <h2 className="text-lg sm:text-xl font-semibold mb-4">Sales Statistic</h2>
 
-      {/* Totals Section */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
         <div>
           <p className="text-gray-500">Total Revenue</p>
@@ -39,7 +38,6 @@ const SalesStatistic = () => {
         </div>
       </div>
 
-      {/* Chart Section */}
       <div className="mt-6 h-[300px] sm:h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart

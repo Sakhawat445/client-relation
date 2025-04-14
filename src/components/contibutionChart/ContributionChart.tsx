@@ -9,8 +9,6 @@ const dayOfWeek = currentDate.getDay();
 const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 const startOfWeek = new Date(currentDate);
 startOfWeek.setDate(currentDate.getDate() - daysToMonday);
-
-// Generate week labels and date strings
 const weekLabels: string[] = [];
 const weekDates: string[] = [];
 

@@ -1,10 +1,9 @@
 import React from "react";
-import { useTotalOrders } from "./useTargetOrder"; // Ensure correct path
+import { useTotalOrders } from "./useTargetOrder";
 
 const TotalOrderCard: React.FC = () => {
-  const { totalOrders, completedOrders } = useTotalOrders(); // Get both values
+  const { totalOrders, completedOrders } = useTotalOrders(); 
 
-  // Calculate percentage
   const percentage = totalOrders > 0 ? Math.min((completedOrders / totalOrders) * 100, 100) : 0;
 
   return (

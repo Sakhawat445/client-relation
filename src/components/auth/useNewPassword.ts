@@ -21,7 +21,6 @@ const useNewPassword = () => {
     }
 
     const token = new URLSearchParams(window.location.search).get("token");
-    console.log("Reset Token:", token);
     
     if (!token) {
       setError("Invalid or expired token.");
@@ -39,10 +38,10 @@ const useNewPassword = () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Failed to update password");
 
-      return true; // Success
+      return true; 
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An unknown error occurred");
-      return false; // Failure
+      return false; 
     } finally {
       setLoading(false);
     }

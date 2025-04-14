@@ -8,11 +8,11 @@ import type { AppDispatch } from '@/redux/store';
 
 export const useSidebar = () => {
   const [active, setActive] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false); // ✅ Add isOpen state
+  const [isOpen, setIsOpen] = useState<boolean>(false); 
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const toggleSidebar = () => setIsOpen((prev) => !prev); // ✅ Add toggle function
+  const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   const handleLogout = () => {
     dispatch(logoutUser());

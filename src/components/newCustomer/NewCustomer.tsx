@@ -14,7 +14,6 @@ const NewCustomers = () => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-full sm:max-w-3xl md:max-w-5xl mx-auto mt-4">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
         <h2 className="text-lg font-semibold">New Customers</h2>
 
@@ -45,7 +44,6 @@ const NewCustomers = () => {
         </div>
       </div>
 
-      {/* Table Header */}
       <div className="overflow-x-auto rounded-md p-2 mb-2">
         <table className="min-w-full text-left  text-sm">
           <thead>
@@ -59,10 +57,8 @@ const NewCustomers = () => {
         </table>
       </div>
 
-      {/* Customer List */}
       <CustomerList currentPage={currentPage} itemsPerPage={6} />
 
-      {/* Pagination */}
       <div className="flex flex-wrap justify-center gap-2 mt-4">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
@@ -77,7 +73,6 @@ const NewCustomers = () => {
         ))}
       </div>
 
-      {/* Modal */}
       <CustomerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );

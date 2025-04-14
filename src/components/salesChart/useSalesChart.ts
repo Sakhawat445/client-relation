@@ -8,7 +8,7 @@ interface SalesData {
 }
 
 export const useSalesData = () => {
-  const customers = useAppSelector((state: RootState) => state.customer?.customers); // 🔥 Get customers from Redux
+  const customers = useAppSelector((state: RootState) => state.customer?.customers); 
 
   const [salesData, setSalesData] = useState<SalesData[]>([]);
   const [totalSales, setTotalSales] = useState<number>(0);
@@ -22,26 +22,20 @@ export const useSalesData = () => {
       const twoWeeksAgo = new Date(today);
       twoWeeksAgo.setDate(today.getDate() - 14);
 
-      // 🔥 Separate customers based on date ranges
       const currentWeekCustomers = customers?.filter((customer) => new Date(customer?.createdDate) >= oneWeekAgo);
       const lastWeekCustomers = customers?.filter(
         (customer) => new Date(customer?.createdDate) >= twoWeeksAgo && new Date(customer?.createdDate) < oneWeekAgo
       );
 
-      // 🔥 Calculate total sales for the current week
       const currentWeekTotal = currentWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
 
-      // 🔥 Calculate total sales for last week
       const lastWeekTotal = lastWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
 
-      // 🔥 Set total sales for the current week
       setTotalSales(currentWeekTotal);
 
-      // 🔥 Calculate percentage change from last week
       const percentage = lastWeekTotal > 0 ? ((currentWeekTotal - lastWeekTotal) / lastWeekTotal) * 100 : 0;
       setPercentageChange(percentage);
 
-      // 🔥 Group sales data by date
       const groupedData: Record<string, { currentWeek: number; lastWeek: number }> = {};
 
       customers.forEach((customer) => {
@@ -61,7 +55,6 @@ export const useSalesData = () => {
         }
       });
 
-      // Convert grouped data to an array for the chart
       const formattedData = Object.entries(groupedData)?.map(([date, values]) => ({
         date,
         ...values,

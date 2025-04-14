@@ -12,7 +12,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid request" }, { status: 400 });
     }
 
-    // Find user by reset token
     const user = await prisma.user.findFirst({
       where: {
         reset_token: token,
@@ -20,7 +19,6 @@ export async function POST(req: Request) {
       },
     });
     
-    console.log("User found:", user); // Debugging line
     
     if (!user) {
       return NextResponse.json({ message: "Invalid or expired token" }, { status: 400 });
@@ -33,11 +31,10 @@ export async function POST(req: Request) {
       data: { password: hashedPassword, reset_token: null, reset_token_expiration: null },
     });
     
-    console.log("Password updated successfully"); // Debugging line
 
     return NextResponse.json({ message: "Password updated successfully" }, { status: 200 });
   } catch (error) {
-    console.error("Error updating password:", error); // Debugging line
+    console.error("Error updating password:", error);   
     return NextResponse.json(
       { message: "Something went wrong", error: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }

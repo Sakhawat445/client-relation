@@ -85,10 +85,6 @@ const useProfile = () => {
     }
   };
 
-  console.log("User data in useProfile:", user);
-  console.log("Image preview URL:", imagePreview);
-  console.log("User image URL:", user?.imageURL);
-  console.log("User data:", user);
 
   return {
     user,

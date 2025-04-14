@@ -2,7 +2,7 @@ export type User = {
     id: string;
     name: string;
     email: string;
-    imageURL?: string; // Add this line
+    imageURL?: string; 
   }
 
   export  type Customer ={
@@ -13,14 +13,14 @@ export type User = {
     orderCount?: number;
     spendings?: number;
     documentURL?: string;
-    createdDate: string; // or Date, depending on your schema
+    createdDate: string; 
     status: string;
     address: string;
     contactNumber: number;
     deviceType: string;
     selectedProduct?: string;
-    productType?: string; // Added productType property
-    product?: { id: string; name: string }; // Add this property
+    productType?: string;
+    product?: { id: string; name: string }; 
 
   }
 

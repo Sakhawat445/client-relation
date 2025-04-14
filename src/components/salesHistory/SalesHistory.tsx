@@ -29,9 +29,7 @@ const SalesHistory: React.FC = () => {
       <h2 className="text-lg font-semibold text-gray-800 mb-3">Sales History</h2>
       <p className="text-sm text-gray-500 mb-4">RECENT</p>
 
-      {/* Pagination Bar */}
       <div className="flex flex-wrap justify-center items-center mb-4 gap-2">
-        {/* Left Arrow */}
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -41,7 +39,6 @@ const SalesHistory: React.FC = () => {
           &lt;
         </button>
 
-        {/* Numbered Buttons */}
         {Array.from({ length: Math.min(totalPages, 6) }, (_, i) => i + 1).map(
           (pageNumber) => (
             <button
@@ -59,7 +56,6 @@ const SalesHistory: React.FC = () => {
           )
         )}
 
-        {/* Right Arrow */}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
@@ -70,7 +66,6 @@ const SalesHistory: React.FC = () => {
         </button>
       </div>
 
-      {/* Customer List */}
       <ul className="space-y-4">
         {currentCustomers.map((customer) => (
           <SalesHistoryList

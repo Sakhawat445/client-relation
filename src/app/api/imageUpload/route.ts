@@ -1,4 +1,3 @@
-// api/upload/route.ts
 import { uploadFile } from "@/utils/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,14 +8,13 @@ export async function POST(req: NextRequest) {
     const filenameEntry = formData.get("filename");
     const sampleFilename = typeof filenameEntry === "string" 
       ? filenameEntry.split('.').slice(0, -1).join('.') 
-      : null; // Get filename from request
+      : null;
 
     if (!file) {
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
 
     if (!sampleFilename) {
-      console.log('=> ',sampleFilename)
       return NextResponse.json(
         {  error: "Filename not provided" },
         { status: 400 }
@@ -30,10 +28,9 @@ export async function POST(req: NextRequest) {
       format: string;
     };
 
-    console.log(formData)
     return NextResponse.json(
       {
-        filename: sampleFilename, // Return the sample filename provided
+        filename: sampleFilename, 
         public_id: res.public_id,
         url: res.secure_url,
         format: res.format,

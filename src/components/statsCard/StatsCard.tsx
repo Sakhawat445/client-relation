@@ -11,7 +11,7 @@ interface StatsCardProps {
   amount: string | number;
   percentage: string | number;
   isPositive: boolean;
-  chartData: ChartData<"line", number[], string>; // Correctly type the chart data for a line chart
+  chartData: ChartData<"line", number[], string>;
   icon: ReactNode;
   bgColor: string;
 }
@@ -32,7 +32,6 @@ const StatsCard: FC<StatsCardProps> = ({
         <h3 className="text-gray-700 font-medium">{title}</h3>
       </div>
 
-      {/* Amount & Percentage */}
       <div className="flex items-center justify-between mt-2">
         <h2 className="text-2xl font-bold text-gray-900">{amount}</h2>
         <span
@@ -44,7 +43,6 @@ const StatsCard: FC<StatsCardProps> = ({
         </span>
       </div>
 
-      {/* Chart */}
       <div className="mt-3">
         <Line data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
       </div>

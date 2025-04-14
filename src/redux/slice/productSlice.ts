@@ -1,4 +1,3 @@
-// productSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Product } from '@/types/types';
 import axios from 'axios';
@@ -14,7 +13,6 @@ const initialState: ProductState = {
   error: null,
 };
 
-// GET all products
 export const fetchProducts = createAsyncThunk<Product[]>(
   'products/fetchProducts',
   async () => {
@@ -27,7 +25,6 @@ export const fetchProducts = createAsyncThunk<Product[]>(
   }
 );
 
-// CREATE new product
 export const createProduct = createAsyncThunk<Product, Omit<Product, 'id'>>(
   'products/createProduct',
   async (productData) => {
@@ -45,7 +42,6 @@ const productSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // fetchProducts
     builder.addCase(fetchProducts.pending, (state) => {
       state.status = 'loading';
     });
@@ -58,7 +54,6 @@ const productSlice = createSlice({
       state.error = action.error.message ?? 'Failed to fetch products';
     });
 
-    // createProduct
     builder.addCase(createProduct.pending, (state) => {
       state.status = 'loading';
     });

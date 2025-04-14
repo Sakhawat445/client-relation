@@ -20,13 +20,11 @@ const MonthlyIncomeCard: React.FC = () => {
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-4 w-full h-full max-w-xl mx-auto border border-gray-200 ml-3 ">
-      {/* Title */}
       <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
         Monthly Income
       </h3>
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        {/* Left Section */}
         <div className="w-full md:w-1/2">
           <div className="flex items-center justify-between mb-3">
             <div>
@@ -49,7 +47,6 @@ const MonthlyIncomeCard: React.FC = () => {
             </span>
           </div>
 
-          {/* Accounting Info */}
           <div className="flex items-center gap-2 text-gray-600 text-xs mt-4 border-t pt-3">
             <span className="w-6 h-6 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-md">
               <svg
@@ -76,7 +73,6 @@ const MonthlyIncomeCard: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Section (Chart) */}
         <div className="w-full md:w-1/2">
           <ResponsiveContainer width="100%" height={100}>
             <BarChart layout="vertical" data={chartData}>

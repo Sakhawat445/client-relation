@@ -1,11 +1,11 @@
 "use client";
 
-import InputField from "@/components/input/InputField"; // Reusable InputField component
-import Button from "@/components/button/Button"; // Reusable Button component
-import useResetPasswordForm from "./useResetPassword"; // Custom hook for reset password logic
-import { useRouter } from "next/navigation"; // For navigation
-import { ToastContainer } from "react-toastify"; // For toast notifications
-import "react-toastify/dist/ReactToastify.css"; // Toast styles
+import InputField from "@/components/input/InputField";  
+import Button from "@/components/button/Button";
+import useResetPasswordForm from "./useResetPassword"; 
+import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const ResetPasswordPage = () => {
   const { form, loading, error, handleChange, handleSubmit } = useResetPasswordForm();
@@ -40,18 +40,16 @@ const ResetPasswordPage = () => {
           </Button>
         </form>
 
-        {/* Back to Login Link */}
         <p className="text-center mt-4 text-black">
           <span
             className="text-blue-500 cursor-pointer hover:underline"
-            onClick={() => router.push("/login")} // Navigate back to login page
+            onClick={() => router.push("/login")}
           >
             Back to Login
           </span>
         </p>
       </div>
 
-      {/* Toast Container for Notifications */}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );

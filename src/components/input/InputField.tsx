@@ -1,7 +1,7 @@
 interface InputFieldProps {
   type: string;
   name: string;
-  id?: string; // Added id property
+  id?: string; 
   className?: string;
 
   placeholder?: string;
@@ -15,6 +15,7 @@ interface InputFieldProps {
     type,
     value,
     onChange,
+    placeholder,
   }) => {
     return (
       <div className="mb-4">
@@ -24,6 +25,8 @@ interface InputFieldProps {
           name={name}
           value={value}
           onChange={onChange}
+          placeholder={placeholder || `Enter ${label.toLowerCase()}`}
+          title={label}
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />

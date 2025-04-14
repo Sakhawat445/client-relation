@@ -24,7 +24,7 @@ const useCountryOrderChart = () => {
 
       if (country) {
         countryOrders[country] =
-          (countryOrders[country] || 0) + (Number(customer?.orderCount) || 1); // Ensure it's always a number
+          (countryOrders[country] || 0) + (Number(customer?.orderCount) || 1);
       }
     });
 

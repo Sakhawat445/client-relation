@@ -1,26 +1,24 @@
 "use client";
 
-import InputField from "@/components/input/InputField"; // Reusable InputField component
-import Button from "@/components/button/Button"; // Reusable Button component
-import useLoginForm from "./useLoginForm"; // Import the custom hook
-import { useEffect } from "react"; // Import useEffect
-import { useRouter } from "next/navigation"; // ✅ Correct import
+import InputField from "@/components/input/InputField"; 
+import Button from "@/components/button/Button"; 
+import useLoginForm from "./useLoginForm"; 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation"; 
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 const LoginForm = () => {
   const { form, loading, error, handleChange, handleSubmit } = useLoginForm();
   const router = useRouter();
-  const user = useSelector((state: RootState) => state.auth.user); // Get user from Redux
-
-  // Redirect if user is already logged in
+  const user = useSelector((state: RootState) => state.auth.user); 
   useEffect(() => {
     if (user) {
       toast.success("Login successful! Redirecting to dashboard...", {
         position: "top-right",
-        autoClose: 3000, // Close the toast after 3 seconds
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -28,7 +26,6 @@ const LoginForm = () => {
         progress: undefined,
       });
 
-      // Navigate to dashboard after 3 seconds
       setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
@@ -62,7 +59,6 @@ const LoginForm = () => {
           />
 
           <div className="flex justify-between items-center">
-            {/* Forgot Password Link */}
             <button
               onClick={() => router.push("/reset")}
               className="text-white text-sm hover:underline"
@@ -80,7 +76,6 @@ const LoginForm = () => {
           </Button>
         </form>
 
-        {/* Signup Button */}
         <div className="mt-4 text-center">
           <p className="text-white">Don&apos;t have an account?</p>
           <button
@@ -92,7 +87,6 @@ const LoginForm = () => {
         </div>
       </div>
 
-      {/* ToastContainer should be rendered once in your app, typically in the root component */}
       <ToastContainer />
     </div>
   );

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/store"; // Adjust path as needed
-import { fetchCustomers } from "../../redux/slice/customerSlice"; // Adjust path
+import { useAppDispatch, useAppSelector } from "../../redux/store"; 
+import { fetchCustomers } from "../../redux/slice/customerSlice";
 
 export function useCustomerList() {
   const dispatch = useAppDispatch();

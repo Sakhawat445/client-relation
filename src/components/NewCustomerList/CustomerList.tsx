@@ -2,9 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useCustomerList } from "../newCustomer/useCustomerList"; // Adjust path
-
-// Added interface declaration so this component accepts the pagination props.
+import { useCustomerList } from "../newCustomer/useCustomerList";
 interface CustomerListProps {
   currentPage: number;
   itemsPerPage: number;
@@ -16,7 +14,6 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
   if (status === "loading") return <p>Loading customers...</p>;
   if (status === "failed") return <p>Error: {error}</p>;
 
-  // Added slicing logic to render only a subset of customers.
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const visibleCustomers = customers.slice(startIndex, endIndex);

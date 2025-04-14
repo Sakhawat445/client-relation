@@ -1,13 +1,12 @@
-'use client'; // If using Next.js 13 App Router
+'use client';
 
 import React from 'react';
 import Image from 'next/image';
-import { useProducts } from '../product/useProductList'; // Adjust the path
+import { useProducts } from '../product/useProductList'; 
 
 const ProductList: React.FC = () => {
   const { products, status, error } = useProducts();
 
-  // Handle loading/error states
   if (status === 'loading') {
     return <p>Loading products...</p>;
   }

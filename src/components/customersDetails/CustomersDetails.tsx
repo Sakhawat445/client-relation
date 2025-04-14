@@ -12,7 +12,6 @@ const CustomerList: React.FC = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // --- Pagination state ---
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(customers.length / itemsPerPage);
@@ -20,21 +19,17 @@ const CustomerList: React.FC = () => {
   const endIdx = startIdx + itemsPerPage;
   const paginatedCustomers = customers.slice(startIdx, endIdx);
 
-  // Select customer when checkbox is checked
   const handleSelect = (id: string) => {
-    console.log("Selected Customer ID:", id);
     const customer = customers.find((c) => c.id === id) || null;
     setSelectedCustomer(customer);
   };
 
-  // Open modal in edit mode when Edit button is clicked
   const handleEdit = () => {
     if (selectedCustomer) {
       setIsModalOpen(true);
     }
   };
 
-  // Close modal and reset selection
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedCustomer(null);
@@ -45,7 +40,6 @@ const CustomerList: React.FC = () => {
   return (
     <div className="w-full overflow-x-auto">
       <div className="p-4 md:p-6 rounded-lg shadow-md w-full min-w-[700px] max-w-[1050px] mx-auto space-y-3">
-        {/* Edit Button */}
         <div className="flex justify-end">
           <Button
             onClick={handleEdit}
@@ -56,7 +50,6 @@ const CustomerList: React.FC = () => {
           </Button>
         </div>
   
-        {/* Customer List */}
         <div className="space-y-2">
           
           {paginatedCustomers.map((customer) => (
@@ -69,7 +62,6 @@ const CustomerList: React.FC = () => {
           ))}
         </div>
   
-        {/* Pagination Controls */}
         {customers.length > itemsPerPage && (
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 text-sm gap-3">
             <p>
@@ -91,7 +83,6 @@ const CustomerList: React.FC = () => {
           </div>
         )}
   
-        {/* Edit Customer Modal */}
         {isModalOpen && selectedCustomer && (
           <CustomerModal
             isOpen={isModalOpen}

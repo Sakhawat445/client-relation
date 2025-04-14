@@ -15,12 +15,11 @@ export const useCountrySalesData = () => {
   let totalOrders = 0;
 
   customers.forEach((customer) => {
-    // Extract country from the second value of the address
     const addressParts = customer?.address ? customer?.address.split(",").map(part => part.trim()) : [];
     const country = addressParts.length > 1 ? addressParts[1] : "Unknown";
 
     const sales = customer?.orderCount || 0;
-    totalOrders += sales; // Sum of all orderCount values
+    totalOrders += sales; 
 
     if (!countrySalesMap[country]) {
       countrySalesMap[country] = 0;
@@ -29,7 +28,6 @@ export const useCountrySalesData = () => {
     countrySalesMap[country] += sales;
   });
 
-  // Transform data for visualization
   const salesData: CountrySales[] = Object.entries(countrySalesMap)?.map(([country, sales]) => ({
     country,
     sales,

@@ -13,9 +13,7 @@ const data: PurchaseSource[] = [
   { name: "Direct Search", value: 36, color: "#34A853" },
   { name: "Others", value: 15, color: "#FB534A" },
 ];
-
 export default function PurchaseSourceChart() {
-  // Calculate total value (should be 100)
   const total = data.reduce((acc, cur) => acc + cur.value, 0);
 
   return (
@@ -24,7 +22,6 @@ export default function PurchaseSourceChart() {
         Source of Purchases
       </h3>
 
-      {/* Chart container */}
       <div className="w-full h-64 relative">
         <ResponsiveContainer>
           <PieChart>
@@ -43,7 +40,6 @@ export default function PurchaseSourceChart() {
               ))}
             </Pie>
 
-            {/* Center text */}
             <text
               x="50%"
               y="50%"
@@ -57,7 +53,6 @@ export default function PurchaseSourceChart() {
         </ResponsiveContainer>
       </div>
 
-      {/* Custom Legend */}
       <div className="mt-4">
         {data.map((item) => (
           <div
@@ -65,7 +60,6 @@ export default function PurchaseSourceChart() {
             className="flex justify-between items-center mb-1"
           >
             <div className="flex items-center">
-              {/* Color bullet */}
               <div
                 className="colorBullet"
               />

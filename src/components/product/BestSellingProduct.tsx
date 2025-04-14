@@ -31,12 +31,10 @@ const BestSellingProducts: React.FC = () => {
           <Button onClick={handleOpenModal}>Add Product</Button>
         </div>
 
-        {/* Responsive product list container with vertical scroll */}
         <div className="overflow-y-auto pr-2 max-h-[480px]">
           <ProductList />
         </div>
 
-        {/* Modal display */}
         {isModalOpen && (
           <ProductModal onClose={handleCloseModal} onSave={handleSaveProduct} />
         )}

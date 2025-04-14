@@ -23,19 +23,17 @@ const useSalesPerWeek = () => {
 
       customerSales.forEach((customer) => {
         const date = new Date(customer?.createdDate);
-        const hour = date?.getUTCHours().toString(); // Extract hour (0-23) in UTC
+        const hour = date?.getUTCHours().toString();
         const day = date?.toLocaleDateString("en-US", { weekday: "short" }) as keyof HeatMapData;
-        const orderCount = customer.orderCount || 0; // Get order count
+        const orderCount = customer.orderCount || 0; 
 
         if (!groupedData[hour]) {
           groupedData[hour] = { hour, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
         }
 
-        // 🔥 Sum the order count for the same hour and day
         (groupedData[hour][day as keyof HeatMapData] as number) += orderCount;
       });
 
-      // Convert grouped data to an array
       setData(Object.values(groupedData));
     }
   }, [customerSales]);

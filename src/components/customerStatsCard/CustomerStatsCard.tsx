@@ -3,20 +3,20 @@
 import React from "react";
 import { FaUserPlus } from "react-icons/fa";
 import StatsCard from "@/components/statsCard/StatsCard";
-import { useCustomerStats } from "./useCustomerStats"; // Adjust path as needed
+import { useCustomerStats } from "./useCustomerStats";  
 
 const CustomerStatsCard: React.FC = () => {
-  const { totalCustomers, chartData } = useCustomerStats(); // Fetch total customers & chart data
+  const { totalCustomers, chartData } = useCustomerStats();
 
   return (
     <StatsCard
       title="New Customers"
-      amount={totalCustomers.toLocaleString()} // e.g. "1,000"
+      amount={totalCustomers.toLocaleString()} 
       chartData={chartData} 
       icon={<FaUserPlus className="text-white" />}
-      bgColor="bg-purple-500" // Purple background for the icon circle
-      percentage="10%"        // e.g. "+10%"
-      isPositive={true}       // The arrow/text is shown in green
+      bgColor="bg-purple-500" 
+      percentage="10%"        
+      isPositive={true}       
     />
   );
 };

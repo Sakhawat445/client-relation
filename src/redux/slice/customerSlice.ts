@@ -1,4 +1,3 @@
-// customerSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Customer } from '@/types/types';
 import axios from 'axios';
@@ -8,7 +7,6 @@ interface CustomerState {
   error: string | null;
 };
 
-// Removed unused OrderState initial state
 
 const initialState: CustomerState = {
   customers: [],
@@ -19,7 +17,7 @@ const initialState: CustomerState = {
 export const fetchCustomers = createAsyncThunk<Customer[]>(
   "customers/fetchCustomers",
   async () => {
-    const response = await axios.get("api/customer"); // adjust path if needed
+    const response = await axios.get("api/customer");
     if (!response.data) {
       throw new Error("Failed to fetch customers");
     }
@@ -43,7 +41,6 @@ export const updateCustomer = createAsyncThunk<Customer, Customer>(
 export const deleteCustomer = createAsyncThunk<string, string>(
   "customers/deleteCustomer",
   async (customerId: string) => {
-    // Ensure the URL starts with a slash
     const response = await axios.delete(`/api/customer/${customerId}`);
     if (response.status !== 200) {
       throw new Error("Failed to delete customer");
@@ -52,7 +49,6 @@ export const deleteCustomer = createAsyncThunk<string, string>(
   }
 );
 
-// Async thunk to create a new customer using axios instead of fetch
 export const createCustomer = createAsyncThunk<Customer, Omit<Customer, "id">>(
   "customers/createCustomer",
   async (customerData) => {
@@ -70,10 +66,8 @@ const customerSlice = createSlice({
   name: 'customer',
   initialState,
   reducers: {
-    // Add synchronous reducers if needed.
   },
   extraReducers: (builder) => {
-    // fetchCustomers
     builder.addCase(fetchCustomers.pending, (state) => {
       state.status = 'loading';
     });
@@ -86,7 +80,6 @@ const customerSlice = createSlice({
       state.error = action.error.message ?? 'Failed to fetch customers';
     });
 
-    // createCustomer
     builder.addCase(createCustomer.pending, (state) => {
       state.status = 'loading';
     });
@@ -112,14 +105,12 @@ const customerSlice = createSlice({
       state.error = action.error.message || 'Failed to delete customer';
     });
 
-    // updateCustomer
     builder.addCase(updateCustomer.pending, (state) => {
       state.status = 'loading';
       state.error = null;
     });
     builder.addCase(updateCustomer.fulfilled, (state, action) => {
       state.status = 'succeeded';
-      console.log(action.payload, 'action.payload');
       
       state.customers = state.customers.map((customer) =>
         customer.id === action.payload.id ? action.payload : customer

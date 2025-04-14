@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector, type RootState } from '@/redux/store';
 import { fetchUserData } from '@/redux/slice/authSlice';
 
 export function useHeader() {
-  // Get the current user from the auth slice in Redux.
   const user = useAppSelector((state: RootState) => state.auth.user);
   const dispatch = useAppDispatch();
   const [search, setSearch] = useState('');
