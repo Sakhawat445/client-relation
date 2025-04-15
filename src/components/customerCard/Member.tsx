@@ -5,11 +5,12 @@ import { useCustomerCard } from "./useCustomerCard";
 
 const Member = () => {
   const customerCardData = useCustomerCard();
-  const MemberCustomers = typeof customerCardData === "number" ? customerCardData : 0;
+  const MemberCustomers =
+    typeof customerCardData === "number" ? customerCardData : 0;
 
   return (
     <Card
-    color="bg-white"
+      color="bg-white"
       title="Member"
       value={MemberCustomers}
       textColor="text-black"

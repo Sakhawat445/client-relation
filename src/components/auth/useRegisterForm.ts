@@ -14,20 +14,23 @@ const useRegisterForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, onSuccess: () => void) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    onSuccess: () => void,
+  ) => {
     e.preventDefault();
     setFormError(null);
-  
+
     if (!form.name || !form.email || !form.password) {
       setFormError("All fields are required.");
       return;
     }
-  
+
     setLoading(true);
     try {
       const resultAction = await dispatch(registerUser(form));
       if (registerUser.fulfilled.match(resultAction)) {
-        onSuccess(); 
+        onSuccess();
       } else {
         setFormError((resultAction.payload as string) || "Registration failed");
       }
@@ -37,7 +40,6 @@ const useRegisterForm = () => {
       setLoading(false);
     }
   };
-  
 
   return {
     form,

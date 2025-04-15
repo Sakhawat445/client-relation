@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import { logoutUser } from '@/redux/slice/authSlice';
-import type { AppDispatch } from '@/redux/store';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "@/redux/slice/authSlice";
+import type { AppDispatch } from "@/redux/store";
 
 export const useSidebar = () => {
-  const [active, setActive] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false); 
+  const [active, setActive] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
@@ -16,7 +16,7 @@ export const useSidebar = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    router.push('/login');
+    router.push("/login");
   };
 
   return {

@@ -9,7 +9,9 @@ const useProfile = () => {
   const [username, setUsername] = useState<string>(user?.name ?? "");
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [updateError, setUpdateError] = useState<string>("");
-  const [imagePreview, setImagePreview] = useState<string>(user?.imageURL ?? "");
+  const [imagePreview, setImagePreview] = useState<string>(
+    user?.imageURL ?? "",
+  );
 
   useEffect(() => {
     if (user?.imageURL) setImagePreview(user.imageURL);
@@ -45,10 +47,12 @@ const useProfile = () => {
       const data = await response.json();
       console.log("Update successful:", data);
 
-      dispatch(updateUser({
-        name: username,
-        imageURL: imagePreview,
-      }));
+      dispatch(
+        updateUser({
+          name: username,
+          imageURL: imagePreview,
+        }),
+      );
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to update profile";
@@ -84,7 +88,6 @@ const useProfile = () => {
       }
     }
   };
-
 
   return {
     user,

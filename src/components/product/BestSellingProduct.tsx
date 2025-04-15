@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Button from '../button/Button';
-import ProductList from '../productList/ProductList';
-import ProductModal from '../productModal/ProductModal';
+import React, { useState } from "react";
+import Button from "../button/Button";
+import ProductList from "../productList/ProductList";
+import ProductModal from "../productModal/ProductModal";
 
 const BestSellingProducts: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +18,7 @@ const BestSellingProducts: React.FC = () => {
     companyName: string;
     imageFile?: File | null;
   }) => {
-    console.log('New product saved:', newProduct);
+    console.log("New product saved:", newProduct);
   };
 
   return (

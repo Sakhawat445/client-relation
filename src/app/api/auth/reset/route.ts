@@ -16,7 +16,7 @@ export const POST = async (req: Request) => {
     if (!user) {
       return NextResponse.json(
         { success: false, message: "User not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -52,7 +52,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(
       { success: true, message: "Reset password email sent" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
@@ -60,7 +60,7 @@ export const POST = async (req: Request) => {
         success: false,
         message: error instanceof Error ? error.message : "An error occurred",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

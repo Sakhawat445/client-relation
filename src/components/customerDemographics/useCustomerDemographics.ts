@@ -8,7 +8,7 @@ export const useCustomerDemographics = () => {
   const countryCityMap: Record<string, Set<string>> = {};
 
   customers.forEach((customer) => {
-    const address = customer?.address || "Unknown, Unknown"; 
+    const address = customer?.address || "Unknown, Unknown";
     const [city, country] = address.split(",").map((item) => item.trim());
 
     if (!countryCityMap[country]) {

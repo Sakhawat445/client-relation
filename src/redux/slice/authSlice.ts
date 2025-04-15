@@ -1,21 +1,8 @@
-
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { signIn, signOut } from "next-auth/react";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  imageURL?: string;
-};
-
-interface AuthState {
-  user: User | null;
-  users: User[];
-  loading: boolean;
-  error: string | null;
-}
+import { User } from "@/types/types";
+import { AuthState } from "@/types/types";
 
 const initialState: AuthState = {
   user: null,
@@ -24,27 +11,22 @@ const initialState: AuthState = {
   error: null,
 };
 
-
 export const registerUser = createAsyncThunk<
   User,
   { name: string; email: string; password: string },
   { rejectValue: string }
->(
-  "auth/registerUser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post("/api/auth/register", userData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "An unknown error occurred"
-      );
-    }
+>("auth/registerUser", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await axios.post("/api/auth/register", userData, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred",
+    );
   }
-);
-
+});
 
 export const loginUser = createAsyncThunk<
   User,
@@ -69,7 +51,7 @@ export const loginUser = createAsyncThunk<
     return sessionData;
   } catch (error) {
     return rejectWithValue(
-      error instanceof Error ? error.message : "Login failed"
+      error instanceof Error ? error.message : "Login failed",
     );
   }
 });
@@ -82,18 +64,18 @@ export const resetPassword = createAsyncThunk<
     const response = await axios.post(
       "/api/auth/reset",
       { email },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { "Content-Type": "application/json" } },
     );
     const data = response.data;
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to send reset email."
+        error.response?.data?.message || "Failed to send reset email.",
       );
     }
     return rejectWithValue(
-      error instanceof Error ? error.message : "An unknown error occurred"
+      error instanceof Error ? error.message : "An unknown error occurred",
     );
   }
 });
@@ -107,18 +89,18 @@ export const newPassword = createAsyncThunk<
     const response = await axios.post(
       "/api/auth/newPassword",
       { token, password },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { "Content-Type": "application/json" } },
     );
     const data = response.data;
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update password."
+        error.response?.data?.message || "Failed to update password.",
       );
     }
     return rejectWithValue(
-      error instanceof Error ? error.message : "An unknown error occurred"
+      error instanceof Error ? error.message : "An unknown error occurred",
     );
   }
 });
@@ -144,11 +126,11 @@ export const fetchUserData = createAsyncThunk<
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch user data"
+        error.response?.data?.message || "Failed to fetch user data",
       );
     }
     return rejectWithValue(
-      error instanceof Error ? error.message : "Failed to fetch user data"
+      error instanceof Error ? error.message : "Failed to fetch user data",
     );
   }
 });
@@ -157,7 +139,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { dispatch }) => {
     await signOut({ redirect: false });
     dispatch(authSlice.actions.logoutUser());
-  }
+  },
 );
 
 const authSlice = createSlice({
@@ -170,7 +152,7 @@ const authSlice = createSlice({
     },
     updateUser: (
       state,
-      action: PayloadAction<{ name: string; imageURL: string }>
+      action: PayloadAction<{ name: string; imageURL: string }>,
     ) => {
       if (state.user) {
         state.user.name = action.payload.name;
@@ -189,7 +171,7 @@ const authSlice = createSlice({
         (state, action: PayloadAction<User>) => {
           state.loading = false;
           state.user = action.payload;
-        }
+        },
       )
       .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;

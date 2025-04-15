@@ -5,7 +5,14 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const authRoutes = ["/login", "/register  ", "/reset"];
-  const protectedRoutes = ["/dashboard","/customers", "./orders","./analytics", "./documents", "./profile"];
+  const protectedRoutes = [
+    "/dashboard",
+    "/customers",
+    "./orders",
+    "./analytics",
+    "./documents",
+    "./profile",
+  ];
 
   const url = req.nextUrl.clone();
   const { pathname } = req.nextUrl;

@@ -5,18 +5,18 @@ export default function HelpBlogPage() {
     {
       title: "How to Use the Dashboard",
       content:
-        "Navigate to the dashboard from the sidebar. Here, you'll see charts and key metrics summarizing your data. You can filter results using the dropdown menus at the top."
+        "Navigate to the dashboard from the sidebar. Here, you'll see charts and key metrics summarizing your data. You can filter results using the dropdown menus at the top.",
     },
     {
       title: "Understanding Sales Charts",
       content:
-        "Sales charts visualize performance by country, product, or timeframe. Hover over bars or points to see exact values."
+        "Sales charts visualize performance by country, product, or timeframe. Hover over bars or points to see exact values.",
     },
     {
       title: "Troubleshooting Data Sync",
       content:
-        "If your data looks outdated, try refreshing or checking your integration settings in the account panel. Still having issues? Contact support."
-    }
+        "If your data looks outdated, try refreshing or checking your integration settings in the account panel. Still having issues? Contact support.",
+    },
   ];
 
   return (

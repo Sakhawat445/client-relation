@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { fetchCustomers } from "@/redux/slice/customerSlice";

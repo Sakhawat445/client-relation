@@ -1,37 +1,28 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { useSelector } from 'react-redux';
-import Input from '../input/InputField';
-import Button from '../button/Button';
-import type { RootState } from '@/redux/store';
-import { useAppDispatch } from '@/redux/store';
-import { createCustomer, updateCustomer } from '@/redux/slice/customerSlice';
-import { Customer } from '@/types/types';
-
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { useSelector } from "react-redux";
+import Input from "../input/InputField";
+import Button from "../button/Button";
+import type { RootState } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
+import { createCustomer, updateCustomer } from "@/redux/slice/customerSlice";
+import { Customer } from "@/types/types";
+import { CustomerModalProps } from "@/types/types";
 const initialState = {
-  name: '',
-  email: '',
-  imageURI: '',
+  name: "",
+  email: "",
+  imageURI: "",
   orderCount: 0,
   spendings: 0,
-  documentURL: '',
-  status: 'PENDING',
-  address: { city: '', country: '' },
-  contactNumber: '',
-  deviceType: 'MOBILE',
-  productType: '',
+  documentURL: "",
+  status: "PENDING",
+  address: { city: "", country: "" },
+  contactNumber: "",
+  deviceType: "MOBILE",
+  productType: "",
 };
-interface CustomerModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  isDocumentModal?: boolean;
-  isEditModal?: boolean;
-  isEditMode?: boolean;
-  doc?: Customer;
-  editCustomer?: Customer | null; // Ensure this prop is defined for edit functionality
-}
 
 const CustomerModal: React.FC<CustomerModalProps> = ({
   isOpen,
@@ -40,7 +31,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
   isEditMode = false,
   isEditModal = false,
   doc,
-  
+
   editCustomer,
 }) => {
   const [formData, setFormData] = useState(initialState);
@@ -49,44 +40,51 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
 
   const products = useSelector((state: RootState) => state.product.products);
 
-  // When in edit mode, prefill form data with the passed customer doc.
   useEffect(() => {
     if (isEditModal || isEditMode) {
       const customerData = editCustomer || doc;
-      // Parse address if stored as string
-      const address = typeof (customerData?.address ?? '') === 'string' ? 
-        { city: customerData?.address.split(',')[0]?.trim() || '', country: customerData?.address.split(',')[1]?.trim() || '' } : 
-        customerData?.address;
+      const address =
+        typeof (customerData?.address ?? "") === "string"
+          ? {
+              city: customerData?.address.split(",")[0]?.trim() || "",
+              country: customerData?.address.split(",")[1]?.trim() || "",
+            }
+          : customerData?.address;
 
       setFormData({
-        name: customerData?.name || '',
-        email: customerData?.email || '',
-        imageURI: customerData?.imageURI || '',
+        name: customerData?.name || "",
+        email: customerData?.email || "",
+        imageURI: customerData?.imageURI || "",
         orderCount: customerData?.orderCount || 0,
         spendings: customerData?.spendings || 0,
-        documentURL: customerData?.documentURL || '',
-        status: customerData?.status || 'PENDING',
-        address: typeof address === 'object' && address !== null ? address : { city: '', country: '' },
-        contactNumber: String(customerData?.contactNumber || ''),
-        deviceType: customerData?.deviceType || 'MOBILE',
-        productType: customerData?.productType || customerData?.product?.id || '',
+        documentURL: customerData?.documentURL || "",
+        status: customerData?.status || "PENDING",
+        address:
+          typeof address === "object" && address !== null
+            ? address
+            : { city: "", country: "" },
+        contactNumber: String(customerData?.contactNumber || ""),
+        deviceType: customerData?.deviceType || "MOBILE",
+        productType:
+          customerData?.productType || customerData?.product?.id || "",
       });
     }
-  }, [isEditModal, isEditMode, doc, editCustomer]); // Add editCustomer to dependencies
-
+  }, [isEditModal, isEditMode, doc, editCustomer]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const [city, country] = e.target.value.split(',').map((item) => item.trim());
+    const [city, country] = e.target.value
+      .split(",")
+      .map((item) => item.trim());
     setFormData((prev) => ({
       ...prev,
-      address: { city: city || '', country: country || '' },
+      address: { city: city || "", country: country || "" },
     }));
   };
 
@@ -97,28 +95,28 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
       const file = files[0];
 
       const fileData = new FormData();
-      fileData.append('file', file);
-      fileData.append('filename', file.name);
+      fileData.append("file", file);
+      fileData.append("filename", file.name);
 
       try {
-        const response = await fetch('/api/imageUpload', {
-          method: 'POST',
+        const response = await fetch("/api/imageUpload", {
+          method: "POST",
           body: fileData,
         });
 
         if (!response.ok) {
-          throw new Error('Upload failed');
+          throw new Error("Upload failed");
         }
 
         const result = await response.json();
 
-        if (name === 'image') {
+        if (name === "image") {
           setFormData((prev) => ({ ...prev, imageURI: result.url }));
-        } else if (name === 'document') {
+        } else if (name === "document") {
           setFormData((prev) => ({ ...prev, documentURL: result.url }));
         }
       } catch (error) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       }
     }
   };
@@ -126,22 +124,23 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploading(true);
-  
+
     if (isDocumentModal) {
       // Existing document update logic
       const updatedCustomer = {
         ...doc,
         documentURL: formData.documentURL,
-        name: formData.name || '', // Ensure name is always a string
-        email: formData.email || '', // Ensure email is always a string
+        name: formData.name || "", // Ensure name is always a string
+        email: formData.email || "", // Ensure email is always a string
       };
       await dispatch(updateCustomer(updatedCustomer as Customer));
-    } else if (isEditMode || isEditModal) { // Combined edit mode check
+    } else if (isEditMode || isEditModal) {
+      // Combined edit mode check
       // Use same update pattern as document modal
       const updatedCustomer: Customer = {
         ...doc, // Use doc as base
         ...formData, // Spread form data
-        email: formData.email || '', // Ensure email is always a string
+        email: formData.email || "", // Ensure email is always a string
         address: `${formData.address.city}, ${formData.address.country}`,
         contactNumber: parseInt(formData.contactNumber, 10) || 0,
         createdDate: doc?.createdDate ?? new Date().toISOString(), // Ensure createdDate is always a string
@@ -154,9 +153,14 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
         address: `${formData.address.city}, ${formData.address.country}`,
         createdDate: doc?.createdDate || new Date().toISOString(),
       };
-      await dispatch(createCustomer({ ...customerData, contactNumber: parseInt(formData.contactNumber, 10) || 0 }));
+      await dispatch(
+        createCustomer({
+          ...customerData,
+          contactNumber: parseInt(formData.contactNumber, 10) || 0,
+        }),
+      );
     }
-  
+
     setFormData(initialState);
     setUploading(false);
     onClose();
@@ -191,7 +195,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
           <div className="flex justify-end gap-2 mt-4">
             <Button onClick={onClose}>Cancel</Button>
             <Button type="submit" disabled={uploading}>
-              {uploading ? 'Saving...' : 'Save'}
+              {uploading ? "Saving..." : "Save"}
             </Button>
           </div>
         </form>
@@ -200,68 +204,61 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
   }
   if (!isOpen) return null;
 
-  // If isEditModal prop is true, render the edit customer modal with select fields.
-  
-  // Otherwise render the full customer modal (for adding a new customer).
-  return (
-    isEditMode ? (
-<div className="fixed inset-0 flex items-center justify-center bg-black/25">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-lg shadow-lg w-96 max-h-[80vh] overflow-y-auto"
-        >
-          <h2 className="text-lg font-semibold mb-4">Edit Customer</h2>
-          <div className="space-y-3">
-            <Input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              label="Name"
-            />
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              label="Email"
-            />
+  return isEditMode ? (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/25">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-lg shadow-lg w-96 max-h-[80vh] overflow-y-auto"
+      >
+        <h2 className="text-lg font-semibold mb-4">Edit Customer</h2>
+        <div className="space-y-3">
+          <Input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            label="Name"
+          />
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            label="Email"
+          />
 
-            <div>
-              <input
-                id={`imageUploadInput-${isEditModal ? 'edit' : 'add'}`}
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                title="Upload a profile image"
-                placeholder="Choose an image file"
-              />
-            </div>
-
-            <Input
-              type="number"
-              name="orderCount"
-              value={formData.orderCount.toString()}
-              onChange={handleChange}
-              label="Order Count"
+          <div>
+            <input
+              id={`imageUploadInput-${isEditModal ? "edit" : "add"}`}
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              title="Upload a profile image"
+              placeholder="Choose an image file"
             />
-
-          
           </div>
 
-          <div className="flex justify-end gap-2 mt-4">
-            <Button onClick={onClose}>Cancel</Button>
-            <Button type="submit" disabled={uploading}>
-              {uploading ? 'Saving...' : 'Save'}
-            </Button>
-          </div>
-        </form>
-      </div>
-    ): (
+          <Input
+            type="number"
+            name="orderCount"
+            value={formData.orderCount.toString()}
+            onChange={handleChange}
+            label="Order Count"
+          />
+        </div>
 
-      <div className="fixed inset-0 flex items-center justify-center bg-black/25">
+        <div className="flex justify-end gap-2 mt-4">
+          <Button onClick={onClose}>Cancel</Button>
+          <Button type="submit" disabled={uploading}>
+            {uploading ? "Saving..." : "Save"}
+          </Button>
+        </div>
+      </form>
+    </div>
+  ) : (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/25">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-lg w-96 max-h-[80vh] overflow-y-auto"
@@ -287,12 +284,12 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
             <label className="block mb-1">Profile Image</label>
             <div
               onClick={() =>
-                document.getElementById('imageUploadInput')?.click()
+                document.getElementById("imageUploadInput")?.click()
               }
               className="w-40 h-40 border-2 border-dashed border-gray-400 flex items-center justify-center cursor-pointer"
             >
               {formData.imageURI ? (
-                <Image 
+                <Image
                   width={23}
                   height={23}
                   src={formData.imageURI}
@@ -328,7 +325,7 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
               className="block w-full"
               title="Upload a document file"
               placeholder="Choose a document file"
-              />
+            />
           </div>
 
           {uploading && (
@@ -424,13 +421,12 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
         <div className="flex justify-end gap-2 mt-4">
           <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" disabled={uploading}>
-            {uploading ? 'Saving...' : 'Add Customer'}
+            {uploading ? "Saving..." : "Add Customer"}
           </Button>
         </div>
       </form>
     </div>
-)
-);
+  );
 };
 
 export default CustomerModal;

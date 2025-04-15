@@ -8,12 +8,16 @@ import { fetchCustomers } from "../../redux/slice/customerSlice";
 export function useProductOrderData() {
   const dispatch = useAppDispatch();
 
-  const { products, status: productStatus, error: productError } = useAppSelector(
-    (state) => state.product
-  );
-  const { customers, status: customerStatus, error: customerError } = useAppSelector(
-    (state) => state.customer
-  );
+  const {
+    products,
+    status: productStatus,
+    error: productError,
+  } = useAppSelector((state) => state.product);
+  const {
+    customers,
+    status: customerStatus,
+    error: customerError,
+  } = useAppSelector((state) => state.customer);
 
   useEffect(() => {
     dispatch(fetchProducts());

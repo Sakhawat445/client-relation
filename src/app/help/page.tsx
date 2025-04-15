@@ -1,11 +1,11 @@
-import Help from '@/components/help/Help';
-import React from 'react';
+import Help from "@/components/help/Help";
+import React from "react";
 const HelpPage = () => {
-    return (
-        <div >
-<Help />
-           </div>
-    );
+  return (
+    <div>
+      <Help />
+    </div>
+  );
 };
 
 export default HelpPage;

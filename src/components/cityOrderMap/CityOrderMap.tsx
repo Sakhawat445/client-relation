@@ -76,10 +76,7 @@ const CityOrderMap: React.FC = () => {
         </ComposableMap>
 
         {tooltipData && (
-          <div
-            className="absolute z-10 bg-white shadow-xl p-3 rounded-lg w-40 text-sm transform -translate-x-1/2 -translate-y-full"
-            
-          >
+          <div className="absolute z-10 bg-white shadow-xl p-3 rounded-lg w-40 text-sm transform -translate-x-1/2 -translate-y-full">
             <p className="font-semibold text-gray-800">{tooltipData.name}</p>
             <p className="text-xl font-bold text-black">
               {tooltipData.orders.toLocaleString()}{" "}

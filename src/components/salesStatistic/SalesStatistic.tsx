@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-  Legend
+  Legend,
 } from "recharts";
 import { useSalesData } from "./useSalesStatistic";
 
@@ -23,12 +23,16 @@ const SalesStatistic = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
         <div>
           <p className="text-gray-500">Total Revenue</p>
-          <h3 className="text-xl font-bold text-blue-600">${totalRevenue.toLocaleString()}</h3>
+          <h3 className="text-xl font-bold text-blue-600">
+            ${totalRevenue.toLocaleString()}
+          </h3>
           <span className="text-sm text-gray-400">Orders</span>
         </div>
         <div>
           <p className="text-gray-500">Total Sales</p>
-          <h3 className="text-xl font-bold text-green-600">{totalSales.toLocaleString()}</h3>
+          <h3 className="text-xl font-bold text-green-600">
+            {totalSales.toLocaleString()}
+          </h3>
           <span className="text-sm text-gray-400">Products</span>
         </div>
         <div>

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import { Search } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-import { useHeader } from './useHeader';
+import React from "react";
+import Image from "next/image";
+import { Search } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useHeader } from "./useHeader";
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -12,11 +12,11 @@ const Header: React.FC = () => {
   const { user, search, handleSearchChange } = useHeader();
   const pathname = usePathname();
 
-  const isDashboard = pathname === '/dashboard';
+  const isDashboard = pathname === "/dashboard";
 
-  let pageName = '';
+  let pageName = "";
   if (!isDashboard) {
-    const segments = pathname.split('/').filter(Boolean);
+    const segments = pathname.split("/").filter(Boolean);
     if (segments.length > 0) {
       pageName = capitalize(segments[segments.length - 1]);
     }
@@ -45,10 +45,8 @@ const Header: React.FC = () => {
           )}
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
-              Welcome Back,{' '}
-              <span className="text-purple-600">
-                {user?.name || 'User'}
-              </span>
+              Welcome Back,{" "}
+              <span className="text-purple-600">{user?.name || "User"}</span>
             </h2>
             <p className="text-sm text-gray-500 mt-1">
               Here are your monthly store updates.
@@ -76,7 +74,7 @@ const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between p-10">
       <div>
-        <h1 className="text-xl font-bold">{pageName || 'Page'}</h1>
+        <h1 className="text-xl font-bold">{pageName || "Page"}</h1>
       </div>
 
       <div className="flex items-center gap-3">
@@ -98,7 +96,7 @@ const Header: React.FC = () => {
           />
         )}
         <span className="font-medium text-gray-700 text-lg">
-          Welcome back, {user?.name || 'User'}
+          Welcome back, {user?.name || "User"}
         </span>
       </div>
     </header>

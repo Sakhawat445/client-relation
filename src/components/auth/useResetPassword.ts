@@ -22,11 +22,12 @@ const useResetPasswordForm = () => {
     setError("");
 
     try {
-      await dispatch(resetPassword(form.email)).unwrap(); 
+      await dispatch(resetPassword(form.email)).unwrap();
       toast.success("Reset password email sent! Check your inbox.");
       setTimeout(() => router.push("/login"), 3000);
     } catch (error: unknown) {
-      const errorMessage = (error instanceof Error) ? error.message : "An error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {

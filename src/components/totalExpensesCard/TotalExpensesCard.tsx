@@ -1,14 +1,14 @@
-import React from 'react';
-import StatsCard from '@/components/statsCard/StatsCard';
-import { MdMoneyOff } from 'react-icons/md';
+import React from "react";
+import StatsCard from "@/components/statsCard/StatsCard";
+import { MdMoneyOff } from "react-icons/md";
 
 const TotalExpensesCard = () => {
   const expensesChartData = {
-    labels: ['Mar', 'Apr', 'May', 'Jun', 'July'],
+    labels: ["Mar", "Apr", "May", "Jun", "July"],
     datasets: [
       {
         data: [300, 250, 400, 350, 500],
-        borderColor: 'red',
+        borderColor: "red",
         fill: false,
       },
     ],

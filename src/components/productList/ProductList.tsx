@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import { useProducts } from '../product/useProductList'; 
+import React from "react";
+import Image from "next/image";
+import { useProducts } from "../product/useProductList";
 
 const ProductList: React.FC = () => {
   const { products, status, error } = useProducts();
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <p>Loading products...</p>;
   }
-  if (status === 'failed') {
+  if (status === "failed") {
     return <p>Error: {error}</p>;
   }
 
@@ -19,17 +19,19 @@ const ProductList: React.FC = () => {
       <ul className="list-none  p-3 space-y-4 bg-gray-200 ">
         {products.map((product) => (
           <li key={product?.id} className="flex items-center space-x-4">
-          <Image 
-          src={product?.imageURL || '/default-product.png'}
-          alt={product?.name} 
-    width={64} 
-    height={64} 
-    className="object-cover rounded-lg bg-white"
-  />
-            
+            <Image
+              src={product?.imageURL || "/default-product.png"}
+              alt={product?.name}
+              width={64}
+              height={64}
+              className="object-cover rounded-lg bg-white"
+            />
+
             <div className="flex-1">
               <p className="m-0 text-base font-semibold">{product.name}</p>
-              <p className="mt-1 text-sm text-gray-500">{product.companyName}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {product.companyName}
+              </p>
             </div>
             <p className="text-base font-semibold">${product.price}</p>
           </li>

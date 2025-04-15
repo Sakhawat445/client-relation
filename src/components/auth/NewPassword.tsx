@@ -10,10 +10,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 const NewPasswordPage: React.FC = () => {
   const router = useRouter();
-  const { password, confirmPassword, setPassword, setConfirmPassword, handleSubmit, error, loading } = useNewPassword();
+  const {
+    password,
+    confirmPassword,
+    setPassword,
+    setConfirmPassword,
+    handleSubmit,
+    error,
+    loading,
+  } = useNewPassword();
 
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-
     const success = await handleSubmit(e);
 
     if (success) {
@@ -44,7 +51,9 @@ const NewPasswordPage: React.FC = () => {
   return (
     <div className="w-full flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">Set New Password</h2>
+        <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">
+          Set New Password
+        </h2>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
@@ -68,14 +77,13 @@ const NewPasswordPage: React.FC = () => {
             className="w-full p-3 border border-gray-300 rounded-md"
           />
 
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             className="w-full bg-green-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition"
             disabled={loading}
           >
-            {loading ? "Updating..." : "Update Password"}                         
+            {loading ? "Updating..." : "Update Password"}
           </Button>
-         
         </form>
       </div>
 

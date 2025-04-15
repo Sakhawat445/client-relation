@@ -1,7 +1,7 @@
-'use client';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/store'; 
-import { fetchProducts } from '../../redux/slice/productSlice'; 
+"use client";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { fetchProducts } from "../../redux/slice/productSlice";
 
 export function useProducts() {
   const dispatch = useAppDispatch();

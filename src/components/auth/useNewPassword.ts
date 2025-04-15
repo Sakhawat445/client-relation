@@ -6,7 +6,9 @@ const useNewPassword = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<boolean> => {
     e.preventDefault();
     setError("");
 
@@ -21,7 +23,7 @@ const useNewPassword = () => {
     }
 
     const token = new URLSearchParams(window.location.search).get("token");
-    
+
     if (!token) {
       setError("Invalid or expired token.");
       return false;
@@ -36,18 +38,29 @@ const useNewPassword = () => {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Failed to update password");
+      if (!response.ok)
+        throw new Error(data.message || "Failed to update password");
 
-      return true; 
+      return true;
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An unknown error occurred");
-      return false; 
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
-  return { password, confirmPassword, setPassword, setConfirmPassword, handleSubmit, error, loading };
+  return {
+    password,
+    confirmPassword,
+    setPassword,
+    setConfirmPassword,
+    handleSubmit,
+    error,
+    loading,
+  };
 };
 
 export default useNewPassword;

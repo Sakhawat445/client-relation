@@ -1,3 +1,4 @@
+import { CustomBarLabelProps, VisitorsData } from "@/types/types";
 import React from "react";
 import {
   BarChart,
@@ -9,11 +10,6 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-
-interface VisitorsData {
-  date: string;
-  visitors: number;
-}
 
 const data: VisitorsData[] = [
   { date: "1 Jul", visitors: 5000 },
@@ -27,13 +23,6 @@ const data: VisitorsData[] = [
 
 export default function VisitorsChart() {
   const maxValue = Math.max(...data.map((item) => item.visitors));
-
-  interface CustomBarLabelProps {
-    x: number;
-    y: number;
-    width: number;
-    value: number;
-  }
 
   const CustomBarLabel = (props: CustomBarLabelProps) => {
     const { x, y, width, value } = props;
@@ -59,17 +48,29 @@ export default function VisitorsChart() {
       <h3 className="mb-5 text-xl font-semibold text-center">Visitors</h3>
 
       <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={data} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 20, bottom: 20, left: 0 }}
+        >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="date" />
           <YAxis tickFormatter={(val) => val.toLocaleString()} />
-          <Tooltip formatter={(value: number) => `${value.toLocaleString()} Visitors`} />
+          <Tooltip
+            formatter={(value: number) => `${value.toLocaleString()} Visitors`}
+          />
 
-          <Bar dataKey="visitors" radius={[5, 5, 0, 0]} label={(props) => <CustomBarLabel {...props} />}>
+          <Bar
+            dataKey="visitors"
+            radius={[5, 5, 0, 0]}
+            label={(props) => <CustomBarLabel {...props} />}
+          >
             {data.map((entry, index) => {
               const isMax = entry.visitors === maxValue;
               return (
-                <Cell key={`cell-${index}`} fill={isMax ? "#48BB78" : "#BBF7D0"} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={isMax ? "#48BB78" : "#BBF7D0"}
+                />
               );
             })}
           </Bar>

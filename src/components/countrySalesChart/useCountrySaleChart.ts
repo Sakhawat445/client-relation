@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAppSelector, RootState } from "@/redux/store";
-
-interface OrderData {
-  country: string;
-  orders: number;
-}
+import { OrderData } from "@/types/types";
 
 const useCountryOrderChart = () => {
   const customers = useAppSelector(
-    (state: RootState) => state.customer?.customers
+    (state: RootState) => state.customer?.customers,
   );
 
   const [orderData, setOrderData] = useState<OrderData[]>([]);

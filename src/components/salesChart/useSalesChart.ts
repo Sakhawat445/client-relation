@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAppSelector, RootState } from "@/redux/store";
-
-interface SalesData {
-  date: string;
-  currentWeek: number;
-  lastWeek: number;
-}
+import { SalesData } from "@/types/types";
 
 export const useSalesData = () => {
-  const customers = useAppSelector((state: RootState) => state.customer?.customers); 
+  const customers = useAppSelector(
+    (state: RootState) => state.customer?.customers,
+  );
 
   const [salesData, setSalesData] = useState<SalesData[]>([]);
   const [totalSales, setTotalSales] = useState<number>(0);
@@ -22,27 +19,46 @@ export const useSalesData = () => {
       const twoWeeksAgo = new Date(today);
       twoWeeksAgo.setDate(today.getDate() - 14);
 
-      const currentWeekCustomers = customers?.filter((customer) => new Date(customer?.createdDate) >= oneWeekAgo);
+      const currentWeekCustomers = customers?.filter(
+        (customer) => new Date(customer?.createdDate) >= oneWeekAgo,
+      );
       const lastWeekCustomers = customers?.filter(
-        (customer) => new Date(customer?.createdDate) >= twoWeeksAgo && new Date(customer?.createdDate) < oneWeekAgo
+        (customer) =>
+          new Date(customer?.createdDate) >= twoWeeksAgo &&
+          new Date(customer?.createdDate) < oneWeekAgo,
       );
 
-      const currentWeekTotal = currentWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
+      const currentWeekTotal = currentWeekCustomers?.reduce(
+        (acc, customer) => acc + (customer?.spendings ?? 0),
+        0,
+      );
 
-      const lastWeekTotal = lastWeekCustomers?.reduce((acc, customer) => acc + (customer?.spendings ?? 0), 0);
+      const lastWeekTotal = lastWeekCustomers?.reduce(
+        (acc, customer) => acc + (customer?.spendings ?? 0),
+        0,
+      );
 
       setTotalSales(currentWeekTotal);
 
-      const percentage = lastWeekTotal > 0 ? ((currentWeekTotal - lastWeekTotal) / lastWeekTotal) * 100 : 0;
+      const percentage =
+        lastWeekTotal > 0
+          ? ((currentWeekTotal - lastWeekTotal) / lastWeekTotal) * 100
+          : 0;
       setPercentageChange(percentage);
 
-      const groupedData: Record<string, { currentWeek: number; lastWeek: number }> = {};
+      const groupedData: Record<
+        string,
+        { currentWeek: number; lastWeek: number }
+      > = {};
 
       customers.forEach((customer) => {
-        const date = new Date(customer?.createdDate).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        });
+        const date = new Date(customer?.createdDate).toLocaleDateString(
+          "en-US",
+          {
+            month: "short",
+            day: "numeric",
+          },
+        );
 
         if (!groupedData[date]) {
           groupedData[date] = { currentWeek: 0, lastWeek: 0 };
@@ -55,10 +71,12 @@ export const useSalesData = () => {
         }
       });
 
-      const formattedData = Object.entries(groupedData)?.map(([date, values]) => ({
-        date,
-        ...values,
-      }));
+      const formattedData = Object.entries(groupedData)?.map(
+        ([date, values]) => ({
+          date,
+          ...values,
+        }),
+      );
 
       setSalesData(formattedData);
     }

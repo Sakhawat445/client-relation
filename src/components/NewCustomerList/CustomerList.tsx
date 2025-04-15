@@ -3,12 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { useCustomerList } from "../newCustomer/useCustomerList";
-interface CustomerListProps {
-  currentPage: number;
-  itemsPerPage: number;
-}
+import { CustomerListProps } from "@/types/types";
 
-const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }) => {
+const CustomerList: React.FC<CustomerListProps> = ({
+  currentPage,
+  itemsPerPage,
+}) => {
   const { customers, status, error } = useCustomerList();
 
   if (status === "loading") return <p>Loading customers...</p>;
@@ -18,13 +18,13 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
   const endIndex = startIndex + itemsPerPage;
   const visibleCustomers = customers.slice(startIndex, endIndex);
 
+
   return (
     <div className=" rounded-lg p-4 w-full shadow">
       <table className="w-full border-collapse text-gray-600 text-sm">
-      
         <tbody>
           {visibleCustomers?.map((customer) => (
-            <tr key={customer?.id} >
+            <tr key={customer?.id}>
               <td className="py-3 px-3">
                 {new Date(customer?.createdDate).toLocaleDateString("en-GB", {
                   day: "2-digit",
@@ -39,7 +39,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ currentPage, itemsPerPage }
                   width={40}
                   height={40}
                   className="rounded-full aspect-square object-cover"
-                  />
+                />
                 {customer?.name}
               </td>
               <td className="py-3 px-3">

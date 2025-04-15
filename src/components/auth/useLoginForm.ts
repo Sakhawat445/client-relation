@@ -8,7 +8,9 @@ import { toast } from "react-toastify";
 const useLoginForm = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error, user } = useSelector((state: RootState) => state.auth);
+  const { loading, error, user } = useSelector(
+    (state: RootState) => state.auth,
+  );
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +37,13 @@ const useLoginForm = () => {
         router.push("/dashboard");
       }, 2000);
     } else {
-      toast.error(resultAction.payload as string || "Login failed. Please try again.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error(
+        (resultAction.payload as string) || "Login failed. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        },
+      );
     }
   };
 

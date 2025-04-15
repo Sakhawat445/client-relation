@@ -2,25 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-interface ProductProps {
-    product: {
-      id?: string;
-      name: string;
-      price: number;
-      stock: number;
-      companyName: string;
-      imageURL: string;
-      orderCount: number;
-      orderDate?: string;
-      status: string;
-    };
-  }
-  
+import { ProductProps } from "@/types/types";
 
-
-const ProductOrderList: React.FC<ProductProps> = ({ product}) => {
+const ProductOrderList: React.FC<ProductProps> = ({ product }) => {
   return (
-    <tr >
+    <tr>
       <td className="py-3 px-3 flex items-center gap-3">
         <Image
           src={product.imageURL || "/placeholder.png"}

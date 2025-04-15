@@ -9,7 +9,9 @@ import Button from "../button/Button";
 
 const CustomerList: React.FC = () => {
   const { customers = [], status, error } = useCustomerList();
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,9 +51,8 @@ const CustomerList: React.FC = () => {
             Edit
           </Button>
         </div>
-  
+
         <div className="space-y-2">
-          
           {paginatedCustomers.map((customer) => (
             <CustomerRow
               key={customer?.id}
@@ -61,28 +62,33 @@ const CustomerList: React.FC = () => {
             />
           ))}
         </div>
-  
+
         {customers.length > itemsPerPage && (
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4 text-sm gap-3">
             <p>
-              Showing {startIdx + 1} to {Math.min(endIdx, customers.length)} of {customers.length} entries
+              Showing {startIdx + 1} to {Math.min(endIdx, customers.length)} of{" "}
+              {customers.length} entries
             </p>
             <div className="flex flex-wrap gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  className={`px-3 py-1 rounded-md text-sm ${
-                    page === currentPage ? "bg-purple-600 text-white" : "bg-white border"
-                  }`}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    className={`px-3 py-1 rounded-md text-sm ${
+                      page === currentPage
+                        ? "bg-purple-600 text-white"
+                        : "bg-white border"
+                    }`}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
             </div>
           </div>
         )}
-  
+
         {isModalOpen && selectedCustomer && (
           <CustomerModal
             isOpen={isModalOpen}
@@ -95,5 +101,5 @@ const CustomerList: React.FC = () => {
       </div>
     </div>
   );
-}  
+};
 export default CustomerList;

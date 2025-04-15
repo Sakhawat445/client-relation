@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/button/Button";
 import CustomerModal from "@/components/customerModal/Modal";
-import { Customer } from "@/types/types";
+import { DocumentRowProps } from "@/types/types";
 
-interface DocumentRowProps {
-  doc: Customer;
-  isSelected: boolean;
-  onSelect: () => void;
-}
-
-export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowProps) {
+export default function DocumentRow({
+  doc,
+  isSelected,
+  onSelect,
+}: DocumentRowProps) {
   const fileUrl = doc.documentURL || "";
   let extractedName = "";
   let extractedType = "";
@@ -82,7 +80,7 @@ export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowPr
               width={24}
               height={24}
               className="rounded-full aspect-square object-cover"
-              />
+            />
             <span>{doc?.name}</span>
           </div>
         </td>
@@ -105,7 +103,10 @@ export default function DocumentRow({ doc, isSelected, onSelect }: DocumentRowPr
             >
               View
             </Button>
-            <Button variant="outline" onClick={() => setIsDocumentModalOpen(true)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDocumentModalOpen(true)}
+            >
               Edit
             </Button>
           </div>

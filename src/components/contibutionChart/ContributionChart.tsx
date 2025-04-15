@@ -38,7 +38,9 @@ export default function ContributionChart() {
 
   return (
     <div className="w-full max-w-5xl mx-auto bg-gray-50 p-5 rounded-md shadow-sm mt-8">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700">Sales per Week</h2>
+      <h2 className="text-lg font-semibold mb-4 text-gray-700">
+        Sales per Week
+      </h2>
 
       <div className="overflow-x-auto">
         <div className="min-w-[500px]">

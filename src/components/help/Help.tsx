@@ -9,21 +9,20 @@ import HelpBlogPage from "../helpBolg/HelpBlog";
 export default function Help() {
   return (
     <>
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 text-gray-800">
-      <aside className="w-full lg:w-64 hidden lg:block">
-        <Sidebar />
-      </aside>
+      <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 text-gray-800">
+        <aside className="w-full lg:w-64 hidden lg:block">
+          <Sidebar />
+        </aside>
 
-      <div className="flex flex-col flex-1">
-        <Header />
+        <div className="flex flex-col flex-1">
+          <Header />
 
-        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
+          <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
             <HelpBlogPage />
-                    </main>
-
+          </main>
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }

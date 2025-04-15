@@ -14,8 +14,9 @@ const useProductModal = (onClose: () => void) => {
   const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setImageFile(files[0]);
     }
   };
 
@@ -27,6 +28,7 @@ const useProductModal = (onClose: () => void) => {
       setUploading(true);
       const formData = new FormData();
       formData.append('file', imageFile);
+      formData.append('filename', imageFile.name);
 
       try {
         const res = await fetch('/api/imageUpload', {
@@ -56,6 +58,7 @@ const useProductModal = (onClose: () => void) => {
         imageURL,
       })
     );
+
     onClose();
   };
 

@@ -60,9 +60,7 @@ const Profile = () => {
         />
       </div>
 
-      {updateError && (
-        <p className="text-red-500 mb-4">{updateError}</p>
-      )}
+      {updateError && <p className="text-red-500 mb-4">{updateError}</p>}
 
       <div className="mb-4">
         <label htmlFor="username" className="text-gray-700 font-medium">

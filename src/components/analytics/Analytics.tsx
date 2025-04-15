@@ -48,10 +48,9 @@ export default function Analytics() {
               </div>
             </div>
           </main>
-
         </div>
       </div>
-          <Footer />
+      <Footer />
     </>
   );
 }

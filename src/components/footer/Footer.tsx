@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import Link from "next/link";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -10,7 +10,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-center md:text-left">
             <h1 className="text-xl font-bold text-indigo-600">swiftCRM</h1>
-            <p className="mt-1 text-xs">Crafting Connections, One Customer at a Time.</p>
+            <p className="mt-1 text-xs">
+              Crafting Connections, One Customer at a Time.
+            </p>
           </div>
 
           <nav className="flex flex-wrap justify-center gap-3 text-gray-700 text-sm">

@@ -15,14 +15,14 @@ export default function CountryOrdersChart() {
   const orderData = useCountryOrderChart();
   const totalOrders = orderData.reduce(
     (acc, item) => acc + (item.orders || 0),
-    0
+    0,
   );
 
   const maxOrders = Math.max(...orderData?.map((d) => d.orders || 0), 100);
   const tickInterval = 25;
   const ticks = Array.from(
     { length: Math.ceil(maxOrders / tickInterval) + 1 },
-    (_, i) => i * tickInterval
+    (_, i) => i * tickInterval,
   );
 
   return (
@@ -45,7 +45,9 @@ export default function CountryOrdersChart() {
               interval={0}
             />
             <YAxis dataKey="country" type="category" width={100} />
-            <Tooltip formatter={(value) => `${value.toLocaleString()} Orders`} />
+            <Tooltip
+              formatter={(value) => `${value.toLocaleString()} Orders`}
+            />
             <Bar dataKey="orders" fill="#4A90E2" barSize={30} />
           </BarChart>
         </ResponsiveContainer>

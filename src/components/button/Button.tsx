@@ -1,12 +1,4 @@
-type ButtonProps = {
-  type?: "button" | "submit" | "reset";
-  className?: string;
-  disabled?: boolean;
-  children: React.ReactNode;
-  variant?: "primary" | "outline";
-  onClick?: () => void;
-};
-
+import { ButtonProps } from "@/types/types";
 const Button: React.FC<ButtonProps> = ({
   children,
   type = "button",

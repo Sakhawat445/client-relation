@@ -1,14 +1,14 @@
-import React from 'react';
-import StatsCard from '@/components/statsCard/StatsCard';
-import { FaChartLine } from 'react-icons/fa';
+import React from "react";
+import StatsCard from "@/components/statsCard/StatsCard";
+import { FaChartLine } from "react-icons/fa";
 
 const TotalProfitCard = () => {
   const profitChartData = {
-    labels: ['Mar', 'Apr', 'May', 'Jun', 'July'],
+    labels: ["Mar", "Apr", "May", "Jun", "July"],
     datasets: [
       {
         data: [100, 200, 150, 300, 250],
-        borderColor: 'green',
+        borderColor: "green",
         fill: false,
       },
     ],

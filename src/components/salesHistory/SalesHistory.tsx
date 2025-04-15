@@ -26,7 +26,9 @@ const SalesHistory: React.FC = () => {
 
   return (
     <div className="bg-white p-5 rounded-lg shadow-md w-full max-w-4xl mx-auto mt-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-3">Sales History</h2>
+      <h2 className="text-lg font-semibold text-gray-800 mb-3">
+        Sales History
+      </h2>
       <p className="text-sm text-gray-500 mb-4">RECENT</p>
 
       <div className="flex flex-wrap justify-center items-center mb-4 gap-2">
@@ -53,7 +55,7 @@ const SalesHistory: React.FC = () => {
             >
               {pageNumber}
             </button>
-          )
+          ),
         )}
 
         <button

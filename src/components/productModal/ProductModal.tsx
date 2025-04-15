@@ -4,17 +4,9 @@ import React from 'react';
 import InputField from '../input/InputField';
 import Button from '../button/Button';
 import useProductModal from './useProductModal';
+import { ProductModalProps } from '@/types/types';
 
-interface ProductModalProps {
-  onClose: () => void;
-  onSave: (newProduct: {
-    name: string;
-    price: number;
-    stock: number;
-    companyName: string;
-    imageFile?: File | null;
-  }) => void;
-}
+
 
 const ProductModal: React.FC<ProductModalProps> = ({ onClose }) => {
   const {
@@ -97,4 +89,3 @@ const ProductModal: React.FC<ProductModalProps> = ({ onClose }) => {
 };
 
 export default ProductModal;
-

@@ -68,7 +68,9 @@ export default function DocumentManagement() {
       {documents === null ? (
         <p className="text-center text-sm text-gray-500">Loading...</p>
       ) : error ? (
-        <p className="text-center text-sm text-red-500">Something went wrong.</p>
+        <p className="text-center text-sm text-red-500">
+          Something went wrong.
+        </p>
       ) : documents && documents.length > 0 ? (
         <>
           <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -102,23 +104,26 @@ export default function DocumentManagement() {
           <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm gap-2">
             <p className="text-center sm:text-left">
               Showing {(currentPage - 1) * 10 + 1} to{" "}
-              {Math.min(currentPage * 10, documents?.length)} of {documents?.length} entries
+              {Math.min(currentPage * 10, documents?.length)} of{" "}
+              {documents?.length} entries
             </p>
 
             <div className="flex flex-wrap justify-center gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1)?.map((page) => (
-                <button
-                  key={page}
-                  className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-md border text-xs sm:text-sm ${
-                    page === currentPage
-                      ? "bg-purple-600 text-white border-purple-600"
-                      : "bg-white text-gray-700 border-gray-300"
-                  }`}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1)?.map(
+                (page) => (
+                  <button
+                    key={page}
+                    className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-md border text-xs sm:text-sm ${
+                      page === currentPage
+                        ? "bg-purple-600 text-white border-purple-600"
+                        : "bg-white text-gray-700 border-gray-300"
+                    }`}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
             </div>
           </div>
         </>

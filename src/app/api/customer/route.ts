@@ -1,26 +1,20 @@
-
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const customers = await prisma.customer.findMany({
-      include: {
-        product: true,
-      },
-    });
+    const customers = await prisma.customer.findMany();
     return NextResponse.json(customers, { status: 200 });
   } catch (error) {
-    console.error('GET /customer error:', error);
+    console.error("GET /customer error:", error);
     return NextResponse.json(
-      { message: 'Internal Server Error' },
+      { message: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
-
 
 export async function POST(req: Request) {
   try {
@@ -41,7 +35,7 @@ export async function POST(req: Request) {
 
     if (!productType) {
       return NextResponse.json(
-        { error: "ProductType is required" }, 
+        { error: "ProductType is required" },
         { status: 400 }
       );
     }
@@ -71,9 +65,8 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error creating customer:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" }, 
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
-

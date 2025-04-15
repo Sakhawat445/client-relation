@@ -1,12 +1,7 @@
 "use client";
+import { PurchaseSource } from "@/types/types";
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-
-interface PurchaseSource {
-  name: string;
-  value: number;
-  color: string;
-}
 
 const data: PurchaseSource[] = [
   { name: "Social Media", value: 49, color: "#4285F4" },
@@ -60,9 +55,7 @@ export default function PurchaseSourceChart() {
             className="flex justify-between items-center mb-1"
           >
             <div className="flex items-center">
-              <div
-                className="colorBullet"
-              />
+              <div className="colorBullet" />
               <span className="text-sm">{item.name}</span>
             </div>
             <span className="text-sm font-bold">{item.value}%</span>

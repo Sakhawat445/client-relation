@@ -2,9 +2,10 @@ import React from "react";
 import { useTotalOrders } from "./useTargetOrder";
 
 const TotalOrderCard: React.FC = () => {
-  const { totalOrders, completedOrders } = useTotalOrders(); 
+  const { totalOrders, completedOrders } = useTotalOrders();
 
-  const percentage = totalOrders > 0 ? Math.min((completedOrders / totalOrders) * 100, 100) : 0;
+  const percentage =
+    totalOrders > 0 ? Math.min((completedOrders / totalOrders) * 100, 100) : 0;
 
   return (
     <div className="p-4 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl text-white w-full md:w-[200px] h-auto mx-auto  sm:h-[260px] md:h-[280px]  md:ml-[2]">
@@ -32,13 +33,17 @@ const TotalOrderCard: React.FC = () => {
             className="transition-all duration-300"
           />
         </svg>
-        <span className="absolute text-base sm:text-lg font-semibold">{Math.round(percentage)}%</span>
+        <span className="absolute text-base sm:text-lg font-semibold">
+          {Math.round(percentage)}%
+        </span>
       </div>
       <p className="text-center mt-2 text-lg sm:text-xl font-bold">
         {completedOrders.toLocaleString()}/
         <span className="text-gray-300">{totalOrders.toLocaleString()}</span>
       </p>
-      <p className="text-center text-gray-200 text-sm sm:text-base">Completed Orders</p>
+      <p className="text-center text-gray-200 text-sm sm:text-base">
+        Completed Orders
+      </p>
     </div>
   );
 };

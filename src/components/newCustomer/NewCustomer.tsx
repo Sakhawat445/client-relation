@@ -36,7 +36,9 @@ const NewCustomers = () => {
           <button
             type="button"
             title="Next Page"
-            onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+            onClick={() =>
+              currentPage < totalPages && setCurrentPage(currentPage + 1)
+            }
             className="p-2 bg-gray-200 rounded-md"
           >
             <ChevronRight />
@@ -73,7 +75,10 @@ const NewCustomers = () => {
         ))}
       </div>
 
-      <CustomerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <CustomerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

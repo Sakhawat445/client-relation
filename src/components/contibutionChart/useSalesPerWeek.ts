@@ -1,20 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "@/redux/store";
 import { RootState } from "@/redux/store";
-
-interface HeatMapData {
-  hour: string;
-  Mon: number;
-  Tue: number;
-  Wed: number;
-  Thu: number;
-  Fri: number;
-  Sat: number;
-  Sun: number;
-}
+import { HeatMapData } from "@/types/types";
 
 const useSalesPerWeek = () => {
-  const customerSales = useAppSelector((state: RootState) => state.customer?.customers);
+  const customerSales = useAppSelector(
+    (state: RootState) => state.customer?.customers,
+  );
   const [data, setData] = useState<HeatMapData[]>([]);
 
   useEffect(() => {
@@ -24,11 +16,22 @@ const useSalesPerWeek = () => {
       customerSales.forEach((customer) => {
         const date = new Date(customer?.createdDate);
         const hour = date?.getUTCHours().toString();
-        const day = date?.toLocaleDateString("en-US", { weekday: "short" }) as keyof HeatMapData;
-        const orderCount = customer.orderCount || 0; 
+        const day = date?.toLocaleDateString("en-US", {
+          weekday: "short",
+        }) as keyof HeatMapData;
+        const orderCount = customer.orderCount || 0;
 
         if (!groupedData[hour]) {
-          groupedData[hour] = { hour, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+          groupedData[hour] = {
+            hour,
+            Mon: 0,
+            Tue: 0,
+            Wed: 0,
+            Thu: 0,
+            Fri: 0,
+            Sat: 0,
+            Sun: 0,
+          };
         }
 
         (groupedData[hour][day as keyof HeatMapData] as number) += orderCount;
