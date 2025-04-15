@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Customer, CustomerState } from "@/types/types";
+import { Customer, CustomerState, customerType } from "@/types/types";
 import axios from "axios";
 
 const initialState: CustomerState = {
@@ -18,13 +18,6 @@ export const fetchCustomers = createAsyncThunk<Customer[]>(
     return (await response.data) as Customer[];
   }
 );
-
-interface customerType{
-  id?: string;
-  name: string;
-  email: string;
-  orderCount?: number;
-}
 
 export const updateCustomer = createAsyncThunk<Customer, Customer>(
   "customers/updateCustomer",

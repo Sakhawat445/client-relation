@@ -189,3 +189,9 @@ export type CountrySales = {
   sales: number;
 };
 
+export type customerType = {
+  id?: string;
+  name: string;
+  email: string;
+  orderCount?: number;
+};
