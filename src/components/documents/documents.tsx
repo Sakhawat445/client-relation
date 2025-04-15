@@ -7,6 +7,8 @@ import Footer from "../footer/Footer";
 import DocumentManagement from "../documentsManagement/DocumentsManagement";
 
 export default function Documents() {
+
+  
   return (
     <>
       <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 text-gray-800">
