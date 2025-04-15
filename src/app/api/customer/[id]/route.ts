@@ -2,33 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.pathname.split('/').pop();
 
   if (!id) {
-    return NextResponse.json({ error: "Invalid customer id" }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid customer id' }, { status: 400 });
   }
 
   try {
     await prisma.customer.delete({
       where: { id },
     });
-    return NextResponse.json(
-      { message: "Customer deleted successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'Customer deleted successfully' }, { status: 200 });
   } catch (error) {
-    console.error("Error deleting customer:", error);
-    return NextResponse.json(
-      { error: "Failed to delete customer" },
-      { status: 500 }
-    );
+    console.error('Error deleting customer:', error);
+    return NextResponse.json({ error: 'Failed to delete customer' }, { status: 500 });
   }
 }
-
 export async function PUT(req: Request) {
   try {
     const body = await req.json();
