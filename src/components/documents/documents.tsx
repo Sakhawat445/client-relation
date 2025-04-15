@@ -8,7 +8,7 @@ import DocumentManagement from "../documentsManagement/DocumentsManagement";
 
 export default function Documents() {
 
-  
+
   return (
     <>
       <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 text-gray-800">
@@ -19,7 +19,11 @@ export default function Documents() {
         <div className="flex flex-col flex-1">
           <Header />
 
+
+
           <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
+
+            
             <DocumentManagement />
           </main>
         </div>
