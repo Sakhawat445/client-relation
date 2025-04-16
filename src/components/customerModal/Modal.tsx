@@ -126,28 +126,24 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
     setUploading(true);
 
     if (isDocumentModal) {
-      // Existing document update logic
       const updatedCustomer = {
         ...doc,
         documentURL: formData.documentURL,
-        name: formData.name || "", // Ensure name is always a string
-        email: formData.email || "", // Ensure email is always a string
+        name: formData.name || "", 
+        email: formData.email || "", 
       };
       await dispatch(updateCustomer(updatedCustomer as Customer));
     } else if (isEditMode || isEditModal) {
-      // Combined edit mode check
-      // Use same update pattern as document modal
       const updatedCustomer: Customer = {
-        ...doc, // Use doc as base
-        ...formData, // Spread form data
-        email: formData.email || "", // Ensure email is always a string
+        ...doc, 
+        ...formData, 
+        email: formData.email || "", 
         address: `${formData.address.city}, ${formData.address.country}`,
         contactNumber: parseInt(formData.contactNumber, 10) || 0,
-        createdDate: doc?.createdDate ?? new Date().toISOString(), // Ensure createdDate is always a string
+        createdDate: doc?.createdDate ?? new Date().toISOString(), 
       };
       await dispatch(updateCustomer(updatedCustomer));
     } else {
-      // Existing create logic
       const customerData = {
         ...formData,
         address: `${formData.address.city}, ${formData.address.country}`,
@@ -165,7 +161,6 @@ const CustomerModal: React.FC<CustomerModalProps> = ({
     setUploading(false);
     onClose();
   };
-  // If isDocumentModal prop is true, render a simplified form with one document input field.
   if (isDocumentModal) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/25">

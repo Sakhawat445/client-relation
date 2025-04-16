@@ -67,7 +67,7 @@ const customerSlice = createSlice({
     builder.addCase(fetchCustomers.fulfilled, (state, action) => {
       state.customers = action.payload;
       state.status = "succeeded";
-      state.error = null; // Reset error on success
+      state.error = null; 
     });
     builder.addCase(fetchCustomers.rejected, (state, action) => {
       state.status = "failed";
@@ -79,7 +79,7 @@ const customerSlice = createSlice({
     });
     builder.addCase(createCustomer.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.error = null; // Reset error on successful creation
+      state.error = null; 
       state.customers.push(action.payload);
     });
 
