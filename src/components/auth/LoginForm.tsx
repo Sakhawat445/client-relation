@@ -18,7 +18,7 @@ const LoginForm = () => {
     if (user) {
       toast.success("Login successful! Redirecting to dashboard...", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
