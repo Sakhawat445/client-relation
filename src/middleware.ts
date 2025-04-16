@@ -4,14 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  const authRoutes = ["/login", "/register  ", "/reset"];
+  const authRoutes = ["/login", "/register", "/reset"];
   const protectedRoutes = [
     "/dashboard",
     "/customers",
-    "./orders",
-    "./analytics",
-    "./documents",
-    "./profile",
+    "/orders",
+    "/analytics",
+    "/documents",
+    "/profile",
   ];
 
   const url = req.nextUrl.clone();
@@ -31,5 +31,16 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/login", "/register", "/dashboard"],
+  matcher: [
+    "/",
+    "/login",
+    "/register",
+    "/reset",
+    "/dashboard",
+    "/customers",
+    "/orders",
+    "/analytics",
+    "/documents",
+    "/profile",
+  ],
 };

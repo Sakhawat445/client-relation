@@ -20,61 +20,69 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center min-h-screen bg-gradient-to-r from-[#D355FF] to-[#9A55FF]">
-      <div className="w-full max-w-lg p-6 rounded-lg bg-green bg-opacity-10 backdrop-blur-md border border-white border-opacity-30 shadow-lg opacity-80">
-        <h2 className="text-2xl font-bold mb-4 text-center text-black">
+    <div className="w-full flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">
           Register
         </h2>
 
-        {formError && <p className="text-red-200 text-center">{formError}</p>}
+        {formError && (
+          <p className="text-red-500 text-center mb-4">{formError}</p>
+        )}
 
         <form
           onSubmit={(e) => handleSubmit(e, onSuccessfulRegister)}
-          className="space-y-4"
+          className="space-y-5"
         >
           <InputField
             label="Name"
             value={form.name}
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Enter your name"
             onChange={handleChange}
-            className="mb-3 w-full bg-white bg-opacity-20 text-white placeholder-gray-200"
+            className="w-full p-3 border border-gray-300 rounded-md"
           />
           <InputField
             label="Email"
             value={form.email}
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Enter your email"
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md"
           />
           <InputField
             label="Password"
             value={form.password}
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Enter your password"
             onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md"
           />
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button
+            type="submit"
+            className="w-full bg-green-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition"
+            disabled={loading}
+          >
             {loading ? "Registering..." : "Register"}
           </Button>
         </form>
 
-        <p className="text-center mt-4 text-black">
+        <p className="text-center mt-4 text-gray-900">
           Already registered?{" "}
           <span
-            className="text-blue-500 cursor-pointer hover:underline"
+            className="text-gray-900 font-semibold hover:underline cursor-pointer"
             onClick={() => router.push("/login")}
           >
             Login here
           </span>
         </p>
-      </div>
 
-      <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-right" autoClose={3000} />
+      </div>
     </div>
   );
 };
