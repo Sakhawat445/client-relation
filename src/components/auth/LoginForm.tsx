@@ -28,7 +28,7 @@ const LoginForm = () => {
 
       setTimeout(() => {
         router.push("/dashboard");
-      });
+      }, 3000);
     }
   }, [user, router]);
 
