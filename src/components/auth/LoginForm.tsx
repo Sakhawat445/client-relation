@@ -7,31 +7,39 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { toast, ToastContainer } from "react-toastify";
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const { form, loading, error, handleChange, handleSubmit } = useLoginForm();
   const router = useRouter();
   const user = useSelector((state: RootState) => state.auth.user);
-  useEffect(() => {
-    if (user) {
-      toast.success("Login successful! Redirecting to dashboard...", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+  // useEffect(() => {
+  //   if (user) {
+  //     toast.success("Login successful! Redirecting to dashboard...", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //     });
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+  //     setTimeout(() => {
+  //       router.push("/dashboard");
+  //     }, 3000);
+  //   }
+  // }, [user, router]);
+
+  useEffect(() => {
+    console.log("User state changed:", user);
+    if (user) {
+      console.log("User exists; preparing to redirect");
+      // existing toast and redirection code...
     }
   }, [user, router]);
-
+  
   return (
     <div className="w-full flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
