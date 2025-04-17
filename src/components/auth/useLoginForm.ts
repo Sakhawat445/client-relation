@@ -35,7 +35,7 @@ const useLoginForm = () => {
 
       setTimeout(() => {
         router.push("/dashboard");
-      }, 2000);
+      }, 6000);
     } else {
       toast.error(
         (resultAction.payload as string) || "Login failed. Please try again.",
