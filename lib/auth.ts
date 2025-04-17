@@ -36,21 +36,23 @@ export const authOptions: AuthOptions = {
 
         const user = await prisma.user.findFirst({
           where: { email: credentials.email },
-          select: { id: true, name: true, email: true, password: true, },
+          select: { id: true, name: true, email: true, password: true },
         });
 
         if (!user || !user.password) {
           throw new Error("Invalid credentials");
         }
 
-        const correctPassword = await bcrypt.compare(credentials.password, user.password);
+        const correctPassword = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
 
         if (!correctPassword) {
           throw new Error("Invalid credentials");
         }
 
-        return { id: user.id, name: user.name, email: user.email
-         };
+        return { id: user.id, name: user.name, email: user.email };
       },
     }),
   ],
@@ -72,9 +74,21 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as "ADMIN" | "EMPLOYEE"; 
+        session.user.role = token.role as "ADMIN" | "EMPLOYEE";
       }
       return session;
     },
   },
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: false, // disables __Secure- prefix
+      },
+    },
+  },
+  
 };
