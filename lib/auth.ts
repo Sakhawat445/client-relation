@@ -184,7 +184,7 @@ export const authOptions: AuthOptions = {
         path: "/",
         httpOnly: true,
         sameSite: "lax",
-        secure: false,
+        secure: false, // set to true in production
       },
     },
     csrfToken: {
