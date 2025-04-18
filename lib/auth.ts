@@ -180,9 +180,10 @@ export const authOptions: AuthOptions = {
     sessionToken: {
       name: "next-auth.session-token",
       options: {
+        domain: "client-relation-sakhawat.vercel.app",
+        path: "/",
         httpOnly: true,
         sameSite: "lax",
-        path: "/",
         secure: false,
       },
     },
