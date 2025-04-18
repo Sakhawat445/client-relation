@@ -92,8 +92,9 @@
 //   },
   
 // };
+// pages/api/auth/[...nextauth].ts
 
-import { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./prisma";
@@ -172,15 +173,16 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
+      if (session.user) {
         session.user.id = token.id as string;
       }
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Redirect to dashboard after login
-      if (url.startsWith("/login")) return `${baseUrl}/dashboard`;
+      // Relative URL
       if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Absolute URL on same origin
+      if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
   },
@@ -195,4 +197,7 @@ export const authOptions: AuthOptions = {
       },
     },
   },
+  useSecureCookies: false,
 };
+
+export default NextAuth(authOptions);
