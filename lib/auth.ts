@@ -94,12 +94,14 @@
 // };
 // pages/api/auth/[...nextauth].ts
 
-import NextAuth, { AuthOptions } from "next-auth";
-import bcrypt from "bcrypt";
-import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "./prisma";
+// pages/api/auth/[...nextauth].ts
 
-// Extend NextAuth types (role removed)
+import NextAuth, { AuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
+import prisma from "./prisma"; // adjust path as needed
+
+// ————— Extend Types —————
 declare module "next-auth" {
   interface Session {
     user: {
@@ -109,7 +111,6 @@ declare module "next-auth" {
       image?: string | null;
     };
   }
-
   interface User {
     id: string;
     name?: string | null;
@@ -118,6 +119,7 @@ declare module "next-auth" {
   }
 }
 
+// ————— Auth Options —————
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -130,62 +132,50 @@ export const authOptions: AuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Missing credentials");
         }
-
         const user = await prisma.user.findFirst({
           where: { email: credentials.email },
           select: { id: true, name: true, email: true, password: true },
         });
-
         if (!user || !user.password) {
           throw new Error("Invalid credentials");
         }
-
-        const correctPassword = await bcrypt.compare(
+        const valid = await bcrypt.compare(
           credentials.password,
           user.password
         );
-
-        if (!correctPassword) {
+        if (!valid) {
           throw new Error("Invalid credentials");
         }
-
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
+        return { id: user.id, name: user.name, email: user.email };
       },
     }),
   ],
+
   secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    signIn: "/login",
-  },
+  session: { strategy: "jwt" },
+  pages: { signIn: "/login" },
   debug: process.env.NODE_ENV !== "production",
+
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
+      if (user) token.id = user.id;
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-      }
+      if (session.user) session.user.id = token.id as string;
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Relative URL
+      // 1) relative urls
       if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Absolute URL on same origin
+      // 2) same-origin absolute
       if (new URL(url).origin === baseUrl) return url;
+      // 3) fallback
       return baseUrl;
     },
   },
+
+  // ————— Explicit Cookie Definitions —————
   cookies: {
     sessionToken: {
       name: "next-auth.session-token",
@@ -196,7 +186,27 @@ export const authOptions: AuthOptions = {
         secure: false,
       },
     },
+    csrfToken: {
+      name: "next-auth.csrf-token",
+      options: {
+        httpOnly: false,
+        sameSite: "lax",
+        path: "/",
+        secure: false,
+      },
+    },
+    callbackUrl: {
+      name: "next-auth.callback-url",
+      options: {
+        httpOnly: false,
+        sameSite: "lax",
+        path: "/",
+        secure: false,
+      },
+    },
   },
+
+  // turn off __Secure- / __Host- entirely
   useSecureCookies: false,
 };
 
