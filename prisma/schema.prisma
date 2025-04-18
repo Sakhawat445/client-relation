@@ -23,6 +23,7 @@ model User {
    reset_token_expiration DateTime? // Add this line
 }
 
+
 model Product {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   imageURL    String?
