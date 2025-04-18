@@ -93,33 +93,30 @@
   
 // };
 // pages/api/auth/[...nextauth].ts
-
-// pages/api/auth/[...nextauth].ts
-
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { type AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
-import prisma from "./prisma"; // adjust path as needed
 
-// ————— Extend Types —————
+// Extend JWT to include custom user data
 declare module "next-auth" {
   interface Session {
-    user: {
+    user?: {
       id: string;
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
+      name: string;
+      email: string;
     };
-  }
-  interface User {
-    id: string;
-    name?: string | null;
-    email?: string | null;
-    password?: string | null;
   }
 }
 
-// ————— Auth Options —————
+declare module "next-auth/jwt" {
+  interface JWT {
+    user?: {
+      id: string;
+      name: string;
+      email: string;
+    };
+  }
+}
+
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -129,86 +126,56 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Missing credentials");
+        // Replace with your real authentication logic
+        const user = {
+          id: "1",
+          name: "Test",
+          email: "test@example.com",
+        };
+
+        if (credentials?.email === user.email && credentials?.password === "123456") {
+          return user;
         }
-        const user = await prisma.user.findFirst({
-          where: { email: credentials.email },
-          select: { id: true, name: true, email: true, password: true },
-        });
-        if (!user || !user.password) {
-          throw new Error("Invalid credentials");
-        }
-        const valid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-        if (!valid) {
-          throw new Error("Invalid credentials");
-        }
-        return { id: user.id, name: user.name, email: user.email };
+
+        return null;
       },
     }),
   ],
-
-  secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt" },
-  pages: { signIn: "/login" },
-  debug: process.env.NODE_ENV !== "production",
-
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.id = user.id;
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) session.user.id = token.id as string;
-      return session;
-    },
-    async redirect({ url, baseUrl }) {
-      // 1) relative urls
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // 2) same-origin absolute
-      if (new URL(url).origin === baseUrl) return url;
-      // 3) fallback
-      return baseUrl;
-    },
+  session: {
+    strategy: "jwt",
   },
-
-  // ————— Explicit Cookie Definitions —————
   cookies: {
     sessionToken: {
       name: "next-auth.session-token",
       options: {
-        domain: "client-relation-sakhawat.vercel.app",
-        path: "/",
         httpOnly: true,
         sameSite: "lax",
-        secure: false, // set to true in production
-      },
-    },
-    csrfToken: {
-      name: "next-auth.csrf-token",
-      options: {
-        httpOnly: false,
-        sameSite: "lax",
         path: "/",
-        secure: false,
-      },
-    },
-    callbackUrl: {
-      name: "next-auth.callback-url",
-      options: {
-        httpOnly: false,
-        sameSite: "lax",
-        path: "/",
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
       },
     },
   },
-
-  // turn off __Secure- / __Host- entirely
-  useSecureCookies: false,
+  pages: {
+    signIn: "/login",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = {
+          id: user.id,
+          name: user.name || "Unknown", // Provide a default value if name is null or undefined
+          email: user.email || "Unknown", // Provide a default value if email is null or undefined
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.user) {
+        session.user = token.user;
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
