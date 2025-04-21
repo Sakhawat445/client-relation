@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
    reset_token            String?  // Add this line
    reset_token_expiration DateTime? // Add this line
+   role     UserRole @default(EMPLOYEE)
 }
 
 
@@ -87,4 +88,9 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELED
+}
+
+enum UserRole {
+EMPLOYEE
+  ADMIN
 }
